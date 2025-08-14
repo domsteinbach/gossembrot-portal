@@ -1,0 +1,10 @@
+{
+  "name": "gossembrot-db",
+  "short_name": "gossembrot-db",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+
+  ]
+}

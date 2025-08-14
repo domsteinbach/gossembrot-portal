@@ -1,0 +1,36 @@
+.verweis-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  padding-right: 0.5em;
+  margin-bottom: var(--margin-small);
+  margin-top: var(--margin-small);
+}
+
+.result-header {
+  color: var(--title-color);
+  font-style: italic;
+}
+
+.source-infocar {
+  margin-right: var(--margin-large);
+  min-width: 15vw;
+  max-width: 15vw;
+}
+
+.orig-tag-col {
+  margin-right: var(--margin-small);
+  min-width: 40vw;
+  max-width: 40vw;
+}
+
+.verweis-link {
+  cursor: pointer;
+}
+
+.highlight-tag {
+  color: var(--title-color);
+  font-weight: bold;
+  font-style: italic;
+}

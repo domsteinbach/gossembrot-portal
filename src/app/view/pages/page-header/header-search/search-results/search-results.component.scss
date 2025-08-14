@@ -1,0 +1,29 @@
+.group-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.group-filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.close-button-right {
+  margin-left: auto;
+  margin-right: 0.75rem;
+}
+
+.scroll-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  max-height: calc(80vh - 6rem);
+  padding-right: 0.5rem;
+}

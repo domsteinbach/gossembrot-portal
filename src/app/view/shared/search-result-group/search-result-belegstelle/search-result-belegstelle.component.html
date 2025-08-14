@@ -1,0 +1,3 @@
+<div *ngFor="let belegstelle of belegstellen;" class="suggestion-item" (click)="onVerweisClicked(belegstelle.verweis)">
+    <app-tei-render-component [teiXmlString]="belegstelle.belegstelle.label" [stringToHighlight]="termsToHighlight"/>
+</div>

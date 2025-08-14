@@ -1,0 +1,64 @@
+@import "../../../../styles";
+
+.verweis-view-blatt-info {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.carrier-info {
+  height: var(--fix-height-small);
+}
+
+.carrier-title {
+  font-weight: bold;
+  color: var(--primary-variant);
+}
+
+.blattangabe {
+  cursor: pointer;
+  color: var(--primary);
+}
+
+.blattangabe:hover {
+  text-decoration: underline;
+}
+
+.missing-blatt {
+  text-decoration: line-through;
+}
+
+.missing-blatt-arrow {
+  margin-left: 0.5em;
+  display: inline-flex;
+  font-size: 1em;
+  align-items: center;
+  vertical-align: middle;
+  color: var(--primary);
+}
+
+
+.lagen-info-container {
+  margin-top: auto;
+  height: var(--fix-height-x-small);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lagen-img-border {
+  width: 132px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid; /* no color here */
+}
+
+.dark {
+  border-color: white;
+}
+
+.light {
+  border-color: black;
+}

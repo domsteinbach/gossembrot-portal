@@ -1,0 +1,23 @@
+<div class="verweis-view-blatt-info">
+  <div class="carrier-info">
+    <h3 class="carrier-title">
+        <div>{{carrierTitle}}</div>
+        <div *ngIf="!isMissingPageOfExistingCarrier" (click)="openCarrierInNewTab()" class="blattangabe">{{blattangabe}}</div>
+        <div *ngIf="isMissingPageOfExistingCarrier" [matTooltip]="missingTooltip">
+          <span class="cursor-tooltip" [class.missing-blatt] ="!!alternativePageBlattangabe">{{blattangabe}}</span>
+          <span class="cursor-tooltip" *ngIf="!alternativePageBlattangabe"> ist verloren.</span>
+          <mat-icon *ngIf="alternativePageBlattangabe" class="missing-blatt-arrow cursor-tooltip">arrow_forward</mat-icon>
+          <span (click)="openCarrierInNewTab()" *ngIf="alternativePageBlattangabe" class="blattangabe">{{alternativePageBlattangabe}}</span>
+        </div>
+    </h3>
+  </div>
+  <div class="lagen-info-container">
+    <div class="lagen-info-text">
+      <div *ngIf="agency === 'Target' && verweis?.targetCarObj?.physicality !== 'Available'" >{{ carrierDesc }}</div>
+      <span>{{page?.lagenText || ''}}</span>
+    </div>
+    <div [class.lagen-img-border]="!!page?.lagenSym" [class]="(themeBrightness$ | async)">
+      <app-lagensymbol *ngIf="page && !!page.lagenSym" [page]="page" />
+    </div>
+  </div>
+</div>

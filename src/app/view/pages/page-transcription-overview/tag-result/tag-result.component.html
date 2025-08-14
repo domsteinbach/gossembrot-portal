@@ -1,0 +1,26 @@
+<div class="verweis-container result-header meta-text">
+    <div class="source-infocar">Handschrift</div>
+    <div class="orig-tag-col">Text in den Ursprungsdokumenten</div>
+    <div>resultierende Auszeichnung</div>
+</div>
+<mat-divider></mat-divider>
+<div *ngFor="let b of belegstellen; let vIndex = index">
+    <mat-divider *ngIf="vIndex > 0"></mat-divider>
+    <div id="{{b.id}}" class="verweis-container">
+        <div class="source-infocar">
+            <span (click)="onBelegstelleClicked(b)" class="verweis-link"
+                  matTooltip="Handschrift in einem neuen Tab öffnen">{{getCarrierOfBelegstelle(b)?.fullTitle}}</span>
+        </div>
+        <div class="orig-tag-col transcription">
+            <ng-container *ngFor="let part of highlightTags(b.wortlaut, highlghtTag)">
+                <span [ngClass]="{'highlight-tag': part.highlight}">{{ part.text }}</span>
+            </ng-container>
+        </div>
+        <div *ngIf="displayResultsAs==='html'">
+            <app-tei-render-component [teiXmlString]="b.wortlautTeiXml"></app-tei-render-component>
+        </div>
+        <div *ngIf="displayResultsAs==='tei-xml'">
+            {{b.wortlautTeiXml}}
+        </div>
+    </div>
+</div>

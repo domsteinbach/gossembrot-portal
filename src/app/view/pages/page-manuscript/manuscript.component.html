@@ -1,0 +1,17 @@
+<div class="manuscript-container">
+    <div class="man-left-container">
+        <app-info-carrier-select
+                [carriers]="(existingCarriers$ | async) ?? []"
+                [selectedCarrier]="(selectedCarrier$ | async) ?? undefined"
+                [label]="'Manuskriptauswahl'"
+                (carrierSelected)="onManuscriptSelectionChange($event)"
+        />
+      <app-outgoing-verweise-per-manuscript
+          [selectedCarrier]="selectedCarrier$ | async"/>
+    </div>
+    <div class="man-right-container">
+        <app-manuscript-nav/>
+        <app-manuscript-browser/>
+    </div>
+</div>
+

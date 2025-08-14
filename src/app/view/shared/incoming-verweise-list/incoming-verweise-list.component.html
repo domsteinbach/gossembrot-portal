@@ -1,0 +1,56 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<div class="quell-verweise-container" *ngIf="texts.length > 0 && !loading">
+    <app-steckbrief [selectedCarrier]="infoCarrier" *ngIf="displaySteckbrief"/>
+    <div class="quell-verweise-header">
+        <h3>{{infoCarrier ? infoCarrier.verweiseAufDiesenStr() : 'Verweise auf diesen Textträger'}}</h3>
+    </div>
+    <div class="scroll-container" id="incoming-verweise-scroll-container"
+         appScrollIntoView #scrollDirective="scrollIntoView"
+         [containerId]="'incoming-verweise-scroll-container'">
+        <div *ngFor="let t of texts" [id]="t.id">
+            <h4 class="sticky-title" *ngIf="t.hasIncomingVerweis">
+              <mat-icon class="text-icon">bookmark_outline</mat-icon>
+              <span *ngIf="t.author?.cognomen">
+                <span *ngIf="!t.author?.linkToGnd">{{t.author?.cognomen}}: </span>
+                <span *ngIf="t.author?.linkToGnd" matTooltip="Autor #{{t?.author?.gndId}} in der Deutschen Nationalbibliothek öffnen"><a class="author-link" [href]="t?.author?.linkToGnd || ''" target="_blank">{{t.author?.cognomen}}</a>: </span>
+              </span>
+              <span>{{t.title}}</span>
+              <span *ngIf="t.isOnlyNennung"> (Nennung) </span>
+            </h4>
+            <div *ngFor="let v of t.incomingVerweise; let i = index">
+
+                <div id="{{this.INCOMING_PREFIX}}{{v.id}}">
+                    <div *ngIf="(v.targetBelegstelleObj?.abschnitt && displayAbschnitt(v)) || closingAbschnitt(v)" class="abschnitt-container">
+                      <hr class="abschnitt-line">
+                      <div class="abschnitt-text" *ngIf="displayAbschnitt(v)">{{ v.targetBelegstelleObj?.abschnitt }}</div>
+                      <div class="abschnitt-text" *ngIf=" closingAbschnitt(v)">Ohne Zuordnung</div>
+                      <hr class="abschnitt-line">
+                    </div>
+                    <mat-divider *ngIf="!displayAbschnitt(v) && !closingAbschnitt(v)" class="blattangabe-divider"></mat-divider>
+                    <div [ngClass]="selectedVerweis && selectedVerweis.id === v.id ? 'verweis-card selected-verweis' : 'verweis-card'"
+                         (click)="this.onVerweisClicked(v)"
+                    >
+                        <div class="blattangabe">
+                          <span *ngIf="displayKarta(v)">{{ v.targetBlattangabe}}</span>
+                        </div>
+                        <div class="belegstelle">
+                                <span class="belegstellen-text">{{v.srcBelegstelleText}}</span>
+                            </div>
+                        <div class="wortlaut">
+                            <app-tei-render-component [teiXmlString]="v.wortlautTeiXml"></app-tei-render-component>
+                            <app-verweis-link-icon-component
+                              *ngIf="v?.id === selectedVerweis?.id"
+                              [displayedAgent]="'incoming'"
+                              [verweis]="v"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="quell-verweise-container" *ngIf="infoCarrier && !infoCarrier.has_incoming_verweis">
+    <div class="quell-verweise-header">
+        <h3>Es sind keine Verweise auf diesen Textträger bekannt.</h3>
+    </div>
+</div>

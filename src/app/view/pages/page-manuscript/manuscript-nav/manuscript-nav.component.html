@@ -1,0 +1,29 @@
+<form>
+    <div class="nav-panel">
+        <app-text-select *ngIf="!hideTextSelect"/>
+        <app-belegstellen-nav *ngIf="!hideVerweisSelect"/>
+    </div>
+    <div class="nav-panel">
+        <div id="lagen-info">
+            <app-doppel-lagensymbol></app-doppel-lagensymbol>
+            <app-doppellagen-info-text></app-doppellagen-info-text>
+        </div>
+        <div id="blatt-text-field" class="blatt-text-field" *ngIf="displayedPages && displayedPages.length > 1">
+            <div id="blatt-text">
+
+                <div *ngIf="!displayedPages[0].isDisplayedAsSingleImage">
+                  <span>{{ displayedPages[0].pageText }}</span>
+                  <span *ngIf="displayedPages.length > 1"> / </span>
+                  <span>{{ displayedPages[1].pageText }}</span>
+                </div>
+                <span *ngIf="displayedPages[0].isDisplayedAsSingleImage">
+                        <span>{{ displayedPages[0].pageText}}</span>
+                    </span>
+            </div>
+        </div>
+      <div id="blatt-select-container">
+        <app-blatt-select *ngIf="pagesOfCarrier$ | async as pagesOfCarrier"
+                          [pages]="pagesOfCarrier"/>
+      </div>
+    </div>
+</form>

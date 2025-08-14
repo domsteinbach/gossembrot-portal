@@ -1,0 +1,28 @@
+<mat-card-header class="group-filter-row">
+  <div class="group-filter-row">
+    <ng-container *ngFor="let group of groupOrder">
+      <mat-checkbox
+        [(ngModel)]="visibleGroups[group.type]"
+      >
+        {{ group.label }}
+      </mat-checkbox>
+    </ng-container>
+  </div>
+
+  <app-ui-close-button
+    *ngIf="showCloseButton"
+    class="close-button-right"
+    (close)="closeResults.emit()"
+  />
+</mat-card-header>
+<mat-card-footer class="scroll-container">
+  <ng-container *ngFor="let group of groupOrder">
+    <app-search-result-group
+      *ngIf="visibleGroups[group.type]"
+      [type]="group.type"
+      [searchType]="searchType"
+      [results]="resultGroups[group.type]"
+      [searchTerm]="searchTerm"
+    />
+  </ng-container>
+</mat-card-footer>

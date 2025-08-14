@@ -1,0 +1,27 @@
+<div class="login-container">
+  <div *ngIf="authService.isAuthenticated()">
+    <p class="title">Angemeldet als {{getUsername()}}</p>
+    <button mat-raised-button color="primary" (click)="logout()">Abmelden</button>
+  </div>
+  <div *ngIf="!authService.tokenValue || !authService.isAuthenticated()">
+    <h2 class="title">Login</h2>
+    <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
+      <mat-form-field class="full-width">
+        <mat-label>Benutzername</mat-label>
+        <input matInput type="text" [(ngModel)]="username" name="username" required>
+        <!-- General error message will be displayed below -->
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Passwort</mat-label>
+        <input matInput type="password" [(ngModel)]="password" name="password" required>
+        <!-- General error message will be displayed below -->
+      </mat-form-field>
+
+      <!-- General error for the form -->
+      <mat-error>{{ loginError }}</mat-error>
+
+      <button mat-raised-button color="primary" style="margin-top: var(--margin-small)" type="submit">Login</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="mat-elevation-z8">
+  <mat-drawer-container>
+    <div class="search-bar">
+      <app-info-carrier-select
+        class="manuscript-select"
+        *ngIf="carriers.length > 0"
+        [label]="'Handschrift'"
+        [carriers]="carriers"
+        [selectedCarrier]="carriers[0] || null"
+        (carrierSelected)="onCarrierSelectionChange($event)">
+      </app-info-carrier-select>
+      <app-table-filter [tableName]="'page'" (filterChange)="onFilterChange($event)"></app-table-filter>
+      <div class="settings-button-bar">
+        <button
+          mat-icon-button
+          class="primary-variant"
+          (click)="openColumnSettingsDialog()"
+          matTooltip="Spalten auswählen"
+        >
+          <mat-icon>settings_ethernet</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="primary-variant"
+          *ngIf="isDrawerClosed"
+          (click)="toggleAdvancedFilterDrawer()"
+          matTooltip="Erweiterte Filter"
+        >
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="result-table-container">
+      <table id="carrier-text-table" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Loop through all headers to generate columns -->
+        <ng-container *ngFor="let col of columns$ | async" [matColumnDef]="col.column">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
+            <div>{{ col.displayedName }}</div>
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="selectRow(element)"
+            [ngClass]="{ 'selected-row': selectedRow === element }"
+            class="table-cell"
+          >
+
+            <!-- Default rendering for other columns -->
+            <ng-container *ngIf="col.column"
+            >
+              {{ element[col.column] }}
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="(displayedColumns$ | async) || ''"></tr>
+        <tr mat-row *matRowDef="let row; columns: (displayedColumns$ | async) || '';"></tr>
+      </table>
+      <mat-progress-bar *ngIf="loading"mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div class="search-footer">
+      <mat-paginator
+        id="text-paginator"
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        showFirstLastButtons
+        class="custom-paginator"
+      ></mat-paginator>
+      <button mat-raised-button>Export</button>
+    </div>
+    <mat-drawer #advancedFilterDrawer mode="side" position="end" (openedChange)="onDrawerStateChange($event)">
+      <button mat-raised-button class="close-button" color="primary" (click)="advancedFilterDrawer.close()">Schliessen</button>
+      <app-null-filter
+        (close)="advancedFilterDrawer.close()"
+        [tableName]="'page'"
+      />
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

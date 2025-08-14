@@ -1,0 +1,72 @@
+.suggestion-item {
+  padding: 0.5rem 3rem;
+  cursor: pointer;
+  width: 48vw;
+  display: block;
+  overflow: hidden;
+
+  &:hover {
+    background-color: var(--surface-highlight-active);
+  }
+
+  .value-item {
+    overflow: hidden;
+    white-space: normal;
+    word-break: break-word;
+  }
+}
+
+.lost-carrier-title {
+  font-style: italic;
+}
+
+app-tei-render-component {
+  display: block;
+  width: 100%;
+}
+
+.in-text-icon-button {
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1em;
+  align-items: center;
+  vertical-align: middle;
+  color: var(--primary);
+}
+
+.in-text-icon-button:hover {
+  color: var(--primary-variant);
+  background-color: unset;
+  border-radius: 8px;
+  transform: scale(1.1);
+}
+
+.show-more-link {
+  color: var(--primary);
+  display: block;
+  padding: 0.5rem 3rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    font-weight: bold;
+  }
+}
+
+.group-toggle-icon {
+  color: var(--accent);
+}
+
+.group-header {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}

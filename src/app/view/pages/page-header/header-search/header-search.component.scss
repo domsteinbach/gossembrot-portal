@@ -1,0 +1,40 @@
+.search-panel {
+  position: relative;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  .search-icon {
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--hardcode-text-color);
+  }
+}
+
+.search-suggestions {
+  position: fixed;
+  top: 3.5rem;
+  right: var(--margin-small);
+  background: None;
+  width: 54vw;
+  z-index: 1000;
+  max-height: 80vh;
+  overflow: auto;
+  padding: 0.5rem
+}

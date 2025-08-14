@@ -1,0 +1,7 @@
+<div class="belegstellen-panel">
+    <app-belegstelle-select
+            [label]="'Verweisauswahl'"
+            [pages]="(pagesWithQuellBelegstellen$ | async) || []"
+            (pageSelected)="onPageSelected($event)"
+    ></app-belegstelle-select>
+</div>

@@ -1,0 +1,16 @@
+<span class="transcription"
+      *ngIf="currentTooltip === ''"
+      (mouseover)="updateTooltip($event)"
+      [innerHTML]="htmlString"
+>
+</span>
+<span class="transcription"
+      *ngIf="currentTooltip !== ''"
+      (mouseover)="updateTooltip($event)"
+      [innerHTML]="htmlString"
+      [mtxTooltip]="tooltipTpl">
+</span>
+
+<ng-template #tooltipTpl>
+  <div [innerHTML]="currentTooltip"></div>
+</ng-template>

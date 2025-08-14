@@ -1,0 +1,60 @@
+.settings-accordion {
+  margin-top: calc(var(--margin-small) / 2);
+}
+
+.settings-panel{
+
+}
+
+.vis-selections {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 0 1rem 0;
+  justify-content: space-between;
+}
+
+.selection-row {
+  width: 60%;
+  min-height: 40vh;
+  max-height: 40vh;
+}
+
+.selection-header {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.selected-node-list {
+  max-height: 35vh;
+  height:100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.carrier-item {
+  margin-left: var(--margin-small);
+  border:  1px solid var(--primary);
+  border-radius: 8px !important;
+  margin-bottom: 1px;
+}
+
+.action-panel {
+  display: flex;
+  flex-direction: row;
+}
+
+.vis-action-panel {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: var(--margin-small);
+  align-items: center;
+}
+
+.vis-carrier-select {
+  width: 60%;
+}
+
+.vis-action-button {
+  margin-left: var(--margin-small);
+}

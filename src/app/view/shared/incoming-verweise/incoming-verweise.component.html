@@ -1,0 +1,25 @@
+<div class="bottom-inc-container" [class]="withSubMenu ? 'submenu' : 'no-submenu'" *ngIf="carriers && carriers.length > 0">
+    <div class="left-container">
+        <div class="carrier-select">
+            <app-info-carrier-select
+                    [carriers]="carriers"
+                    [selectedCarrier]="selectedCarrier"
+                    [label]="label"
+                    (carrierSelected)="selectCarrier($event)"
+            >
+            </app-info-carrier-select>
+        </div>
+        <div [ngClass]="['incoming-verweis-base', withSubMenu ? 'incoming-with-submenu' : 'incoming-without-submenu']">
+            <app-incoming-verweise-list
+                    [infoCarrier] = "selectedCarrier"
+                    [texts] = "texts"
+                    (verweisSelected)="onVerweisSelected($event)"
+            />
+        </div>
+    </div>
+    <div [ngClass]="['osd-base', withSubMenu ? 'osd-with-submenu' : 'osd-without-submenu']">
+        <app-osd-editor
+                [page]="selectedVerweis?.srcBelegstelleObj?.page"
+        ></app-osd-editor>
+    </div>
+</div>

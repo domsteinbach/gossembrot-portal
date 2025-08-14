@@ -1,0 +1,20 @@
+<div *ngIf="einband && einband.externalEntity" class="steckbrief-entry">
+    <h3>Informationen zum Einband</h3>
+    <div id="einband-data" *ngIf="einband.werkstattDesc">
+        <div class="fact-point-group">
+            <span class="fact-bullet-init">Werkstatt:</span>
+            <span>{{einband.werkstattDesc}}</span>
+        </div>
+        <div class="fact-point-group" *ngIf="einband.werkzeugDesc">
+            <span class="fact-bullet-init">Werkzeug:</span>
+            <span>{{einband.werkzeugDesc}}</span>
+        </div>
+        <div class="fact-point-group" *ngIf="einbandLink">
+            <span class="fact-bullet-init">Eintrag in der Einbanddatenbank:</span>
+            <span>
+              <a [href]="einbandLink" target="_blank">{{einbandId}}</a>
+            </span>
+        </div>
+    </div>
+</div>
+<div *ngIf="hsLinkText" class="steckbrief-entry" [innerHTML]="hsLinkText"></div>

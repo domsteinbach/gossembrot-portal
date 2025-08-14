@@ -1,0 +1,126 @@
+mat-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.toolbar-right-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.toolbar-far-right-container {
+  margin-left: 2em;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: center;
+}
+
+.verweis-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--margin-small);
+  background-color: var(--background);
+}
+
+.verweis-view-split-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.info-container {
+  color: var(--hardcode-text-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: calc(100% - var(--margin-small));
+  gap: var(--margin-small);
+  margin-bottom: var(--margin-medium);
+  justify-content: space-between;
+}
+
+.osd-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.osd-border {
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+}
+
+.wortlaut-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.wortlaut-card {
+  position: relative;
+  color: var(--hardcode-text-color);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-highlight-active);
+  border-radius: 8px;
+  padding: var(--margin-medium);
+  height: fit-content;
+  overflow-y: auto;
+  border: 2px solid var(--primary);
+}
+
+.hover-icon-container {
+  position: absolute;
+  z-index: 1;
+  top: var(--margin-small);
+  right: 0;
+}
+
+.hover-icon {
+  color: var(--primary);
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.arrow-container {
+  min-width: var(--margin-x-large);
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.node-line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: var(--primary);
+  position: relative;
+}
+
+.node-line-arrow {
+  flex-grow: 1;
+  height: 2px;
+  background-color: var(--primary);
+  position: relative;
+  margin-right: 5px;
+}
+
+.arrow-head::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--primary);
+  border-bottom: 2px solid var(--primary);
+}

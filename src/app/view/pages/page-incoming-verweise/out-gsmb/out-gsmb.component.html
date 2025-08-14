@@ -1,0 +1,4 @@
+<app-incoming-verweise
+        [carriers]="(manuscriptsNotInGsmbLibrary$ | async) || []"
+        [label]="'Handschriften ausserhalb Gossembrots Bibliothek'"
+/>

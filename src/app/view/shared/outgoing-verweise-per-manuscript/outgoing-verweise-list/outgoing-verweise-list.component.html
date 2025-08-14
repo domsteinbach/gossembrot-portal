@@ -1,0 +1,63 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<div class="outgoing-verweise-container"
+     id="outgoing-verweise-scroll-container"
+     *ngIf="texts && !loading"
+     appScrollIntoView #scrollDirective="scrollIntoView" [containerId]="'outgoing-verweise-scroll-container'">
+    <div *ngFor="let t of texts">
+        <div class="sticky-wrapper">
+            <h4 *ngIf="t.outgoingVerweise.length > 0" class="src-text-title sticky-title">
+                <mat-icon class="text-icon">bookmark_outline</mat-icon>
+
+                <span *ngIf="t.author?.cognomen">
+                  <span *ngIf="!t.author?.linkToGnd">{{t.author?.cognomen}}: </span>
+                  <span *ngIf="t.author?.linkToGnd" matTooltip="Autor #{{t?.author?.gndId}} in der Deutschen Nationalbibliothek öffnen"><a class="author-link" [href]="t?.author?.linkToGnd || ''" target="_blank">{{t.author?.cognomen}}</a>: </span>
+                </span>
+                <span>{{t.title}}</span>
+                <span *ngIf="t.title && t.incipit">
+                  <span>, Incipit </span>
+                  <span class="text-title-incipit">‘{{t.incipit}}’</span>
+                  <span *ngIf="t.textRange"> ({{t.textRange}})</span>
+                </span>
+            </h4>
+        </div>
+        <div *ngFor="let v of t.outgoingVerweise">
+            <div *ngIf="v.insecurity <=1 && displayWortlaut(v);" [ngStyle]="{'color': v.type === 'Nennung' ? 'red' : 'inherit'}" id="{{OUTGOING_PREFIX}}{{v.id}}">
+                <div *ngIf="(v.srcBelegstelleObj?.abschnitt && displayAbschnitt(v)) || closingAbschnitt(v)" class="abschnitt-container">
+                  <hr class="abschnitt-line">
+                  <div class="abschnitt-text">{{closingAbschnitt(v) ? 'Ohne Zuordnung' : v.srcBelegstelleObj?.abschnitt }}</div>
+                  <div class="abschnitt-text" *ngIf="closingAbschnitt(v)">Ohne Zuordnung</div>
+                  <hr class="abschnitt-line">
+                </div>
+                <mat-divider *ngIf="!displayAbschnitt(v) && !closingAbschnitt(v)&& displayPage(v)" class="blattangabe-divider"></mat-divider>
+                <mat-divider *ngIf="!displayAbschnitt(v) && !displayPage(v) && !closingAbschnitt(v) && displayWortlaut(v)" class="verweis-divider"></mat-divider>
+                <div *ngIf="v.srcBelegstelleObj" (click)="onVerweisClicked(v)" class='verweis-card' [ngClass]="{'selected-verweis': selectedVerweis?.id === v.id}">
+                    <div class="belegstelle">
+                      <span *ngIf="displayPage(v)">{{v.srcBlattangabe || ''}}</span>
+                    </div>
+                    <div class="wortlaut">
+                        <app-tei-render-component [teiXmlString]="v.wortlautTeiXml"></app-tei-render-component>
+                    </div>
+                    <div class="target-text">
+
+                      <app-verweis-link-icon-component
+                        *ngIf="v?.id === selectedVerweis?.id"
+                        [displayedAgent]="'outgoing'"
+                        [verweis]="v"/>
+                        <div *ngIf="v.targetCarObj && v.targetCarObj.physicality === 'Available'">
+                            <span *ngIf="v.isSelfTargeting">Interner Verweis: </span>
+                            <div *ngIf="!v.isSelfTargeting && v.targetCarObj?.mainNamingGossembrot">{{v.targetCarObj.mainNamingGossembrot}} =</div>
+                          <div>
+                            <span>{{v.targetCarObj.fullTitle}}</span>
+                            <span *ngIf="v.targetBelegstelleObj">, {{v.targetBlattangabe}}</span>
+                          </div>
+                        </div>
+                        <div *ngIf="v.targetCarObj?.physicality && v.targetCarObj?.physicality !== 'Available'">
+                            <span>{{v.targetCarObj?.fullTitle}} </span>
+                            <span>({{v.targetCarObj?.getCarrierTypeDescDeLowerCased()}}) </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

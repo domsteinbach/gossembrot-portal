@@ -1,0 +1,41 @@
+<div class="verweis-view-container">
+  <div
+    class="verweis-view-list-container width-25">
+    <app-info-carrier-select
+      [carriers]="(srcCarriers$ | async) ?? []"
+      [selectedCarrier]="selectedSrcCarrier$ | async"
+      [label]="'Manuskript mit ausgehenden Verweisen'"
+      (carrierSelected)="onSrcManuscriptSelectionChange($event)"/>
+    <app-outgoing-verweise-per-manuscript
+      id="outgoing-verweise-container"
+      [displaySteckbrief]="false"
+      [selectedCarrier]="(selectedSrcCarrier$ | async)"
+      [forceSelectFirstVerweis]="forceSelectFirstSrcVerweis"/>
+  </div>
+  <div class="osd-center-container">
+    <div class="info-container">
+      <app-verweis-view-blatt-info class="width-50" [agency] = "'Src'"/>
+      <app-verweis-view-blatt-info class="width-50" [agency]="'Target'"/>
+    </div>
+    <div class="osd-container">
+      <app-osd-editor id="src-osd-container" class="width-50" [page]="(srcPage$ | async) || undefined" />
+      <app-osd-editor id="target-osd-container" class="width-50" [page]="(targetPage$ | async) || undefined"/>
+    </div>
+  </div>
+  <div
+    class="verweis-view-list-container width-25">
+    <app-info-carrier-select
+      [carriers]="(targetCarriers$ | async) ?? []"
+      [selectedCarrier]="targetCarrier$ | async"
+      [label]="'Manuskript mit eingehenden Verweisen'"
+      (carrierSelected)="onTargetManuscriptSelectionChange($event)"/>
+    <app-incoming-verweise-list
+      class="scroll-container"
+      [forceSelectFirstVerweis] = "forceSelectFirstTargetVerweis"
+      [loading]="(targetTextsLoading$ | async) || false"
+      [displaySteckbrief]="false"
+      [texts]="(targetTexts$ | async) || []"
+      [infoCarrier]="(targetCarrier$ | async) || null"
+    />
+  </div>
+</div>

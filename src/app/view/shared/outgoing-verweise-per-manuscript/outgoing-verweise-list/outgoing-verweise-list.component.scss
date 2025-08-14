@@ -1,0 +1,122 @@
+@import "../../../../../styles";
+
+.src-text-title {
+  margin-left: 0.5%;
+}
+
+.outgoing-verweise-container {
+  position: relative;
+}
+
+.sticky-wrapper {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--mat-app-background-color);
+}
+
+.sticky-title {
+  padding: 10px 0;
+}
+
+.text-icon {
+  vertical-align: bottom;
+  margin-right: 0.5em;
+}
+
+.author-link {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.target-text-divider {
+  margin-top: var(--margin-small);
+  border-top-width: 3px !important;
+  max-width: 95%;
+}
+
+.verweis-card {
+  position: relative;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.1s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.verweis-card:hover {
+  background-color: var(--surface-highlight-active);
+  transform: scale(0.98);
+}
+
+.selected-verweis {
+  background-color: var(--surface-highlight-active);
+  transform: scale(0.98);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.target-text {
+  width: 100%;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+
+.abschnitt-container {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-left: 6em;
+  margin-right: 6em;
+  color: grey;
+}
+
+.abschnitt-text {
+  font-style: italic;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.abschnitt-line {
+  flex: 1;
+  border: none;
+  border-top: 1px solid currentColor;
+  margin: 0;
+  height: 0;
+}
+
+.blattangabe-divider {
+  width: 100%;
+  margin-left: 1%;
+}
+
+.verweis-divider {
+  margin-left: 17%;
+}
+
+.belegstelle {
+  width: 16%;
+  min-width: 16%;
+  max-width: 16%;
+  margin-left: 1em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.wortlaut {
+  width: 43%;
+  min-width: 43%;
+  max-width: 43%;
+  padding-right: 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em ;
+}
+

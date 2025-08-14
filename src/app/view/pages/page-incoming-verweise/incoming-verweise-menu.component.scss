@@ -1,0 +1,19 @@
+mat-tab-group {
+  flex: 1; /* fill the available space */
+}
+
+.mat-mdc-tab-body-content {
+  overflow: hidden !important;
+}
+
+app-incoming-verweise-menu {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* take up all available space */
+  height: 100%;
+}
+
+.tab-group-divider {
+  margin-bottom: var(--margin-tiny);
+}
+

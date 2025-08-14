@@ -1,0 +1,302 @@
+@use '@angular/material' as mat;
+@import 'themes/old-brick';
+@import 'themes/glow-green';
+
+@include mat.core();
+
+// @import '~@recogito/annotorious-openseadragon/dist/annotorious.min.css';
+// Junicode for medieval transcripts if needed
+@font-face {
+        font-family: 'Junicode';
+        src: url('assets/junicode-1.002/Junicode.ttf') format('truetype'),
+        url('assets/junicode-1.002/Junicode-Bold.ttf') format('truetype'),
+        url('assets/junicode-1.002/Junicode-BoldItalic.ttf') format('truetype'),
+        url('assets/junicode-1.002/Junicode-Italic.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+}
+
+// dark theme colors
+
+$primary-dark: mat.define-palette(mat.$blue-palette, 300);
+$primary-dark-variant: mat.define-palette(mat.$blue-palette, 100); // softer than the primary color
+$accent-dark: mat.define-palette(mat.$orange-palette, 200);
+$secondary-dark: #fff0c6; // complementary to the primary color, but at at shade 100
+$background-dark: #303030; // same as the background of angular material dark theme default
+$osd-background-dark: #000000; // the background for the OpenSeadragon viewer
+$surface-dark: #424242; // main elements surface color
+$surface-highlight-active-dark: #424242; // surface color for elements that need to stand out
+
+// dark material theme
+$dark-theme: mat.define-dark-theme((
+        color: (
+                primary: $primary-dark,
+                accent: $accent-dark,
+        ),
+));
+
+// Apply the dark theme as default to the application. This will apply the default material styles and the custom dark theme styles
+@include mat.core-theme($old-brick-theme);
+@include mat.all-component-themes($old-brick-theme);
+
+
+// LIGHT THEME CLASSES
+
+// old brick theme class
+.old-brick-theme {
+
+        --primary: #{mat.get-color-from-palette($old-brick-primary)};
+        --accent: #{mat.get-color-from-palette($old-brick-accent)};
+        // generate the light theme styles
+        --primary-variant: #{mat.get-color-from-palette($old-brick-primary-variant)}; // softer than the primary color
+        --background: #{$old-brick-background};
+        --osd-background: #{$background-dark}; // the background for the OpenSeadragon viewer is dark in every theme
+        --osd-button: #020202;
+        --title-color: #{mat.get-color-from-palette($old-brick-primary-variant)};
+        --surface: #{$old-brick-surface};
+        --surface-highlight-active: #{$old-brick-highlight-active};
+        --chart-background: #{$old-brick-highlight-active};
+        --interacted: #{mat.get-color-from-palette($old-brick-interacted)}; // exists only in the light theme
+        --disabled: #020202;
+        // light theme specific styles which do not exist in the dark theme
+        --hardcode-text-color: #020202;
+        --tei-gb: #006900;
+        --tei-k: #a2a2a2;
+}
+
+.glow-green-theme {
+        --primary: #{mat.get-color-from-palette($green-glow-primary)};
+        --accent: #{mat.get-color-from-palette($green-glow-accent)};
+        --primary-variant: #{mat.get-color-from-palette($green-glow-primary-variant)};
+        --background: #{$green-glow-background};
+        --osd-background: #{$background-dark}; // unchanged
+        --osd-button: #020202;
+        --title-color: #{mat.get-color-from-palette($green-glow-primary-variant)};
+        --surface: #{$green-glow-surface};
+        --surface-highlight-active: #{$green-glow-highlight-active};
+        --chart-background: #{$green-glow-highlight-active};
+        --interacted: #{mat.get-color-from-palette($green-glow-interacted)};
+        --disabled: #020202;
+        --hardcode-text-color: #020202;
+        --tei-gb: #006900;
+        --tei-k: #a2a2a2;
+}
+
+// dark theme class
+.dark-theme {
+        @include mat.all-component-colors($dark-theme);
+        // as the mat.core-theme() function already applies the default material styles, we only need to apply the custom theme styles
+
+        // as the dark theme is the default, we only need to generate the custom properties
+        --primary: #{mat.get-color-from-palette($primary-dark)};
+        --accent: #{mat.get-color-from-palette($accent-dark)};
+
+        // generate the dark theme styles
+        --primary-variant: #{mat.get-color-from-palette($primary-dark-variant)}; // softer than the primary color
+        // --secondary: #{$secondary-dark};
+        --background: #{$background-dark}; // the same as the background of angular material dark theme default
+        --osd-background: #{$osd-background-dark}; // the background for the OpenSeadragon viewer
+        --osd-button: #{$osd-background-dark};
+        --title-color: #{mat.get-color-from-palette($primary-dark-variant)};
+        --surface: #{$surface-dark};
+        --chart-background: #000000;
+        --surface-highlight-active: #{$surface-highlight-active-dark};
+
+        // dark theme specific styles, which not exist in the light theme
+        --interacted: #{mat.get-color-from-palette($primary-dark-variant)}; // exists only in the dark theme
+        --hardcode-text-color: #FFFFFF;
+        --tei-gb: #00ce00;
+        --tei-k: #ababab;
+}
+
+
+// default properties
+
+html,
+body,
+app-root {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        font-size: 95%;
+        font-family: "Roboto", Arial, Helvetica, sans-serif;
+
+        background-color: var(--background);
+}
+
+.transcription {
+        font-family: "Junicode", Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        text-wrap: balance;
+}
+
+// all the description texts of landing page and erlaeuterungen must be larger
+.meta-text {
+        font-size: 120%;
+}
+
+.full-width {
+        width: 100%;
+}
+
+.xxx-large-form {
+        width: 50vw;
+}
+
+.xx-large-form {
+        width: 40vw;
+}
+
+.x-large-form {
+        width: 35vw;
+}
+
+.large-form {
+        width: 30vw;
+}
+
+.medium-form {
+        width: 25vw;
+}
+
+.small-form {
+        width: 20vw;
+}
+
+.x-small-form {
+        width: 15vw;
+}
+
+.xxx-small-form {
+        width: 5vw;
+}
+
+.nav-element {
+        margin-left: var(--margin-small);
+}
+
+:root {
+        --margin-tiny: 4px;
+        --margin-small: 8px;
+        --margin-medium: 16px;
+        --margin-large: 24px;
+        --margin-x-large: 32px;
+
+        --fix-height-large: 120px;
+        --fix-height-medium: 96px;
+        --fix-height-small: 64px;
+        --fix-height-x-small: 40px;
+}
+
+// to prevent the scrollbar from appearing in the tabs body globally, because it is annoying
+.mat-mdc-tab-body-content {
+        overflow: hidden !important;
+}
+
+.main-element-surface {
+        background-color: var(--surface) !important;
+}
+
+// DARK THEME SPECIFIC STYLES
+
+// exists only in the dark theme for highlighting interactive elements a bit more.
+// In the light theme, the interactive variable is unset, so the default color is used
+.interactive {
+        color: var(--primary) !important;
+}
+
+.interactive:hover {
+        color: var(--interacted);
+}
+
+.disabled {
+        color: var(--disabled) !important;
+}
+
+.clickable {
+        cursor: pointer;
+}
+
+.title{
+        color: var(--title-color) !important;
+}
+
+.subtitle {
+        color: var(--title-color) !important;
+}
+
+a {
+        color: var(--primary) !important;
+        text-decoration: none;
+}
+
+a:hover {
+        color: var(--primary-variant) !important;
+}
+
+.highlighted-substr {
+        font-weight: bold;
+        color: var(--accent) !important;
+}
+
+.primary-variant-tab {
+        color: var(--primary-variant) !important;
+}
+// LIGHT THEME SPECIFIC STYLES
+// exist only in the light theme for highlighting the header surface bit more
+
+
+.margin-bottom-end {
+        margin-bottom: 3em;
+}
+
+
+.width-25 {
+        width: 25%;
+}
+
+.width-33 {
+        width: 33%;
+}
+
+.width-50 {
+        width: 50%;
+}
+
+.cursor-tooltip {
+        cursor: help;
+}
+
+.in-text-icon-button {
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 1em;
+        align-items: center;
+        vertical-align: middle;
+        color: var(--primary);
+}
+
+.in-text-icon-button:hover {
+        color: var(--primary-variant);
+        background-color: unset;
+        border-radius: 8px;
+        transform: scale(1.1);
+}
+
+
+.nav-button-icon {
+        font-size: 1.5em;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+}
+
+.blatt-text-field {
+        display: flex;
+        justify-content: flex-end;
+}
+
+
+

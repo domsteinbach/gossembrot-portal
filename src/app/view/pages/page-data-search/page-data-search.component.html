@@ -1,0 +1,42 @@
+<mat-tab-group mat-stretch-tabs="false"
+               mat-align-tabs="start"
+               [(selectedIndex)]="activeTabIndex"
+               (selectedTabChange)="onTabChange($event)">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="primary-variant-tab">Freitextsuche</span>
+    </ng-template>
+    <app-data-search-search></app-data-search-search>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="primary-variant-tab">Autoren und Autorinnen</span>
+    </ng-template>
+    <mat-divider class="tab-group-divider"></mat-divider>
+    <app-page-author-search></app-page-author-search>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="primary-variant-tab">Texte</span>
+    </ng-template>
+    <mat-divider class="tab-group-divider"></mat-divider>
+    <app-carrier-text-search></app-carrier-text-search>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="primary-variant-tab">Blätter</span>
+    </ng-template>
+    <mat-divider class="tab-group-divider"></mat-divider>
+    <app-page-blatt-search></app-page-blatt-search>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="primary-variant-tab">Verweise</span>
+    </ng-template>
+    <mat-divider class="tab-group-divider"></mat-divider>
+    <app-verweis-search></app-verweis-search>
+  </mat-tab>
+</mat-tab-group>

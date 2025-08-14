@@ -1,0 +1,43 @@
+.nav-panel {
+  display: flex;
+  flex-direction: row;
+justify-content: space-between;
+}
+
+#blatt-select-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#lagen-info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: baseline;
+    align-items: baseline;
+}
+
+app-doppellagen-info-text {
+  margin-top: auto; /*  pushes the info-text to the bottom */
+}
+
+#blatt-text-field, .nav-element {
+  margin-bottom: var(--margin-small);
+  margin-top: auto;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+}
+
+#blatt-text {
+  width: 100%;
+  align-items: center;
+}
+
+.nav-element {
+  align-self: flex-end; /* This ensures that all .nav-element items align at the bottom */
+}

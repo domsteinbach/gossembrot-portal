@@ -1,0 +1,29 @@
+<div *ngFor="let author of authorsWithTexts;">
+  <div class="author" [class.clickable] = 'author.texts.length' (click)="toggleTexts(author.author.id)">
+    <span class="author-spacer">
+      <mat-icon class="group-toggle-icon" *ngIf="author.texts.length > 0">
+        {{ expanded.get(author?.author?.id ||'')? 'expand_more' : 'chevron_right' }}
+      </mat-icon>
+    </span>
+    <span *ngIf="!author.foundByAlias">
+     👤 <span [innerHTML]="author.author.label | highlight:searchTerm"></span>
+    </span>
+    <span *ngIf="includeFoundByAlias && author.foundByAlias">
+    👤 <span>{{ author.author.label}}</span>
+      [<span [innerHTML]="author.foundByAlias | highlight:searchTerm"></span>]
+    </span>
+    <ng-container *ngIf="author.texts.length && author.texts[0].author?.gndId">
+      <span class="gnd-id"> - GND-Id: </span>
+      <span>
+        <a [href]="author.texts[0].author?.linkToGnd" target="_blank">{{author.texts[0].author?.gndId}}</a>
+      </span>
+    </ng-container>
+  </div>
+  <div *ngIf="author.texts && expanded.get(author?.author?.id ||'')" class="text-intent">
+    <app-search-result-carriertext
+      [texts]="author.texts"
+      [searchTerm]="searchTerm"
+      [showAllHandler]="true"
+    />
+  </div>
+</div>

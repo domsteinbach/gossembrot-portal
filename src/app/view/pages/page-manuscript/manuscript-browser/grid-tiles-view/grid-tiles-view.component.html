@@ -1,0 +1,11 @@
+<div class="osd-grid-container">
+    <mat-grid-list cols="6">
+        <mat-grid-tile *ngFor="let url of thumbnailUrls">
+            <img
+                    [src]="url"
+                    alt="Image"
+                    class="grid-image"
+            >
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

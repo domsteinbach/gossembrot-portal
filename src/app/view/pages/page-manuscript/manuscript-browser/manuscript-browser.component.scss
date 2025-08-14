@@ -1,0 +1,65 @@
+.manuscript-browser {
+  width: 100%;
+  height: 100%;
+}
+
+.man-page-context-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.manuscript-view-container {
+  width: 100%;
+  height: 74vh;
+  max-height: 74vh;
+  position: relative;
+}
+
+.app-manuscript-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+.nav-button {
+  border-color: transparent;
+  cursor: pointer;
+  width: 5% !important;
+  min-width: 1.5em !important;
+  max-width: 2em !important;
+  position: absolute;
+  height: 25%;
+  color: var(--osd-button) !important;
+  top: 50%;
+  transform: translateY(-50%); /* move the button even more upwards by half its own height, effectively centering it vertically */
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manuscript-view-container:hover .nav-button {
+  background: var(--osd-button);
+  opacity: 1;
+  transition: opacity 0.75s ease;
+}
+
+.nav-button:hover {
+  border: 1px solid var(--primary);
+}
+
+.prev-button {
+  left: 0;
+  border: 1px solid var(--interacted);
+  border-left: none !important;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+
+.next-button {
+  right: 0;
+  border: 1px solid var(--interacted);
+  border-right: none !important;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}

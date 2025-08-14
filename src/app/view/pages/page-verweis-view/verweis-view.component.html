@@ -1,0 +1,44 @@
+<mat-toolbar>
+  <div class="title"><h2>Detailansicht: Quelle - Verweistext - Ziel</h2></div>
+  <div class="toolbar-right-container">
+    <button
+      *ngIf="!data.hideSynopsisButton"
+      mat-stroked-button
+      color="primary"
+      (click)="openInVerweisSynopsis()">
+      <span>in der Verweissynopse öffnen</span>
+      <mat-icon>open_in_new</mat-icon>
+    </button>
+    <div class="toolbar-far-right-container">
+      <app-ui-close-button (close)="onClose()"/>
+    </div>
+  </div>
+
+</mat-toolbar>
+<mat-divider></mat-divider>
+<div class="verweis-view-container">
+  <div class="verweis-view-split-container">
+    <div class="info-container">
+      <app-verweis-view-blatt-info class="width-33" [agency] = "'Src'"/>
+      <app-verweis-view-blatt-info class="width-33" [agency]="'Target'"/>
+    </div>
+    <div class="osd-container">
+      <app-osd-editor id="src-osd-container" class="osd-border width-33" [page]="srcPage" />
+      <div class="wortlaut-container width-33">
+        <div class="arrow-container">
+          <div class="node-line"></div>
+        </div>
+        <div class="wortlaut-card">
+          <div class="hover-icon-container" *ngIf="displayCommentIcon">
+            <mat-icon [matTooltip]="commentText" class="hover-icon">speaker_notes</mat-icon>
+          </div>
+          <app-tei-render-component [teiXmlString]="wortlautTeiXml"></app-tei-render-component>
+        </div>
+        <div class="arrow-container">
+          <div class="node-line-arrow arrow-head"></div>
+        </div>
+      </div>
+      <app-osd-editor id="target-osd-container" class="osd-border width-33" [page]="targetPage"/>
+    </div>
+  </div>
+</div>

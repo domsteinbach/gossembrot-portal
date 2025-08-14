@@ -1,0 +1,31 @@
+<mat-tab-group
+        [selectedIndex]="activeTabIndex"
+        (selectedTabChange)="onTabChange($event)"
+        mat-stretch-tabs="false"
+        mat-align-tabs="start"
+        preserveContent="true"
+>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="primary-variant-tab">Handschriften aus Gossembrots Bibliothek</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="primary-variant-tab">Handschriften ausserhalb Gossembrots Bibliothek</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <span class="primary-variant-tab">Drucke aus Gossembrots Bibliothek</span>
+    </ng-template>
+  </mat-tab>
+  <mat-tab *ngIf="authService.isAuthenticated()">
+    <ng-template mat-tab-label>
+      <span matTooltip="* Nur für interne Benutzer sichtbar" class="primary-variant-tab">* Für Gossembrot unzugängliche Textträger</span>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+<mat-divider class="tab-group-divider"></mat-divider>
+<router-outlet></router-outlet>
+

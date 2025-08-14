@@ -1,0 +1,79 @@
+@use '@angular/material' as mat;
+
+// GREEN GLOW THEME — a light theme
+
+$green-glow-on-bright-text: #212121;
+$green-glow-on-dark-text: #ffffff;
+
+$green-glow: (
+        50:  #e7f5ec,
+        100: #c3e6d0,
+        200: #9fd8b3,
+        300: #7bc996,
+        400: #5fbd82,
+        500: #43b06e,
+        600: #3ca764,
+        700: #339a58,
+        800: #2c8d4d,
+        900: #1f763a,
+        contrast: (
+                50: $green-glow-on-bright-text,
+                100: $green-glow-on-bright-text,
+                200: $green-glow-on-bright-text,
+                300: $green-glow-on-bright-text,
+                400: $green-glow-on-bright-text,
+                500: $green-glow-on-dark-text,
+                600: $green-glow-on-dark-text,
+                700: $green-glow-on-dark-text,
+                800: $green-glow-on-dark-text,
+                900: $green-glow-on-dark-text,
+                A100: $green-glow-on-bright-text,
+                A200: $green-glow-on-bright-text,
+                A400: $green-glow-on-bright-text,
+                A700: $green-glow-on-dark-text,
+        )
+);
+
+$minty: (
+        50:  #e5f7f4,
+        100: #bdeae1,
+        200: #93dccd,
+        300: #69ceba,
+        400: #48c3aa,
+        500: #27b79a,
+        600: #22a78c,
+        700: #1b947a,
+        800: #158068,
+        900: #0a5e4a,
+        contrast: (
+                50: $green-glow-on-bright-text,
+                100: $green-glow-on-bright-text,
+                200: $green-glow-on-bright-text,
+                300: $green-glow-on-bright-text,
+                400: $green-glow-on-bright-text,
+                500: $green-glow-on-dark-text,
+                600: $green-glow-on-dark-text,
+                700: $green-glow-on-dark-text,
+                800: $green-glow-on-dark-text,
+                900: $green-glow-on-dark-text,
+                A100: $green-glow-on-bright-text,
+                A200: $green-glow-on-bright-text,
+                A400: $green-glow-on-bright-text,
+                A700: $green-glow-on-dark-text,
+        )
+);
+
+$green-glow-primary: mat.define-palette($green-glow, 600);
+$green-glow-primary-variant: mat.define-palette($green-glow, 900);
+$green-glow-interacted: mat.define-palette($green-glow, 300);
+$green-glow-accent: mat.define-palette($minty, 500);
+$green-glow-background: #F1F1F1;
+$green-glow-surface: #DDDDDD;
+$green-glow-highlight-active: #DDDDDD;
+
+$green-glow-theme: mat.define-light-theme((
+        color: (
+                primary: $green-glow-primary,
+                accent: $green-glow-accent,
+        ),
+));

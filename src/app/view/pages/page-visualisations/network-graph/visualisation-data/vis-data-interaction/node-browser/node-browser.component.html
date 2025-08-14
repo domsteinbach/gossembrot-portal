@@ -1,0 +1,18 @@
+<div class="browser-container" >
+    <mat-radio-group [(ngModel)]="display">
+        <mat-radio-button value="incoming">Eingehende Verweise</mat-radio-button>
+        <mat-radio-button value="outgoing">Ausgehende Verweise</mat-radio-button>
+    </mat-radio-group>
+    <div class="growing-container" *ngIf="display === 'incoming'">
+        <app-incoming-verweise-list
+                [infoCarrier]="selectedCarrier"
+                (verweisSelected)="onIncomingVerweisClicked($event)"
+        />
+    </div>
+    <div class="outgoing-verweise" *ngIf="display === 'outgoing'">
+        <app-outgoing-verweise-per-manuscript
+                *ngIf="display === 'outgoing'"
+                [selectedCarrier]="selectedCarrier"
+        />
+    </div>
+</div>

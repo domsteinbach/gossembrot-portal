@@ -1,0 +1,31 @@
+
+<div class="vis-settings-panel">
+    <mat-panel-title><span class="title">Bestand</span></mat-panel-title>
+    <mat-checkbox [checked]="isLibrarySelected(true)" (change)="toggleLibraryPresence(true, $event.checked)">In Gossembrots Bibliothek</mat-checkbox>
+    <mat-checkbox [checked]="isLibrarySelected(false)" (change)="toggleLibraryPresence(false, $event.checked)">Ausserhalb von Gossembrots Bibliothek</mat-checkbox>
+</div>
+<mat-divider></mat-divider>
+<!-- Type -->
+<div class="vis-settings-panel">
+    <mat-panel-title><span class="title">Beschaffenheit</span></mat-panel-title>
+    <mat-checkbox [checked]="isInfoCarrierTypeSelected('Manuscript')" (change)="toggleInfoCarrierType('Manuscript', $event.checked)">Handschriften</mat-checkbox>
+    <mat-checkbox [checked]="isInfoCarrierTypeSelected('Print')" (change)="toggleInfoCarrierType('Print', $event.checked)">Drucke</mat-checkbox>
+    <mat-checkbox [checked]="isInfoCarrierTypeSelected('Classic')" (change)="toggleInfoCarrierType('Classic', $event.checked)">kanonische Werke (immateriell)</mat-checkbox>
+</div>
+<mat-divider></mat-divider>
+<!-- Physicality 0 and 1. Physicality 2 is handled above-->
+<div class="vis-settings-panel">
+    <mat-panel-title><span class="title">Verfügbarkeit</span></mat-panel-title>
+    <mat-checkbox [checked]="isPhysicalitySelected('Available')" (change)="togglePhysicality('Available', $event.checked)">Erhalten</mat-checkbox>
+    <mat-checkbox [checked]="isPhysicalitySelected('Lost')" (change)="togglePhysicality('Lost', $event.checked)">Verschollen (rekonstruiert)</mat-checkbox>
+</div>
+<!--
+<mat-divider></mat-divider>
+<div class="vis-settings-panel">
+    <mat-panel-title><span class="title">Filterstärke</span></mat-panel-title>
+    <mat-radio-group [value]="filter.includeConnected" (change)="applyScopeChange($event.value)">
+        <mat-radio-button matTooltip="Zu den selektierten Textträgern werden zusätzlich alle über Verweise verbundene Textträger angezeigt" [value]="true">über Verweise verknüpfte Textträger anzeigen</mat-radio-button>
+        <mat-radio-button matTooltip="Es werden ausschliesslich die selektierten Textträger angezeigt. Je nach selektion werden keine Verweise/verknüpfen hergestellt. " [value]="false">Ausschliesslich selektierte Textträger anzeigen</mat-radio-button>
+    </mat-radio-group>
+</div>
+-->

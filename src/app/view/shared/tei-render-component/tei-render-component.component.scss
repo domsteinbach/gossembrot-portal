@@ -1,0 +1,159 @@
+.show-tooltip {
+  border: none;
+    padding: 0;
+    color: red;
+  background-color: red;
+}
+
+.hide-tooltip {
+  display: none;
+}
+
+tei-k {
+  color: var(--tei-k);
+  cursor: help;
+}
+
+/* Hide all <tei-w> elements directly inside <tei-k> */
+tei-k > tei-w {
+  display: none;
+}
+
+/* Style for <tei-gb> inside <tei-k> */
+tei-k tei-gb {
+  color: var(--tei-gb);
+}
+
+tei-k tei-gb tei-w {
+  color: var(--tei-gb);
+}
+
+tei-gap[reason="editoral"]::before {
+  content:"[...]";
+}
+
+tei-gap[reason="illegible"]::before {
+  content:"[...]";
+}
+
+tei-underline {
+  text-decoration: underline;
+}
+
+tei-add::before {
+  content: ">";
+}
+
+tei-add::after {
+  content: "<";
+}
+
+tei-finis::before {
+  content: "ꝝ";
+  font-style: italic; /* Make the bracket italic */
+  vertical-align: middle; /* Center the dot vertically */
+}
+
+tei-finis-full::before {
+  content: "·)";
+  font-style: italic; /* Make the bracket italic */
+  vertical-align: middle; /* Center the dot vertically */
+}
+
+tei-add[place="below"][customtag="uz"] {
+  display: inline-block;  /* Ensures the element flows inline but can be repositioned */
+  position: relative;    /* Relative positioning to nudge it down without affecting others */
+  top: 0.3em;               /* push it down */
+  margin-left: 0.3em;
+}
+
+tei-add[place="above"][customtag="oz"] {
+  display: inline-block;  /* Ensures the element flows inline but can be repositioned */
+  position: relative;    /* Relative positioning to nudge it down without affecting others */
+  bottom: 0.3em;               /* push it up */
+  margin-left: 0.3em;
+}
+
+tei-sic::after {
+  content: " (!)";
+}
+
+tei-del {
+  text-decoration: line-through;
+}
+
+tei-del * { // make all children inherit the text-decoration
+  text-decoration: inherit;
+}
+
+tei-del[undo="true"] {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+tei-supplied {
+  font-style: italic;
+}
+
+tei-unl {
+  font-style: normal;
+  //background-color: yellow;
+}
+
+tei-leader::after {
+  content: '';
+  display: inline-block;
+  width: 3em;
+  border-bottom: 1px solid;
+  margin-top: 1.1em;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+
+tei-lb[break="no"]::after {
+  content: '¶';
+}
+
+tei-symbol[type="letter"]::before {
+  content: '[';
+}
+
+/* Specific style for tei-symbol elements of type="letter" */
+tei-symbol[type="letter"]::after {
+  content: ']'; /* Specific character for type="letter" */
+}
+
+/* Default style for tei-symbol elements not of type="letter" */
+tei-symbol:not([type="letter"])::before {
+  content: '[\F2FB]'; /* HELBING SIGN */
+  font-family: 'Junicode', Arial, sans-serif;
+}
+// Override the default style for tei-symbol elements
+
+/* Specific style for tei-symbol elements of type="manicula" */
+tei-symbol[type="manicula"]::before {
+  margin-left: 0.25em;
+  margin-right: 0.75em;
+  font-size: 1em;
+  content: '☞';
+  font-family: 'Junicode', Arial, sans-serif;
+  display: inline-block;
+  vertical-align: middle;
+  transform: scale(1.8); /* Scale the icon to make it larger */
+  transform-origin: left; /* Ensure scaling happens from the left, so it stays in place */
+  position: relative; /* Allows precise control over the vertical position */
+  top: 0.2em; /* Adjust this value to push the symbol down */
+}
+
+/* Fallback content if the font or character is not available */
+@supports not (font-family: 'Junicode') {
+  tei-symbol:not([type="letter"])::before {
+    content: '⟨Default⟩'; /* Default textual content when Junicode is not supported */
+    font-family: Arial, sans-serif;
+  }
+}
+
+.highlight {
+  // highlight
+    background-color: yellow;
+}

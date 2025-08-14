@@ -1,0 +1,136 @@
+.vis-container {
+  display: flex;
+  flex-direction: row;
+  max-height: 85vh;
+  width: 100vw;
+  overflow: hidden;
+  padding-top: var(--margin-small);
+
+}
+
+.svg-container {
+  background: var(--chart-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  width: 40%;
+  overflow: hidden;
+  margin-right: var(--margin-small);
+  border-radius: 10px;
+}
+
+.data-container {
+  max-width: calc(60vw - 3 * var(--margin-small));
+}
+
+.tooltip {
+  position: absolute;
+  background-color: var(--surface);
+  padding: 10px;
+  border-radius: 8px;
+  pointer-events: none; /* Ensures the tooltip does not block mouse events */
+  z-index: 100; /* Ensures the tooltip is above other elements */
+}
+
+.nodeTooltip {
+    color: var(--title-color);
+    border: 1px solid var(--primary);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Adds shadow */
+}
+
+.textTooltip{
+  color: var(--hardcode-text-color);
+  border: 1px solid #a2a2a2;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Adds shadow */
+}
+
+.linkTooltip {
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.fullscreen-button, .screenshot-button, .toggle-legend-button, .toggle-tooltip-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  color: var(--primary);
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-left: 5px;
+}
+
+.fullscreen-button {
+  right: 50px;
+}
+
+.toggle-legend-button {
+  right: 90px;
+}
+
+.toggle-tooltip-button {
+  right: 130px;
+}
+
+.close-legend-button {
+  cursor: pointer;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-legend-icon {
+  text-align: center;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.vis-fullscreen {
+  background: var(--chart-background);
+  height: 85vh;
+  width: 100vw;
+}
+
+svg {
+  height: 100%;
+  width: 100%;
+}
+
+.legend-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--chart-background);
+  border: 1px solid var(--primary);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.legend-color {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.legend-label {
+  display: inline-block;
+}
+

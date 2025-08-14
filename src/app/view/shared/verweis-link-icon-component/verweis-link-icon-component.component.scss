@@ -1,0 +1,12 @@
+@import "../../../../styles";
+
+.link-icon-container {
+  position: absolute;
+  background-color: unset;
+  z-index: 1;
+  right: -8px;
+  top: -24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

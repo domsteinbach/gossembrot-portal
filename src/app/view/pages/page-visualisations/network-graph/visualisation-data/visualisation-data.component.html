@@ -1,0 +1,20 @@
+<div class="main-container">
+  <mat-tab-group
+    [selectedIndex]="activeTabIndex"
+    (selectedIndexChange)="onTabChange($event)"
+    mat-stretch-tabs="true"
+    mat-align-tabs="start"
+  >
+
+    <mat-tab label="Einstellungen und Filter">
+      <app-vis-data-interaction class="vis-data-tab"></app-vis-data-interaction>
+    </mat-tab>
+      <mat-tab label="Information">
+          <app-node-browser class="vis-data-tab"></app-node-browser>
+      </mat-tab>
+    <!--<mat-tab label="Auswertungen">
+      <div class="vis-data-tab"></div>
+    </mat-tab>
+    -->
+  </mat-tab-group>
+</div>

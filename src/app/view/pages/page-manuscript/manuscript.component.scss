@@ -1,0 +1,60 @@
+.manuscript-container {
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+}
+
+.man-left-container {
+  flex: 0 1 40%; /* flex-grow, flex-shrink, flex-basis */
+  margin-top: var(--margin-small);
+  margin-left: var(--margin-small);
+  margin-right: var(--margin-medium);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+app-outgoing-verweise-per-manuscript {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.man-right-container {
+  flex: 1; /* Grow to use available space */
+  margin: var(--margin-small);
+  height: 100%  ;
+}
+
+#carrier-description{
+  padding-left: 1em;
+  padding-right: 1em;
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+#more-info-button {
+  height: 80%;
+  margin-right: var(--margin-small);
+}
+
+#more-info-icon {
+  min-width: 2em;
+  margin-right: 1em;
+}
+
+.scroll-icon-container {
+  margin-left: 0.5em;
+}
+
+.scroll-target-icon {
+  cursor: pointer;
+  display: inline-flex; /*  keep it inline with text */
+  align-items: center; /* Vertically center the icon */
+  font-size: 1.5em;
+  color: var(--primary); /* Icon color */
+  vertical-align: middle; /* Ensure it aligns well with inline text */
+}

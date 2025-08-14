@@ -1,0 +1,85 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-top: var(--margin-small);
+  margin-bottom: var(--margin-small);
+  justify-content: space-between;
+}
+
+.settings-button-bar {
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+}
+
+.custom-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  bottom: 0; /* Stick to the bottom of the container */
+  z-index: 1; /* Ensure it stays on top of the content */
+  padding: 0.5rem; /* Add some padding for spacing */
+}
+
+.paginator-label {
+  display: flex;
+  align-items: center;
+}
+
+.mat-paginator-page-size-label {
+  display: none; /* Hide the default "Items per page" label */
+}
+
+.search-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--margin-small);
+  margin-right: var(--margin-small);
+}
+
+.tab-group-divider {
+  margin-bottom: var(--margin-tiny);
+}
+
+.result-table-container {
+  margin-right: var(--margin-small);
+  height: 65vh;
+  max-width: 100%;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.table-cell {
+  max-height: 2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tr .table-header {
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  background-color: var(--surface-highlight-active);
+}
+
+tr:hover {
+  background-color: var(--surface-highlight-active);
+}
+
+.filter-title {
+  margin-bottom: var(--margin-small);
+  color: var(--primary);
+}
+
+.close-button {
+  margin: var(--margin-small);
+  cursor: pointer;
+}
+
+.filter-card {
+  margin-top: var(--margin-small);
+  margin-left: var(--margin-small);
+  margin-right: var(--margin-small);
+}

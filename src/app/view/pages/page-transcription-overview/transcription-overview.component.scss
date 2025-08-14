@@ -1,0 +1,38 @@
+.tag-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--margin-small);
+  margin-right: var(--margin-small);
+}
+
+.tag-table-container {
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  overflow: scroll;
+}
+
+.tag-desc {
+  margin-top: var(--margin-medium);
+  display: flex;
+  justify-content: space-between;
+  color: var(--title-color);
+}
+
+.tag-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3em;
+}
+
+.more-button {
+  margin-top: var(--margin-small);
+  margin-right: var(--margin-small);
+}
+
+.has-results-desc {
+  margin-bottom: var(--margin-small);
+}

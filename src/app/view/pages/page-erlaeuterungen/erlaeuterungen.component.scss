@@ -1,0 +1,14 @@
+.erl {
+  height: calc(100vh - 64px);
+  margin-left: var(--margin-small);
+  margin-bottom: var(--margin-small);
+  overflow-y: scroll;
+}
+
+.margin-top {
+  margin-top: 2em;
+}
+
+.cite {
+  font-style: italic;
+}

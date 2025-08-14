@@ -1,0 +1,44 @@
+.bottom-inc-container {
+  margin-top: var(--margin-small);
+  margin-right: var(--margin-small);
+  margin-bottom: var(--margin-small);
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  max-height: 90vh;
+}
+
+.left-container {
+  width: 50vw;
+  overflow: hidden;
+}
+
+.carrier-select {
+  width: calc(100% - var(--margin-medium));
+}
+
+.incoming-verweis-base {
+  margin-right: var(--margin-small);
+}
+
+.incoming-with-submenu {
+  height: calc(82vh - 48px);
+}
+
+.incoming-without-submenu {
+  height: 82vh;
+}
+
+.osd-base {
+  width: 50vw;
+  margin-right: var(--margin-small);
+}
+
+.osd-with-submenu {
+  height: calc(100% - 48px);
+}
+
+.osd-without-submenu {
+  height: 100%;
+}
+

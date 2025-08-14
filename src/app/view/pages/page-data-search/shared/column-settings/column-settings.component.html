@@ -1,0 +1,25 @@
+<h3 mat-dialog-title class="title">Spalten- und Filteranzeige</h3>
+
+<mat-list>
+  @for (col of columns$ | async; track col) {
+    <mat-list-item>
+      <div class="column-content">
+        <div class="column-name">
+          {{ col.displayedName }}
+        </div>
+        <!-- Displayed checkbox -->
+        <mat-checkbox [checked]="col.displayed" (change)="toggleDisplayedColumn(col)">
+          Spalte anzeigen
+        </mat-checkbox>
+        <mat-checkbox *ngIf="col.displayFilter !== undefined" [checked]="col.displayFilter" (change)="toggleDisplayedFilter(col)">
+          Filter anzeigen
+        </mat-checkbox>
+      </div>
+    </mat-list-item>
+    <mat-divider class="column-item-divider"></mat-divider>
+  }
+</mat-list>
+
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="closeDialog()">Schliessen</button>
+</div>

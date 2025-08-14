@@ -1,0 +1,8 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <mat-dialog-content>
+    <div>Verweis von {{ verweis.srcTitle }} nach {{verweis.targetTitle}}</div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()">Close</button>
+  </mat-dialog-actions>
+</div>

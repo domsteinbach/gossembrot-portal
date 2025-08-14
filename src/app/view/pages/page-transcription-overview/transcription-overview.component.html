@@ -1,0 +1,43 @@
+<div class="tag-title-bar">
+    <h2 class="title">Tags, TEI-Elemente und deren Auszeichnung</h2>
+    <mat-radio-group [(ngModel)]="displayResultAs">
+        <span>Resultate anzeigen als: </span>
+        <mat-radio-button value="html">resultierendes Html</mat-radio-button>
+        <mat-radio-button value="tei-xml">Tei-xml</mat-radio-button>
+    </mat-radio-group>
+</div>
+<mat-divider></mat-divider>
+<div class="erl meta-text" class="tag-table-container">
+    <div *ngFor="let tag of tags$ | async; let i = index" id="{{tag.id}}">
+        <div>
+            <mat-divider *ngIf="i > 0"></mat-divider>
+            <div class="tag-desc">
+                <div>
+                    <h3>
+                        <span *ngIf="tag.startTag !== '...'"><{{tag.startTag}}></span>
+                        <span *ngIf="tag.startTag === '...'">[{{tag.startTag}}]</span>
+                        <span *ngIf="!tag.implemented"> (noch nicht umgesetzt)</span>
+                    </h3>
+                </div>
+                <div>
+                    <button *ngIf="!oneTagInDetail && tag.exampleBelegstellen.length > 0" mat-raised-button (click)="onMoreClicked(tag.startTag)" class="more-button">
+                        <span>Alle Verweise mit diesem Tag anzeigen</span></button>
+                    <button *ngIf="oneTagInDetail" mat-raised-button (click)="onBackClicked()" class="more-button">
+                        <span>Zurück zur Übersicht</span>
+                    </button>
+                </div>
+            </div>
+            <ul>
+            <li *ngIf="tag.description">{{tag.description}}</li>
+            <li *ngIf="tag.implementedAs">Umgesetzt in TEI als: {{tag.implementedAs}}</li>
+            </ul>
+            <div class="has-results-desc">
+                <span *ngIf="oneTagInDetail">
+                    <h4>Total {{tag.exampleBelegstellen.length}} Verweise in den Ursprungskarteien mit dem tag <{{tag.startTag}}> vorhanden</h4>
+                </span>
+                <span *ngIf="tag.exampleBelegstellen.length === 0"><h4>Keine Tags "<{{tag.startTag}}>" in den Ursprungskarteien vorhanden (Verweise der Ziel-Dokumente d, k, x, y, z; Spalte Wortlaut</h4></span>
+            </div>
+            <app-search-result *ngIf="tag.exampleBelegstellen.length > 0" [displayResultsAs]="displayResultAs" [belegstellen]="tag.exampleBelegstellen" [highlghtTag]="tag.startTag"></app-search-result>
+        </div>
+    </div>
+</div>

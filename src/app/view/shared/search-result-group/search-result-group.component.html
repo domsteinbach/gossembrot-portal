@@ -1,0 +1,46 @@
+<div [id]="type" class="group-header" (click)="toggle()">
+  <mat-icon class="group-toggle-icon">
+    {{ expanded && results.length > 0? 'expand_more' : 'chevron_right' }}
+  </mat-icon>
+  <span class="group-label">
+    {{ typeLabel }}
+  </span>
+  <span class="group-count" *ngIf="!showAll && results.length > search.OFFSET">
+  (1-{{ search.OFFSET }} von {{ results.length }})
+  </span>
+  <span class="group-count" *ngIf="showAll || results.length <= search.OFFSET">
+    ({{ results.length }} von {{ results.length }})
+  </span>
+  <span *ngIf="type==='naming_gossembrot'">
+    <mat-icon class="in-text-icon-button" matTooltip="Benennungen der Handschriften, Drucke und Werke durch Gossembrot">help</mat-icon>
+  </span>
+</div>
+<div *ngIf="expanded && type === 'info_carrier'">
+  <div
+    class="suggestion-item"
+    *ngFor="let result of displayedResults; let i = index"
+    (click)="onResultItemClicked(result)"
+    [class.hidden]="i > 9 && !showAll"
+    [ngSwitch]="type">
+    <div *ngSwitchCase="'info_carrier'">
+      📚 <span [innerHTML]="result.label | highlight:searchTerm">)</span>
+    </div>
+  </div>
+</div>
+<div *ngIf="expanded && type === 'author'">
+  <app-search-result-author [authorsWithTexts]="authorsWithTexts" [searchTerm]="searchTerm"/>
+</div>
+<div *ngIf="expanded && type === 'belegstelle'">
+  <app-search-result-belegstelle [results]="results" [showAll]="showAll" [searchTerm]="searchTerm"/>
+</div>
+<div *ngIf="expanded && type === 'carrier_text'">
+  <app-search-result-carriertext [texts]="carrierTexts" [searchTerm]="searchTerm"/>
+</div>
+<div *ngIf="expanded && type === 'naming_gossembrot'">
+  <app-search-results-naming-gsmb [results]="namingsWithCarriers" [searchTerm]="searchTerm"/>
+</div>
+<app-show-more-toggle
+  *ngIf="expanded && results.length > search.OFFSET"
+  [results]="results.length"
+  (showAllChange)="setShowAll($event)"/>
+

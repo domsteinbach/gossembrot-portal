@@ -1,0 +1,54 @@
+mat-toolbar {
+  display: flex;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.active-route span {
+  color: var(--primary-variant) !important;
+}
+
+button.active-route mat-icon {
+  color: var(--primary-variant) !important;
+}
+
+#toolbar-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+#brightness-toggle {
+  margin-left: auto;
+  color: var(--primary);
+}
+
+.vertical-divider {
+  height: 24px; /* Adjust the height as needed */
+  width: 0.5px; /* Adjust the width as needed */
+  background-color: white; /* Divider color, you can adjust the color as needed */
+  margin: 0 8px; /* Spacing around the divider, adjust as needed */
+}
+
+.inline-icon {
+  vertical-align: text-bottom;
+  font-size: 1em;
+  margin-top: 0.5em;
+}
+
+.button-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+
+
+

@@ -1,0 +1,32 @@
+<mat-form-field class="take-full-width clickable"
+        *ngIf="carriers?.length"
+>
+    <mat-label class="title">{{this.label}}</mat-label>
+    <input
+        #carrierInput
+        [formControl]="carrierFormControl"
+        type="text"
+        placeholder="Eingabe ..."
+        aria-label="Text"
+        matInput
+        [matAutocomplete]="carrierAutoComplete"
+        [value]="selectedCarrier?.fullTitle"
+        (keydown.enter)="onEnterPressed($event)"
+    >
+    <mat-icon matSuffix class="interactive clickable">arrow_drop_down</mat-icon>
+
+    <mat-autocomplete
+        #carrierAutoComplete="matAutocomplete"
+        (opened)="onCarrierAutocompleteOpened()"
+        (closed)="onCarrierAutocompleteClosed()"
+
+    >
+        <mat-option
+                *ngFor="let car of autoFilteredCarriers$ | async"
+                [value]="selectedCarrier?.fullTitle"
+                (onSelectionChange)="onCarrierSelectChange(car)"
+        >
+            {{ car?.fullTitle }}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

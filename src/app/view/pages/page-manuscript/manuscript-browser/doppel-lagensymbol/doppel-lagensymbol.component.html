@@ -1,0 +1,3 @@
+<div *ngIf="lagensymbol">
+    <img [class.invert-colors] ="(themeBrightness$ | async) === 'dark'" src="{{lagensymbol}}" alt="{{lagensymbol}}">
+</div>

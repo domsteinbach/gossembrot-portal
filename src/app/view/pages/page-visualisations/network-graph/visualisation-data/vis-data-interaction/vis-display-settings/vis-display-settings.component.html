@@ -1,0 +1,34 @@
+<mat-radio-group
+        [value]="granularity"
+        (change)="onGranularityChange($event)"
+        aria-label="Auswahl der angezeigten Knoten">
+    <mat-radio-button
+            [checked]="granularity === 'InformationCarrier'"
+            value="InformationCarrier"
+            matTooltip="Es werden nur Textträger (Handschriften, Drucke, kanonische Werke) und deren Verweise aufeinander angezeigt">
+        <span class="radio">Textträger</span>
+    </mat-radio-button>
+    <mat-radio-button
+            [disabled]="!authService.isAuthenticated()"
+            [checked]="granularity === 'CarrierAndText'"
+            matTooltip="Es werden Textträger zusammen mit ihren Texten angezeigt. Verweise gehen von Texten aus und zielen auf Texte"
+            value="CarrierAndText">
+        <span class="radio">Textträger und Texte</span>
+    </mat-radio-button>
+    <mat-radio-button
+            [disabled]="!authService.isAuthenticated()"
+            [checked]="granularity === 'CarrierText'"
+            matTooltip="Es werden nur Texte angezeigt. Verweise gehen von Texten aus und zielen auf Texte"
+            value="CarrierText">
+        <span class="radio">Texte</span>
+    </mat-radio-button>
+    <!--
+    <mat-radio-button
+            disabled="true"
+            [checked]="granularity === 'Belegstelle'"
+            matTooltip="Zu Textträgern und Texten, werden zusätzlich die Belegstellen (Blatt, Karta) angezeigt. Verweise gehen von den Belegstellen aus und zielen auf Belegstellen"
+            value="Belegstelle">
+        Textträger, Texte und Belegstellen
+    </mat-radio-button>
+    -->
+</mat-radio-group>

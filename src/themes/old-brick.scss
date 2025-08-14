@@ -1,0 +1,88 @@
+@use '@angular/material' as mat;
+
+// OLD BRICK THEME, a light theme
+
+// old-brick text colors
+$old-brick-on-bright-text: #212121;
+$old-brick-on-dark-text: #ffffff;
+
+// old-brick color palette
+$old-brick: (
+        50: #f6e8e6,
+        100: #f4c8bb,
+        200: #eda58f,
+        300: #e68364,
+        400: #e36a44,
+        500: #df5226,
+        600: #d54d22,
+        700: #c8471e,
+        800: #b9401b,
+        900: #9f3616,
+        contrast: (
+                50: $old-brick-on-bright-text,
+                100: $old-brick-on-bright-text,
+                200: $old-brick-on-bright-text,
+                300: $old-brick-on-bright-text,
+                400: $old-brick-on-bright-text,
+                500: $old-brick-on-dark-text,
+                600: $old-brick-on-dark-text,
+                700: $old-brick-on-dark-text,
+                800: $old-brick-on-dark-text,
+                900: $old-brick-on-dark-text,
+                A100: $old-brick-on-bright-text,
+                A200: $old-brick-on-bright-text,
+                A400: $old-brick-on-bright-text,
+                A700: $old-brick-on-dark-text,
+        )
+);
+
+// old-brick complementary colors
+$smurf: (
+        50: #e2f6ff,
+        100: #b7e8fe,
+        200: #89dafc,
+        300: #5dcbf6,
+        400: #41c1f0,
+        500: #39b6e8,
+        600: #30a7d4,
+        700: #2393b9,
+        800: #167f9f, // primary complementary color
+        900: #005e72,
+        contrast: (
+                50: $old-brick-on-bright-text,
+                100: $old-brick-on-bright-text,
+                200: $old-brick-on-bright-text,
+                300: $old-brick-on-bright-text,
+                400: $old-brick-on-bright-text,
+                500: $old-brick-on-dark-text,
+                600: $old-brick-on-dark-text,
+                700: $old-brick-on-dark-text,
+                800: $old-brick-on-dark-text,
+                900: $old-brick-on-dark-text,
+                A100: $old-brick-on-bright-text,
+                A200: $old-brick-on-bright-text,
+                A400: $old-brick-on-bright-text,
+                A700: $old-brick-on-dark-text,
+        )
+);
+
+
+// theme colors
+$old-brick-primary: mat.define-palette($old-brick, 600);
+$old-brick-primary-variant: mat.define-palette($old-brick, 900); // darker than the primary color
+$old-brick-interacted: mat.define-palette($old-brick, 300);
+$old-brick-accent: mat.define-palette($smurf, 800);
+$old-brick-background: #F1fF1F1; // same as the background of angular material light theme default
+$old-brick-surface: #DDDDDD; // main elements surface color
+$old-brick-highlight-active: #DDDDDD; // surface color for elements that need to stand out
+
+// old-brick material theme
+$old-brick-theme: mat.define-light-theme((
+        color: (
+                primary: $old-brick-primary,
+                accent: $old-brick-accent,
+        ),
+));
+
+
+

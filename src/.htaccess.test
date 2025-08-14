@@ -1,0 +1,34 @@
+<Files "index.html">
+  FileETag None
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </IfModule>
+</Files>
+
+# Basic Authentication
+AuthUserFile /var/authuserfiles/hssfaks/.htpasswd
+AuthType Basic
+AuthName Intern
+AuthBasicProvider file
+require valid-user
+
+RewriteEngine On
+
+
+# Allow access to version.json without authentication
+<Files "version.json">
+  Satisfy Any
+  Allow from all
+</Files>
+
+# If an existing asset or directory is requested, go to it as it is
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# Rewrite all other routes to index.html for Angular to handle routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

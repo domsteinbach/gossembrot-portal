@@ -1,0 +1,26 @@
+<div class="filter-settings-container">
+  <mat-card class="filter-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title><h3>Leere Werte anzeigen/ausblenden</h3></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngFor="let filter of nullFilterArr">
+          <div class="nullfilter-value-bar">
+            <h4 class="column-title">{{ filter.column.displayedName }}</h4>
+            <mat-checkbox
+              [checked]="filter.showNullValues"
+              (change)="toggleShowNullvalues(filter.column.column)"
+            >
+              ohne Wert
+            </mat-checkbox>
+            <mat-checkbox
+              [checked]="filter.showNonNullValues"
+              (change)="toggleShowNonNullvalues(filter.column.column)"
+            >
+              mit Wert
+            </mat-checkbox>
+          </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

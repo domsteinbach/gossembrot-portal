@@ -1,0 +1,97 @@
+<mat-toolbar>
+    <div class="nav-buttons">
+        <button mat-button
+                matTooltip="Startseite"
+                [routerLink]="[routeConstants.HOME]"
+                [queryParams]="{}"
+              routerLinkActive="active-route">
+            <span><mat-icon>home</mat-icon></span>
+        </button>
+        <button mat-button
+                matTooltip="Dokumentiert die erhaltenen Handschriften aus Gossembrots Bibliothek."
+                [routerLink]="[routeConstants.MANUSCRIPTS]"
+                [queryParams]="{}"
+                routerLinkActive="active-route">
+            <span>Erhaltene Handschriften</span>
+
+        </button>
+        <!--<div class="vertical-divider"></div>-->
+        <button mat-button
+                matTooltip="Dokumentiert über Verweise erschließbare Bände in Gossembrots Sammlung und weiteren Bibliotheken."
+                [routerLink]="[routeConstants.RECONSTRUCTION]"
+                [queryParams]="{}"
+                routerLinkActive="active-route">
+            <span>Rekonstruierte Textträger</span>
+        </button>
+        <button mat-button
+                matTooltip="Dokumentiert Standardwerke wie Bibel, klassische Autoren und Weiteres."
+                [routerLink]="[routeConstants.CLASSICS]"
+                [queryParams]="{}"
+                routerLinkActive="active-route">
+            <span>Kanonische Werke</span>
+        </button>
+      <button mat-button
+              *ngIf="authService.isAuthenticated()"
+              matTooltip="* Dokumentiert Gossembrots Verweise ausgehend von erhaltenen Handschriften aus Gossembrots Bibliothek."
+              [routerLink]="[routeConstants.VERWEIS]"
+              [queryParams]="{}"
+              routerLinkActive="active-route">
+        <span>* Verweis-Synopse</span>
+      </button>
+
+        <button mat-button
+                matTooltip="Visualisierungen von Gossembrots Bibliothek und Verweisen der Werke untereinander."
+                [routerLink]="[routeConstants.VISUALISATIONS]"
+                [queryParams]="{}"
+                routerLinkActive="active-route">
+            <span>Visualisierungen</span>
+        </button>
+        <button *ngIf="authService.isAuthenticated()"
+                mat-button
+                matTooltip="* Anzeige und Suche in den Daten wie Autoren, Texte oder Verweise von Gossembrot in seinen Handschriften (nur für unsere Benutzer verfügbar)."
+                [routerLink]="[routeConstants.DATA_SEARCH]"
+                [queryParams]="{}"
+                routerLinkActive="active-route">
+            <span>* Expertensuche</span>
+        </button>
+
+        <button mat-button class="button-with-icon"
+            (click)="openInNewTab(routeConstants.ERLAEUTERUNGEN)">
+            Erläuterungen
+        </button>
+      <button
+        *ngIf="authService.isAuthenticated()"
+        mat-button
+        matTooltip="* Dokumentiert intern genutzte Tags und Milestones."
+        [routerLink]="[routeConstants.TRANSCRIPTION_OVERVIEW]"
+        [queryParams]="{}"
+        routerLinkActive="active-route">
+        <span>* Tags und Milestones</span>
+      </button>
+
+
+        <!--<button mat-button [routerLink]="[routeConstants.AV_SOURCES]" routerLinkActive="active-route">
+            <span>Verweise von erhaltenen Hss. ausgehend</span>
+        </button>
+    -->
+    </div>
+    <span class="spacer"></span>
+    <app-header-search *ngIf="authService.isAuthenticated()"/>
+    <button color="primary" mat-icon-button id="brightness-toggle" (click)="toggleBrightness()">
+      <mat-icon class="interactive">{{currentBrightness === 'dark' ? 'brightness_6': 'brightness_3'}}</mat-icon>
+    </button>
+    <button color="primary" mat-icon-button (click)="openLoginDialog()">
+      <mat-icon class="interactive">{{ authService.tokenValue && authService.isAuthenticated()? 'account_circle' : 'input' }}</mat-icon>
+    </button>
+    <button *ngIf="false" color="primary" mat-icon-button [matMenuTriggerFor]="themeMenu">
+      <mat-icon class="interactive">more_vert</mat-icon>
+    </button>
+    <mat-menu #themeMenu="matMenu">
+      <button mat-menu-item *ngFor="let theme of themes" (click)="selectTheme(theme)">
+        {{ theme.name }}
+      </button>
+    </mat-menu>
+</mat-toolbar>
+<mat-divider></mat-divider>
+
+

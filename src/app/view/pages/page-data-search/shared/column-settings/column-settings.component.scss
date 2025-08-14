@@ -1,0 +1,23 @@
+.column-selection {
+  margin: var(--margin-small);
+}
+
+.title {
+  color: var(--color-primary);
+}
+
+.column-item-divider {
+  margin-right: var(--margin-medium);
+  margin-left: var(--margin-medium);
+}
+
+.column-content {
+  display: flex;
+  align-items: center;
+}
+
+.column-name {
+  width: 20em;
+  overflow: hidden;
+  overflow-wrap: break-word;
+}

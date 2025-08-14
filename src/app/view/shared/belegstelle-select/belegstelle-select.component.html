@@ -1,0 +1,25 @@
+<mat-form-field *ngIf="pages.length > 0" class="nav-element clickable">
+    <mat-label class="title">{{label}}</mat-label>
+    <input
+        [formControl]="pagesFormControl"
+        type="text"
+        placeholder="Eingabe ..."
+        aria-label="Seite"
+        matInput
+        [matAutocomplete]="pagesAuto"
+        [value]="''"
+    />
+    <mat-icon class="clickable interactive" matSuffix>arrow_drop_down</mat-icon>
+    <mat-autocomplete
+        #pagesAuto="matAutocomplete"
+        (opened)="onBelegstelleAutocompleteOpened()"
+        (closed)="onBelegstelleAutocompleteClosed()"
+    >
+        <mat-option
+                *ngFor="let p of filteredPages$ | async"
+                (onSelectionChange)="onBelegstelleSelectionChange(p)"
+        >
+            {{ p.pageText }}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

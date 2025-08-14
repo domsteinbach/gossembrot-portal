@@ -1,0 +1,8 @@
+<div class="content-filter-bar" *ngIf="tableName">
+  <div *ngFor="let c of displayedColumnFilters">
+    <mat-form-field class="content-filter" *ngIf="c.displayFilter">
+      <mat-label>{{ c.displayedName}}-Filter</mat-label>
+      <input matInput (keyup)="onValueChange(c.column, $event)" placeholder="Suchtext ..." />
+    </mat-form-field>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="outgoing-verweise-per-manuscript">
+  <app-steckbrief *ngIf="displaySteckbrief" [selectedCarrier]="selectedCarrier"/>
+  <div class="header-line">
+    <h3 class="subtitle" *ngIf="selectedCarrier && selectedCarrier?.has_outgoing_verweis">Verweise in dieser Handschrift</h3>
+    <h3 class="subtitle" *ngIf="selectedCarrier && !selectedCarrier.has_outgoing_verweis">In dieser Handschrift sind keine Verweise enthalten</h3>
+    <div *ngIf="isAuthenticated">
+      <!-- checkbox to include nennungen -->
+      <mat-checkbox
+        matTooltip="* Blendet Nennungen in der Liste ein oder aus. Die Nennungen werden rot gedruckt."
+        [checked]="includeNennungen$ | async"
+        (change)="onIncludeNennungenChange($event.checked)"
+      >* Nennungen anzeigen
+      </mat-checkbox>
+    </div>
+  </div>
+  <app-outgoing-verweise-list
+    class="scroll-container" [loading]="loading" [texts] = "texts || []" (verweisSelected)="onVerweisSelected($event)"/>
+</div>

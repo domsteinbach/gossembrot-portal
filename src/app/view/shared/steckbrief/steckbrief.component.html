@@ -1,0 +1,88 @@
+
+<mat-accordion *ngIf="selectedCarrier || nullCarrier">
+    <mat-expansion-panel
+        #expansionPanel
+        [expanded]="steckbriefPanelOpenState"
+        disabled="true"
+        class="main-element-surface"
+    >
+        <mat-expansion-panel-header class="steckbrief-header">
+            <div class="steckbrief-header-content">
+                <mat-card *ngIf="selectedCarrier" class="steckbrief-header-card main-element-surface">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h2 class="steckbrief-title">{{selectedCarrier.fullTitle}}</h2>
+                        </mat-card-title>
+                        <mat-card-subtitle class="subtitle" *ngIf="selectedCarrier && selectedCarrier.carrierType !== 'NonHabeo'">
+                            <h4>
+                                <span *ngIf="selectedCarrier.physicality === 'Lost'">Aus Verweisen </span>
+                                <span>{{selectedCarrier.getCarrierTypeDescDe()}}</span>
+                                <span *ngIf="selectedCarrier.carrierType !== 'Classic' && selectedCarrier.inGsmbsLib"> aus Gossembrots Bibliothek</span>
+                                <span *ngIf="selectedCarrier.carrierType !== 'Classic' && !selectedCarrier.inGsmbsLib"> ausserhalb Gossembrots Bibliothek</span>
+                            </h4>
+                        </mat-card-subtitle>
+                      <mat-card-subtitle class="subtitle" *ngIf="selectedCarrier && selectedCarrier.carrierType === 'NonHabeo'">
+                        <h4>Von Gossembrot als ihm nicht zugänglich deklarierter Textträger</h4>
+                      </mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+                <mat-card *ngIf="!selectedCarrier && nullCarrier" class="steckbrief-header-card main-element-surface">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h2 class="title">{{nullCarrier.title}}</h2>
+                        </mat-card-title>
+                        <mat-card-subtitle class="subtitle">
+                            <h4>
+                                <span>{{ nullCarrier.subTitle}}</span>
+                            </h4>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+                <button
+                        class="steckbrief-toggle-button"
+                        mat-icon-button
+                        matTooltip="{{steckbriefPanelOpenState ? 'Steckbrief ausblenden' : 'Steckbrief einblenden'}}"
+                        *ngIf="hasContent"
+                        (click)="toggleSteckbriefPanel($event, expansionPanel)">
+                    <mat-icon>{{steckbriefPanelOpenState ? 'expand_less' : 'info'}}</mat-icon>
+                </button>
+            </div>
+        </mat-expansion-panel-header>
+            <div *ngIf="!selectedCarrier && nullCarrier">
+                <mat-divider class="steckbrief-divider"></mat-divider>
+                <p>{{nullCarrier.description}}</p>
+            </div>
+            <div *ngIf="selectedCarrier && hasContent">
+                <mat-divider class="steckbrief-divider"></mat-divider>
+                <div *ngIf="selectedCarrier.matDescription" class="steckbrief-entry">
+                    <div class="entry-topic">
+                        Materialität nach Gossembrot:
+                    </div>
+                    <div class="citing-gsmb">
+                        {{selectedCarrier.matDescription}}
+                    </div>
+                </div>
+                <div class="steckbrief-entry" *ngIf="selectedCarrier.namingsGossembrot.length>0">
+                    <div class="entry-topic">
+                        <span>Benennung</span><span *ngIf="selectedCarrier.namingsGossembrot.length>1">en</span><span> durch Gossembrot:</span>
+                    </div>
+                    <div>
+                        <div *ngFor="let naming of selectedCarrier.namingsGossembrot, let i=index" class="benennung-gsmb">
+                            <span>'{{naming.benennung}}'</span>
+                            <span *ngIf="naming.source"> (nach {{naming.source}}).</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="steckbrief-entry" *ngIf="selectedCarrier.physicality === 'Available' ">
+                    <div class="entry-topic">
+                        <span>Materialität</span>
+                    </div>
+                    <div>
+                        {{selectedCarrier.description}}
+                    </div>
+                </div>
+                <app-manuscript-info *ngIf="selectedCarrier?.physicality === 'Available'" [infoCarrier]="selectedCarrier"></app-manuscript-info>
+            </div>
+    </mat-expansion-panel>
+</mat-accordion>
+

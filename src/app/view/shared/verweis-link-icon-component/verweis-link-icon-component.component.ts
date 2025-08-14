@@ -1,0 +1,46 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { DisplayVerweis } from '../../../model/verweis';
+import { LinkService } from '../../pages/page-manuscript/link.service';
+import { AuthService } from '../../../auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { RouteConstants } from '../../../routeConstants';
+
+@Component({
+  selector: 'app-verweis-link-icon-component',
+  standalone: false,
+  templateUrl: './verweis-link-icon-component.component.html',
+  styleUrl: './verweis-link-icon-component.component.scss'
+})
+export class VerweisLinkIconComponentComponent implements OnInit {
+  @Input({required: true}) verweis!: DisplayVerweis;
+  @Input({required: true}) displayedAgent!: 'incoming' | 'outgoing';
+
+  hideIfSynopsys = false;
+
+  constructor(
+    public auth: AuthService,
+    private _route: ActivatedRoute,
+    private _vls: LinkService) {
+  }
+
+  ngOnInit() {
+    this.hideIfSynopsys = this._route.snapshot.url[0].path === RouteConstants.VERWEIS
+  }
+
+  openTargetOfVerweis(): void {
+    this._vls.openTargetCarrierOfVerweis(this.verweis);
+  }
+
+  openSourceOfVerweis() { // Todo: Move that to child!
+    this._vls.openSourceCarrierOfVerweis(this.verweis);
+  }
+
+  openVerweisInDialog(): void {
+    this._vls.openVerweisViewDialog(this.verweis, 'target', this.hideIfSynopsys);
+  }
+
+  openVerweisInSyopsis(): void {
+    this._vls.openInVerweisSynopsis(this.verweis);
+  }
+
+}

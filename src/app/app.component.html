@@ -1,0 +1,9 @@
+
+<div class="app-frame mat-app-background">
+    <app-header></app-header>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+<img *ngIf="loggerImagePath" [src]="loggerImagePath" width="1" height="1" border="0">
+

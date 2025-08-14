@@ -1,0 +1,28 @@
+
+.author {
+  padding: 0.5rem 3rem;
+  display: flex;
+  align-items: center;
+  cursor: default;
+
+  &:hover {
+    background-color: var(--surface-highlight-active);
+  }
+}
+
+.author-spacer {
+  width: 2rem;
+}
+
+.text-intent {
+  margin-left: 4rem;
+}
+
+.gnd-id {
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}
+
+.clickable {
+  cursor: pointer;
+}

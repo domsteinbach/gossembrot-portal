@@ -1,0 +1,53 @@
+
+.search-input-wrapper {
+  margin-top: 1rem;
+  min-width: 20rem;
+  max-width: 25rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+
+  .search-icon {
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--hardcode-text-color);
+  }
+}
+
+.group-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.5rem 0;
+}
+
+.group-filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+
+.scroll-container {
+  overflow-y: auto;
+  max-height: calc(80vh - 6rem);
+  padding-right: 0.5rem;
+}

@@ -1,0 +1,31 @@
+<div class="search-panel" #searchPanel>
+  <div class="search-input-wrapper">
+        <span class="search-icon">
+          <mat-icon>search</mat-icon>
+        </span>
+    <input
+      #searchInput
+      type="text"
+      placeholder="* Schnellsuche ..."
+      (input)="doSearch(searchInput.value)"/>
+  </div>
+
+  <div *ngIf="searchResults.length || searchType !== 'unset'" class="search-suggestions">
+    <mat-card>
+      <mat-card-header>
+        <mat-radio-group
+          class="group-filter-row"
+          [(ngModel)]="searchType"
+          (ngModelChange)="doSearch(searchInput.value)"
+          aria-label="Suchmodus">
+          <label>Suche:</label>
+          <mat-radio-button value="unset">im ganzen Text</mat-radio-button>
+          <mat-radio-button value="fullWord">nur ganze Wörter</mat-radio-button>
+          <mat-radio-button value="prefix">am Wortanfang</mat-radio-button>
+          <mat-radio-button value="suffix">am Wortende</mat-radio-button>
+        </mat-radio-group>
+      </mat-card-header>
+      <app-search-results [searchResults]="searchResults" [searchTerm]="searchTerm" [searchType]="searchType" [showCloseButton]="true" (closeResults)="onClose()"/>
+    </mat-card>
+  </div>
+</div>

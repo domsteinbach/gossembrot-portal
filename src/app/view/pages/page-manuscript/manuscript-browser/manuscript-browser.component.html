@@ -1,0 +1,23 @@
+<div class="manuscript-browser">
+    <div class="manuscript-view-container">
+        <app-osd-viewer></app-osd-viewer>
+        <button
+                class="nav-button prev-button"
+                [disabled]="manuscript.isOnFirstPage()"
+                (click)="manuscript.goPrevPage()"
+                (keydown)="onKeyDown($event)"
+        > <span>
+            <mat-icon class="nav-button-icon" [ngClass]="manuscript.isOnFirstPage() ? 'disabled' : 'interactive'">chevron_left</mat-icon>
+          </span>
+        </button>
+        <button
+          *ngIf="displayedPages.length"
+                class="nav-button next-button"
+                [disabled]="manuscript.isOnLastPage()"
+                (click)="manuscript.goNextPage()"
+                (keydown)="onKeyDown($event)"
+        >
+            <mat-icon class="nav-button-icon" [ngClass]="manuscript.isOnLastPage() ? 'disabled' : 'interactive'">chevron_right</mat-icon>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="text-nav-panel xx-large-form">
+    <div>
+      <!-- previous text button -->
+        <button
+                matTooltip="Zum vorherigen Text innerhalb des Manuskripts springen"
+                mat-raised-button
+                [disabled]="isInFirstText()"
+                (click)="onPrevTextClick()"
+        >
+          <mat-icon [ngClass]="isInFirstText() ? 'disabled' : 'interactive'">chevron_left</mat-icon>
+        </button>
+    </div>
+    <mat-form-field
+            class="x-large-form nav-element clickable"
+            matTooltip="Geben Sie hier den Titel des Textes ein, um die Textauswahl zu filtern. Klicken Sie auf den gewünschten Text, um ihn auszuwählen."
+    >
+        <mat-label class="title">Textauswahl – Textanzeige</mat-label>
+        <input
+            #textInput
+            [formControl]="textsFormControl"
+            type="text"
+            placeholder="Eingabe ..."
+            aria-label="Text"
+            matInput
+            [matAutocomplete]="textAutoComplete"
+            [value]="selectedText?.fullTitle || ''"
+            (keydown.enter)="onEnterPressed($event)"
+        >
+        <mat-icon class="interactive clickable" matSuffix>arrow_drop_down</mat-icon>
+
+        <mat-autocomplete
+            #textAutoComplete="matAutocomplete"
+            (opened)="onTextAutocompleteOpened()"
+            (closed)="onTextAutocompleteClosed()"
+
+        >
+            <mat-option
+                    *ngFor="let text of filteredTexts$ | async"
+                    [value]="selectedText?.fullTitle || ''"
+                    (onSelectionChange)="onTextSelectChange(text)"
+            >
+                {{ text.fullTitle }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <!-- next text button -->
+    <div class="nav-element">
+        <button
+                matTooltip="Zum nächsten Text innerhalb des Manuskripts springen"
+                mat-raised-button
+                [disabled]="isInLastText()"
+                (click)="onNextTextClick()"
+        >
+            <mat-icon [ngClass]="isInLastText() ? 'disabled' : 'interactive'">chevron_right</mat-icon>
+        </button>
+    </div>
+</div>
