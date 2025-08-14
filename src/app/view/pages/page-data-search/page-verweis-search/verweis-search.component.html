@@ -43,26 +43,16 @@
                             class="table-cell"
                     >
                         <!-- Conditional rendering for "srcBelegstelleText" column -->
-                        <ng-container *ngIf="col.column === 'srcBelegstelleText'">
+                        <ng-container *ngIf="col.column === 'srcBelegstelleText'" style="display: flex;">
                             {{ element[col.column] }}
-                            <mat-icon
-                                    class="in-text-icon-button"
-                                    (click)="openSourceInNewTab(element)"
-                                    matTooltip="Belegstelle in einem neuen Tab öffnen"
-                            >
-                                open_in_new
-                            </mat-icon>
+                            <app-verweis-link-icon-component
+                                    [displayedAgent]="'incoming'"
+                                    [verweis]="element"
+                                    [embed]="true"/>
                         </ng-container>
                         <!-- column text-->
                         <ng-container *ngIf="col.column === 'srcText'">
                             {{ element.srcTextObj?.title}}
-                            <mat-icon
-                                    class="in-text-icon-button"
-                                    (click)="openSourceTextInNewTab(element)"
-                                    matTooltip="Text in einem neuen Tab öffnen"
-                            >
-                                open_in_new
-                            </mat-icon>
                         </ng-container>
                         <ng-container *ngIf="col.column === 'srcTextAuthor'">
                             {{ element.srcTextObj?.author?.cognomen || ''}}
@@ -81,13 +71,10 @@
                             <span>{{ element.targetCarObj?.fullTitle }}</span>
                             <span *ngIf="element.targetBelegstelleObj?.originalText">, </span>
                             <span>{{ element.targetBelegstelleObj?.originalText }}</span>
-                            <mat-icon
-                                    class="in-text-icon-button"
-                                    (click)="openTargetInNewTab(element)"
-                                    matTooltip="Belegstelle in einem neuen Tab öffnen"
-                            >
-                                open_in_new
-                            </mat-icon>
+                            <app-verweis-link-icon-component
+                                    [displayedAgent]="'outgoing'"
+                                    [verweis]="element"
+                                    [embed]="true"/>
                         </ng-container>
                         <ng-container *ngIf="col.column === 'targetTextAuthor'">
                             {{ element.targetTextObj?.author?.cognomen || ''}}

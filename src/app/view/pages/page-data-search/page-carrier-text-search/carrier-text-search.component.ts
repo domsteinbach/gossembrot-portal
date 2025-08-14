@@ -3,18 +3,16 @@ import { CarrierTextRepository } from '../../../../data/repository/carrier-text-
 import { ColumnDef } from '../data-search-types';
 import { map, Observable, Subject, take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { CarrierText, DisplayCarrierText } from '../../../../model/carriertext';
+import { CarrierText } from '../../../../model/carriertext';
 import { combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { RouteConstants } from '../../../../routeConstants';
 import { TableDisplayService } from '../service/table-display.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ColumnSettingsComponent } from '../shared/column-settings/column-settings.component';
 import { ValueFilterService } from '../service/value-filter.service';
 import { MatDrawer } from '@angular/material/sidenav';
-import { InfoCarrierRepository } from '../../../../data/repository/info-carrier-repository';
 import { LinkService } from '../../page-manuscript/link.service';
 
 @Component({
@@ -78,14 +76,14 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
 
   loading = true;
 
-  dataSource: MatTableDataSource<DisplayCarrierText> =
-    new MatTableDataSource<DisplayCarrierText>();
+  dataSource: MatTableDataSource<CarrierText> =
+    new MatTableDataSource<CarrierText>();
 
-  selectedRow: DisplayCarrierText | null = null;
+  selectedRow: CarrierText | null = null;
 
   private _carrierTexts$ =
     combineLatest([this._getCarrierTexts$(), this._fs.nullFilters$('text')]).pipe(
-      map(([texts, filters]) => this._fs.applyNullFilters<DisplayCarrierText>(texts, 'text'))
+      map(([texts, filters]) => this._fs.applyNullFilters<CarrierText>(texts, 'text'))
     );
 
   constructor(
@@ -106,7 +104,7 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
   ngOnInit(): void {
     this._carrierTexts$
       .pipe(takeUntil(this._destroy$))
-      .subscribe((texts: DisplayCarrierText[]) => {
+      .subscribe((texts: CarrierText[]) => {
         this.dataSource.data = texts;
         this.loading = false;
       });
@@ -115,17 +113,17 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.filterPredicate = this._fs.getMultiFilterPredicate<DisplayCarrierText>();
+    this.dataSource.filterPredicate = this._fs.getMultiFilterPredicate<CarrierText>();
     this.paginator._intl = this._ds.updatePaginatorTexts(this.paginator._intl);
     this.paginator._intl.changes.next();
     this._setCustomSort();
     this.dataSource.sort = this.sort;
   }
 
-  private _getCarrierTexts$(): Observable<DisplayCarrierText[]> {
+  private _getCarrierTexts$(): Observable<CarrierText[]> {
     return this._tr.getCarrierTexts$().pipe(
       take(1),
-      map((texts: DisplayCarrierText[]) =>
+      map((texts: CarrierText[]) =>
         texts
           .filter(text => text.title)
           .sort((a, b) =>
@@ -136,7 +134,7 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private _setCustomSort() {
-    this.dataSource.sortingDataAccessor = (item: DisplayCarrierText, property) => {
+    this.dataSource.sortingDataAccessor = (item: CarrierText, property) => {
       switch (property) {
         case 'textRange':
           return item.sortInCar;
@@ -171,7 +169,7 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
     this.isDrawerClosed = !isOpened; // Set true when the drawer is closed
   }
 
-  openTextInNewTab(text: DisplayCarrierText): void {
+  openTextInNewTab(text: CarrierText): void {
     this._ls.openTextInNewTab(text);
   }
 

@@ -29,15 +29,8 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject<void>();
 
   get blattangabe(): string {
-    const blattangabe = this.agency === 'Src' ? this.verweis?.srcBlattangabe : this.verweis?.targetBlattangabe;
-    const isCommonBlatt = !blattangabe?.includes('Cedula') || !blattangabe?.includes('Karta');
-    let prefix = '';
-    if ((this.agency === 'Target' && this.verweis?.targetCarObj?.physicality === 'Available') && isCommonBlatt ||
-      (this.agency === 'Src' && this.verweis?.srcCarObj?.physicality === 'Available')) {
-      prefix = 'Bl. ';
-    }
-
-    return blattangabe ? `${prefix}${blattangabe}` : '';
+    let belegstelle = this.agency === 'Src' ? this.verweis?.srcBelegstelleObj : this.verweis?.targetBelegstelleObj;
+    return belegstelle ? belegstelle.blattangabeWIthBlPrefix : '';
   }
 
   get alternativePageBlattangabe(): string {
@@ -83,7 +76,7 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
 
   constructor(
     private _cdr: ChangeDetectorRef,
-    private _lostPageNotificationService: LostPageNotificationService, // for snack bar in case of a blatt is lost
+    private _lostPageNotificationService: LostPageNotificationService, // Keep for snack bar in case of a blatt is lost
     private _store: Store,
     private _vls: LinkService) {
   }

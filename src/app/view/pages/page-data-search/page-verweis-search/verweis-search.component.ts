@@ -30,7 +30,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ColumnSettingsComponent } from '../shared/column-settings/column-settings.component';
 import { Store } from '@ngxs/store';
 import { CarriersState } from '../../../../state/information-carrier-state.service';
-import { DisplayCarrierText } from '../../../../model/carriertext';
+import { CarrierText } from '../../../../model/carriertext';
 import { TableDisplayService } from '../service/table-display.service';
 import { ValueFilterService } from '../service/value-filter.service';
 import { MatDrawer } from '@angular/material/sidenav';
@@ -265,10 +265,10 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
             v.targetCarObj = target_car;
           }
           if (texts && texts.length > 0) {
-            const targetText = texts.find((t: DisplayCarrierText) => t.id === v.targetText);
+            const targetText = texts.find((t: CarrierText) => t.id === v.targetText);
             v.targetTextObj = targetText;
 
-            const srcText = texts.find((t: DisplayCarrierText) => t.id === v.srcText);
+            const srcText = texts.find((t: CarrierText) => t.id === v.srcText);
             v.srcTextObj = srcText;
           }
 

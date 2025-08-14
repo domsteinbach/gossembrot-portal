@@ -4,7 +4,7 @@ import { DisplayVerweis } from '../model/verweis';
 import { VerweisRepository } from '../data/repository/verweis-repository';
 import { Belegstelle } from '../model/belegstelle';
 import { BelegstelleRepository } from '../data/repository/belegstelle-repository';
-import { DisplayCarrierText } from '../model/carriertext';
+import { CarrierText } from '../model/carriertext';
 import { CarrierTextRepository } from '../data/repository/carrier-text-repository';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class VerweisService {
     carrierId: string,
     selfVerweise = true,
     includeNennungen = false
-  ): Observable<DisplayCarrierText[]> {
+  ): Observable<CarrierText[]> {
 
     const outgoingVerweise$: Observable<DisplayVerweis[]> =
       this._vr.outgoingVerweiseFromCarrier$(carrierId, includeNennungen);
@@ -66,9 +66,9 @@ export class VerweisService {
     verweise$: Observable<DisplayVerweis[]>,
     srcBelegstellen$: Observable<Belegstelle[]>,
     targetBelegstellen$: Observable<Belegstelle[]>,
-    textsOfCarrier$: Observable<DisplayCarrierText[]>,
-    targetTexts$: Observable<DisplayCarrierText[]>
-): Observable<DisplayCarrierText[]> {
+    textsOfCarrier$: Observable<CarrierText[]>,
+    targetTexts$: Observable<CarrierText[]>
+): Observable<CarrierText[]> {
     return combineLatest([
       verweise$,
       srcBelegstellen$,
@@ -106,7 +106,7 @@ export class VerweisService {
     );
   }
 
-  getTextsWithIncomingVerweise(carrierId: string): Observable<DisplayCarrierText[]> {
+  getTextsWithIncomingVerweise(carrierId: string): Observable<CarrierText[]> {
     return combineLatest([
       this._vr.getVerweisePointingToCarrier$(carrierId),
       this._tr.getCarrierTextsOfCarrier$(carrierId),

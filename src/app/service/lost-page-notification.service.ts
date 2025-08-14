@@ -4,8 +4,7 @@ import { DisplayVerweis } from '../model/verweis';
 import { Store } from '@ngxs/store';
 import { SelectedVerweisState } from '../state/belegstelle-state.service';
 import { SelectedThemeState } from '../state/theme-state';
-import { map } from 'rxjs';
-import { GsmbTheme, GsmbThemeClass, ThemeBrightness } from '../model/theme';
+import { GsmbThemeClass, ThemeBrightness } from '../model/theme';
 import { LostSnackbarComponent } from '../view/shared/lost-snackbar.component';
 
 @Injectable({

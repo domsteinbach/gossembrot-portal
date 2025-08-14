@@ -17,7 +17,7 @@ import {
   VisualisationVerweis,
 } from '../../../../model/visualisations';
 import { VisualisationSettingsService } from './visualisation-settings.service';
-import { DisplayCarrierText } from '../../../../model/carriertext';
+import { CarrierText } from '../../../../model/carriertext';
 import { VisGlobalFilter } from './visualisation-data/vis-data-interaction/vis-global-filters/vis-global-filters.component';
 import { takeUntil } from 'rxjs/operators';
 
@@ -224,8 +224,8 @@ export class VisualisationDataService implements OnDestroy {
           let nodes: any[] = [];
           let links: any[] = [];
 
-          const textsOfInvolvedCarriersWithAnyVerweise: DisplayCarrierText[] =
-            textsWithVerweis.filter((t: DisplayCarrierText) =>
+          const textsOfInvolvedCarriersWithAnyVerweise: CarrierText[] =
+            textsWithVerweis.filter((t: CarrierText) =>
               involvedCarriers.some((c) => c.id === t.carId)
             );
 
@@ -288,8 +288,8 @@ export class VisualisationDataService implements OnDestroy {
         let nodes: any[] = [];
 
         // filter the verweise by involved nodes, both must exist - target and source and set the carrier property in the carriertext
-        const textsOfInvolvedCarriersWithAnyVerweise: DisplayCarrierText[] =
-          textsWithVerweis.filter((t: DisplayCarrierText) => {
+        const textsOfInvolvedCarriersWithAnyVerweise: CarrierText[] =
+          textsWithVerweis.filter((t: CarrierText) => {
             t.carrier = involvedCarriers.find((c) => c.id === t.carId);
             return t.carrier;
           });

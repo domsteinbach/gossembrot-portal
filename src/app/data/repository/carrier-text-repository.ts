@@ -2,7 +2,7 @@ import { BehaviorSubject, combineLatest, map, Observable, of, take, tap } from '
 import { Injectable } from '@angular/core';
 import { CarrierTextData } from '../repository-model';
 import { DataService } from '../dataservice.service';
-import { DisplayCarrierText } from '../../model/carriertext';
+import { CarrierText } from '../../model/carriertext';
 import { AuthorRepository } from './author-repository';
 import { InfoCarrierRepository } from './info-carrier-repository';
 import { Author } from '../../model/author';
@@ -13,8 +13,8 @@ import { InformationCarrier } from '../../model/infoCarrier';
 })
 export class CarrierTextRepository {
 
-  private _cachedTexts: DisplayCarrierText[] = [];
-  private _cachedTextsSub = new BehaviorSubject<DisplayCarrierText[]>([]);
+  private _cachedTexts: CarrierText[] = [];
+  private _cachedTextsSub = new BehaviorSubject<CarrierText[]>([]);
   private _cachedTexts$ = this._cachedTextsSub.asObservable();
 
   constructor(
@@ -26,7 +26,7 @@ export class CarrierTextRepository {
 
   private _populateCachedTexts() {
     this._getCarrierTexts$().pipe(take(1)).subscribe(
-      (texts: DisplayCarrierText[]) => {
+      (texts: CarrierText[]) => {
         this._cachedTexts = texts;
         this._cachedTextsSub.next(texts);
       }
@@ -36,7 +36,7 @@ export class CarrierTextRepository {
   /***
    * get all display carrier texts of a given information carrier. Merge the texts with their authors.
    */
-  getCarrierTextsOfCarrier$(carId: string): Observable<DisplayCarrierText[]> {
+  getCarrierTextsOfCarrier$(carId: string): Observable<CarrierText[]> {
     if (!carId) {
       return of([]);
     }
@@ -54,7 +54,7 @@ export class CarrierTextRepository {
    * get all target texts of a given source information carrier,
    * i.e. all texts onto which all verweise of a given information carrier are pointing to. Merge the texts with their authors.
    */
-  getTargetTextsOfSrcCarrier$(carId: string): Observable<DisplayCarrierText[]> {
+  getTargetTextsOfSrcCarrier$(carId: string): Observable<CarrierText[]> {
 
     const q = `SELECT DISTINCT
                     target_text.*
@@ -64,10 +64,10 @@ export class CarrierTextRepository {
                     LEFT JOIN carrier_text AS target_text ON target_text.id = verweis.target_text
                     WHERE verweis.src_car = "${carId}" AND verweis.target_car IS NOT NULL AND target_text.id IS NOT NULL`;
 
-    return this._mapCarrierTextsWithAuthorsAndCarriers$(this._dataService.getDataAs$(DisplayCarrierText, q))
+    return this._mapCarrierTextsWithAuthorsAndCarriers$(this._dataService.getDataAs$(CarrierText, q))
   }
 
-  getCarrierTextsOfAuthors$(authorIds: string[]): Observable<DisplayCarrierText[]> {
+  getCarrierTextsOfAuthors$(authorIds: string[]): Observable<CarrierText[]> {
     if (!authorIds.length) {
       return of([]);
     }
@@ -80,7 +80,7 @@ export class CarrierTextRepository {
     }
   }
 
-  getCarrierTexts$(): Observable<DisplayCarrierText[]> {
+  getCarrierTexts$(): Observable<CarrierText[]> {
     if (this._cachedTexts.length) {
       return this._cachedTexts$;
     }
@@ -92,7 +92,7 @@ export class CarrierTextRepository {
     }));
   }
 
-  getCarrierTextsByIds$(ids: string[]): Observable<DisplayCarrierText[]> {
+  getCarrierTextsByIds$(ids: string[]): Observable<CarrierText[]> {
     if (!ids.length) {
       return of([]);
     }
@@ -104,13 +104,13 @@ export class CarrierTextRepository {
     }
   }
 
-  private _getCarrierTexts$(): Observable<DisplayCarrierText[]> {
-    return this._mapCarrierTextsWithAuthorsAndCarriers$(this._dataService.getDataAs$(DisplayCarrierText));
+  private _getCarrierTexts$(): Observable<CarrierText[]> {
+    return this._mapCarrierTextsWithAuthorsAndCarriers$(this._dataService.getDataAs$(CarrierText));
   }
 
   private _mapCarrierTextsWithAuthorsAndCarriers$(
-    texts$: Observable<DisplayCarrierText[]>
-  ): Observable<DisplayCarrierText[]> {
+    texts$: Observable<CarrierText[]>
+  ): Observable<CarrierText[]> {
     return combineLatest([texts$, this._ar.authors$(), this._ir.informationCarriers$()]).pipe(
       map(([texts, authors, carriers]) =>
         texts.map(text => {
@@ -122,46 +122,46 @@ export class CarrierTextRepository {
     );
   }
 
-  private _getCarrierTextsOfCarrier$(carriers: string[] = []): Observable<DisplayCarrierText[]> {
+  private _getCarrierTextsOfCarrier$(carriers: string[] = []): Observable<CarrierText[]> {
     const whereClause = carriers.length
       ? `WHERE car_id IN (${carriers.map((id) => `"${id}"`).join(',')})`
       : '';
     const q = `SELECT * FROM carrier_text ${whereClause} ORDER BY car_id, sort_in_car;`;
 
-    return this._dataService.getDataAs$(DisplayCarrierText, q);
+    return this._dataService.getDataAs$(CarrierText, q);
   }
 
-  private _getCarrierTextsByTextIds$(textIds: string[]): Observable<DisplayCarrierText[]> {
+  private _getCarrierTextsByTextIds$(textIds: string[]): Observable<CarrierText[]> {
     if (!textIds.length) {
       return of([]);
     }
 
     const q = `SELECT * FROM carrier_text WHERE id IN (${textIds.map(id => `"${id}"`).join(',')}) ORDER BY title`;
-    return this._dataService.getDataAs$(DisplayCarrierText, q);
+    return this._dataService.getDataAs$(CarrierText, q);
   }
 
-  private _getCarrierTextsOfAuthors$(authorIds: string[]): Observable<DisplayCarrierText[]> {
+  private _getCarrierTextsOfAuthors$(authorIds: string[]): Observable<CarrierText[]> {
     const q = `SELECT * FROM carrier_text WHERE author_id IN (${authorIds.map(id => `"${id}"`).join(',')}) 
                            ORDER BY title`;
 
-    return this._dataService.getDataAs$(DisplayCarrierText, q);
+    return this._dataService.getDataAs$(CarrierText, q);
   }
 
-  createNullText(carrierId: string, sortInCar: number): DisplayCarrierText {
+  createNullText(carrierId: string, sortInCar: number): CarrierText {
     const nullTextData: CarrierTextData = {
       author_id: '',
       cognomen: '',
       car_id: carrierId,
-      description: '',
       is_lost: 0,
       id: 'null',
-      short: '',
       sort_in_car: sortInCar,
       title: '?',
       longTitle: '',
       text_range: '',
+      incipit: '',
+      additional_source: '',
     };
 
-    return new DisplayCarrierText(nullTextData);
+    return new CarrierText(nullTextData);
   }
 }

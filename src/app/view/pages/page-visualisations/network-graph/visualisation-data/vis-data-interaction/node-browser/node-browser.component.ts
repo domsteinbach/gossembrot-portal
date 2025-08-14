@@ -15,7 +15,7 @@ import {
   UpdateSelectedSrcInformationCarrier,
 } from '../../../../../../../state/information-carrier-state.service';
 import { VerweisService } from '../../../../../../../service/verweis.service';
-import { DisplayCarrierText } from '../../../../../../../model/carriertext';
+import { CarrierText } from '../../../../../../../model/carriertext';
 
 @Component({
   selector: 'app-node-browser',
@@ -43,7 +43,7 @@ export class NodeBrowserComponent {
 
   activeTabIndex = 0;
 
-  textsWithIncomingVerweise: DisplayCarrierText[] = [];
+  textsWithIncomingVerweise: CarrierText[] = [];
 
   constructor(
     private _br: BelegstelleRepository,

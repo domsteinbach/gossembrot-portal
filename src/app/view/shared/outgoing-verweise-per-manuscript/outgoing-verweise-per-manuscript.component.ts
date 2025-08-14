@@ -11,7 +11,7 @@ import {
   take,
 } from 'rxjs';
 import { VerweisService } from '../../../service/verweis.service';
-import { DisplayCarrierText } from '../../../model/carriertext';
+import { CarrierText } from '../../../model/carriertext';
 import { AuthService } from '../../../auth/auth.service';
 import { RouteConstants } from '../../../routeConstants';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -59,7 +59,7 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
   @Input() forceSelectFirstVerweis?: object;
   _shouldForceSelect = false;
 
-  texts: DisplayCarrierText[] = [];
+  texts: CarrierText[] = [];
 
   loading = false;
 
@@ -122,7 +122,7 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
         includeNennungen
       )
       .pipe(
-        map((texts: DisplayCarrierText[]) => {
+        map((texts: CarrierText[]) => {
           const filtered = texts.filter((t) => t.outgoingVerweise.length > 0);
           filtered.sort((a, b) => a.sortInCar - b.sortInCar);
           filtered.forEach((t) => {

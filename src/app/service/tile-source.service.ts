@@ -6,7 +6,6 @@ import { Page } from '../model/page';
 import { DataService } from '../data/dataservice.service';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, lastValueFrom, map, Observable, of } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { LocalTileSource } from '../view/pages/page-manuscript/manuscript-browser/osd-viewer/osd-viewer.component';
 import { EnvConstants } from '../constants';
 
@@ -85,8 +84,8 @@ export class TileSourceService {
       return this._dataService.getIIIFinfo(page.iiifInfoUrl).pipe(
         map((infoJson) => new GsmbTileSource('iiif', infoJson)),
         catchError((error) => {
-          console.error(error); // Log and return 404 image
-          return of(this._getLocalTileSource());
+          console.error(error); // Fallback to local tile source if IIIF info cannot be fetched
+          return of(this._getLocalTileSource(page.imgDir));
         })
       );
     } else {
@@ -118,13 +117,13 @@ export class TileSourceService {
     }
     const tileSources: GsmbTileSource[] = [];
     for (const page of pages) {
-      console.log('Updating tile sources for page:', page);
       if (page.iiifInfoUrl && (!page.autocomparedIiif || page.matchPercentage >= 25 || page.manuallyAddedIiif)) {
         try {
           const infoJson$ = this._dataService.getIIIFinfo(page.iiifInfoUrl)
           const infoJson = await lastValueFrom(infoJson$);
           if (!infoJson) {
             console.error('Error fetching IIIF info: no infoJson');
+            this._getLocalTileSource(page.imgDir); // Fallback to local tile source if IIIF info cannot be fetched
             continue;
           }
           tileSources.push(new GsmbTileSource('iiif', infoJson));

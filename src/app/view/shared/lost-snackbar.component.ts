@@ -6,7 +6,7 @@ import { DisplayVerweis } from '../../model/verweis';
   template: `
     <div class="lost-snackbar-wrapper">
       <div class="lost-snackbar-content">
-        {{ blattangabe}} ist in {{ data.targetCarObj?.title }} verloren.
+        {{ data.targetBelegstelleObj?.blattangabeWIthBlPrefix }} ist in {{ data.targetCarObj?.title }} verloren.
       </div>
       <div class="bottom-container">
         <button color="primary" mat-raised-button (click)="close()">Schließen</button>
@@ -36,10 +36,5 @@ export class LostSnackbarComponent {
 
   close() {
     this.snackBarRef.dismiss();
-  }
-
-  get blattangabe(): string {
-    const prefix = this.data.targetBlattangabe?.includes('Cedula') || this.data.targetBlattangabe?.includes('Karta') ? '' : 'Bl. ';
-    return `${prefix}${this.data.targetBelegstelleObj?.belegstelleText}`;
   }
 }

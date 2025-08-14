@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { DisplayCarrierText } from '../../../../model/carriertext';
+import { CarrierText } from '../../../../model/carriertext';
 import { LinkService } from '../../../pages/page-manuscript/link.service';
 import { SearchService } from '../../../../service/search-service.service';
 
@@ -21,7 +21,7 @@ import { SearchService } from '../../../../service/search-service.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchResultCarriertextComponent {
-  @Input() texts: DisplayCarrierText[] = [];
+  @Input() texts: CarrierText[] = [];
   @Input() searchTerm = '';
   @Input() showAllHandler = false;
 
@@ -41,7 +41,7 @@ export class SearchResultCarriertextComponent {
     this._showAll = val;
   }
 
-  onTextClicked(text: DisplayCarrierText): void {
+  onTextClicked(text: CarrierText): void {
     this._linkService.openTextInNewTab(text);
   }
 }

@@ -30,14 +30,14 @@ export interface CarrierTextData {
   author_id: string;
   cognomen: string;
   car_id: string;
-  description: string;
   is_lost: number;
   id: string;
-  short: string;
   sort_in_car: number;
   title: string;
   longTitle: string;
   text_range: string;
+  incipit: string;
+  additional_source: string; // e.g. '[aus Clm 26346]'
 }
 
 export interface PageData {

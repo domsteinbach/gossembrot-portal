@@ -9,7 +9,7 @@ import { DisplayVerweis } from '../../../../model/verweis';
 import { Store } from '@ngxs/store';
 import { SelectedVerweisState, UpdateSelectedVerweis,
 } from '../../../../state/belegstelle-state.service';
-import { DisplayCarrierText } from '../../../../model/carriertext';
+import { CarrierText } from '../../../../model/carriertext';
 import { ScrollIntoViewDirective } from '../../../../directives/scroll-into-view.directive';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -23,7 +23,7 @@ import { AuthService } from '../../../../auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() texts: DisplayCarrierText[] = [];
+  @Input() texts: CarrierText[] = [];
   @Input() loading = false;
   @Output() verweisSelected = new EventEmitter<DisplayVerweis>();
 

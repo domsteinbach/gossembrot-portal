@@ -11,7 +11,7 @@ import { RouteConstants } from '../../../routeConstants';
 import { Location } from '@angular/common';
 import { DisplayVerweis } from '../../../model/verweis';
 import { VerweisService } from '../../../service/verweis.service';
-import { DisplayCarrierText } from '../../../model/carriertext';
+import { CarrierText } from '../../../model/carriertext';
 
 @Component({
   selector: 'app-incoming-verweise',
@@ -28,7 +28,7 @@ export class IncomingVerweiseComponent implements OnInit, OnChanges {
   selectedCarrier: InformationCarrier | null = null;
   carrierToSelect: string | null = null;
 
-  texts: DisplayCarrierText[] = [];
+  texts: CarrierText[] = [];
 
   selectedVerweis?: DisplayVerweis;
 

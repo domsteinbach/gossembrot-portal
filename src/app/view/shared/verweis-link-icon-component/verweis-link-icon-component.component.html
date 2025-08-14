@@ -1,5 +1,5 @@
-<div class="link-icon-container">
-    <span *ngIf="auth.isAuthenticated()">
+<span [ngClass]="embed ? 'link-icon-container-embedded' : 'link-icon-container'">
+    <span *ngIf="auth.isAuthenticated() && !hideDetail">
         <mat-icon class="in-text-icon-button"
                   matTooltip="Detailansicht (Quelle, Verweistext, Ziel)"
                   (click)="openVerweisInDialog()"
@@ -20,11 +20,11 @@
         >open_in_new
         </mat-icon>
     </span>
-    <span *ngIf="displayedAgent === 'incoming' && !hideIfSynopsys">
+    <span *ngIf="displayedAgent === 'incoming'&& !hideIfSynopsys">
           <mat-icon class="in-text-icon-button"
                     matTooltip="{{verweis.srcCarObj?.carrierTypeDe}} in einem neuen Tab öffnen"
                     (click)="openSourceOfVerweis()"
           >open_in_new
           </mat-icon>
       </span>
-</div>
+</span>

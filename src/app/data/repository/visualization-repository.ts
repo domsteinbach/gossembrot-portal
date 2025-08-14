@@ -11,7 +11,7 @@ import {
   VisualisationNodeLink,
   VisualisationVerweis,
 } from '../../model/visualisations';
-import { CarrierText, DisplayCarrierText } from '../../model/carriertext';
+import { CarrierText } from '../../model/carriertext';
 import { AuthorRepository } from './author-repository';
 
 @Injectable({
@@ -96,7 +96,7 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
   }
 
   // get all texts which have a verweis - any. merge in the authors.
-  getTextsHavingAVerweis$(): Observable<DisplayCarrierText[]> {
+  getTextsHavingAVerweis$(): Observable<CarrierText[]> {
     return combineLatest([
       this._getAllTextsHavingAVerweisData$(),
       this.authorRepo.authors$(),
@@ -105,14 +105,14 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
         if (Array.isArray(texts)) {
           return texts.map(
             (item) => {
-              const t =  new DisplayCarrierText(item)
+              const t =  new CarrierText(item)
               t.author = authors.find((a) => a.id === item.author_id);
               return t;
             }
           );
         } else {
           return [
-            new DisplayCarrierText(
+            new CarrierText(
               texts,
             ),
           ];
@@ -123,13 +123,13 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
   }
 
   // get simply all texts which have a verweis - any.
-  private _getTextsHavingAVerweis(): Observable<DisplayCarrierText[]> {
+  private _getTextsHavingAVerweis(): Observable<CarrierText[]> {
     return this._getAllTextsHavingAVerweisData$().pipe(
       map((data: CarrierTextData) => {
         if (Array.isArray(data)) {
-          return data.map((item) => new DisplayCarrierText(item));
+          return data.map((item) => new CarrierText(item));
         } else {
-          return [new DisplayCarrierText(data)];
+          return [new CarrierText(data)];
         }
       }),
       defaultIfEmpty([]) // Ensure never null

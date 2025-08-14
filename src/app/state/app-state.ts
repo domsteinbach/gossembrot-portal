@@ -1,4 +1,4 @@
-import { DisplayCarrierText } from '../model/carriertext';
+import { CarrierText } from '../model/carriertext';
 import { Page } from '../model/page';
 import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
@@ -10,7 +10,7 @@ import { take } from 'rxjs';
 
 export class UpdateSelectedCarrierText {
   static readonly type = '[App] Update CarrierText';
-  constructor(public carrierText: DisplayCarrierText | undefined) {}
+  constructor(public carrierText: CarrierText | undefined) {}
 }
 
 export class UpdateSelectedPage {
@@ -29,7 +29,7 @@ export class UpdateDoubleTileSources {
 }
 
 // Text state
-@State<DisplayCarrierText | undefined>({
+@State<CarrierText | undefined>({
   name: 'carrierText',
   defaults: undefined,
 })
@@ -37,7 +37,7 @@ export class UpdateDoubleTileSources {
 export class SelectedCarrierTextState {
   @Action(UpdateSelectedCarrierText)
   updateText(
-    { getState, setState }: StateContext<DisplayCarrierText | undefined>,
+    { getState, setState }: StateContext<CarrierText | undefined>,
     { carrierText }: UpdateSelectedCarrierText
   ) {
     setState(carrierText);

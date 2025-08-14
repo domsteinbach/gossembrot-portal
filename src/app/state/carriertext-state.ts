@@ -1,15 +1,15 @@
 
 // State to manage texts of the selected carrier
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { DisplayCarrierText } from '../model/carriertext';
+import { CarrierText } from '../model/carriertext';
 import { Injectable } from '@angular/core';
 
 export class UpdateSelectedCarriersTexts {
   static readonly type = '[App] Update the texts of the selected Carrier';
-  constructor(public carrierTexts: DisplayCarrierText[]) {}
+  constructor(public carrierTexts: CarrierText[]) {}
 }
 
-@State<DisplayCarrierText[]>({
+@State<CarrierText[]>({
   name: 'carrierTexts',
   defaults: [],
 })
@@ -17,14 +17,14 @@ export class UpdateSelectedCarriersTexts {
 export class CarrierTextsState {
 
   @Selector()
-  static getSelectedCarriersTexts(state: DisplayCarrierText[]): DisplayCarrierText[] {
+  static getSelectedCarriersTexts(state: CarrierText[]): CarrierText[] {
     return [...state];
   }
 
   // Action to update carrier texts in state
   @Action(UpdateSelectedCarriersTexts)
   updateSelectedCarriersTexts(
-    { setState }: StateContext<DisplayCarrierText[]>,
+    { setState }: StateContext<CarrierText[]>,
     { carrierTexts }: UpdateSelectedCarriersTexts
   ) {
     setState(carrierTexts);  }

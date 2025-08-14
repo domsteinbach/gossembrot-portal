@@ -14,8 +14,8 @@
                 </span>
                 <span>{{t.title}}</span>
                 <span *ngIf="t.title && t.incipit">
-                  <span>, Incipit </span>
-                  <span class="text-title-incipit">‘{{t.incipit}}’</span>
+                  <span class="text-title-incipit"> {{t.incipit}}</span>
+                  <span *ngIf="t.additionalSource"> {{t.additionalSource}}</span>
                   <span *ngIf="t.textRange"> ({{t.textRange}})</span>
                 </span>
             </h4>

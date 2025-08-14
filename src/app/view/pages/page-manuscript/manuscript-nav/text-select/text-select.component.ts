@@ -10,7 +10,7 @@ import { CarrierTextsState } from '../../../../../state/carriertext-state';
 import {
   CarrierTextService,
 } from '../../../../../service/carrier-text.service';
-import { DisplayCarrierText } from '../../../../../model/carriertext';
+import { CarrierText } from '../../../../../model/carriertext';
 import { MatSelect } from '@angular/material/select';
 import {
   combineLatest,
@@ -35,20 +35,20 @@ import {
   styleUrls: ['./text-select.component.scss'],
 })
 export class TextSelectComponent implements OnInit, OnDestroy {
-  carrierTexts$!: Observable<DisplayCarrierText[]>;
-  selectedText$!: Observable<DisplayCarrierText>;
+  carrierTexts$!: Observable<CarrierText[]>;
+  selectedText$!: Observable<CarrierText>;
 
   textsSub!: Subscription;
 
-  selectedText: DisplayCarrierText | undefined = undefined;
+  selectedText: CarrierText | undefined = undefined;
   lastSelectedText!: string;
 
-  carrierTexts: DisplayCarrierText[] = [];
+  carrierTexts: CarrierText[] = [];
 
   textsFormControl = new FormControl(); // autocomplete needs a FormControl
 
-  filteredTexts$!: Observable<DisplayCarrierText[]>; // populating the autocomplete input of pages
-  firstFilteredText: DisplayCarrierText | undefined = undefined; // for make the first filtered carrier accessible to enter strokes
+  filteredTexts$!: Observable<CarrierText[]>; // populating the autocomplete input of pages
+  firstFilteredText: CarrierText | undefined = undefined; // for make the first filtered carrier accessible to enter strokes
 
   // access the inputs for updating programmatically
   @ViewChild('textInput', { static: false }) textInput!: MatInput;
@@ -99,7 +99,7 @@ export class TextSelectComponent implements OnInit, OnDestroy {
     });
   }
 
-  filterTextOptions(value: string): DisplayCarrierText[] {
+  filterTextOptions(value: string): CarrierText[] {
     const filterValue = value.toLowerCase();
     return this.carrierTexts.filter((t) =>
       t.fullTitle.toLowerCase().includes(filterValue)
@@ -151,7 +151,7 @@ export class TextSelectComponent implements OnInit, OnDestroy {
     this._carrierTextService.goNextText();
   }
 
-  onTextSelectChange(text: DisplayCarrierText): void {
+  onTextSelectChange(text: CarrierText): void {
     this._carrierTextService.jumpToText(text);
     this.autocompleteTrigger.closePanel();
   }

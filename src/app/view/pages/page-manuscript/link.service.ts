@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DisplayVerweis, Verweis } from '../../../model/verweis';
+import { DisplayVerweis } from '../../../model/verweis';
 import { RouteConstants } from '../../../routeConstants';
 import { MatDialog } from '@angular/material/dialog';
 import { VerweisViewComponent, VerweisViewData } from '../page-verweis-view/verweis-view.component';
 import { View } from '../page-verweis-view/verweis-view.types';
-import { DisplayCarrierText } from '../../../model/carriertext';
+import { CarrierText } from '../../../model/carriertext';
 import { InformationCarrier } from '../../../model/infoCarrier';
 
 @Injectable({
@@ -82,7 +82,7 @@ export class LinkService {
     window.open(this._getCarrierRoute(carrier), '_blank');
   }
 
-  openTextInNewTab(text: DisplayCarrierText): void {
+  openTextInNewTab(text: CarrierText): void {
     if (!text.carrier) {
       console.error('Carrier information is missing for the text:', text);
       return;

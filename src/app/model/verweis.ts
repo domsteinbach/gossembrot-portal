@@ -3,7 +3,7 @@ import {
 } from '../data/repository-model';
 import { Belegstelle } from './belegstelle';
 import { InformationCarrier, Physicality } from './infoCarrier';
-import { DisplayCarrierText } from './carriertext';
+import { CarrierText } from './carriertext';
 import { GsmbResource } from '../data/repository/gsmb-resource';
 
 export enum VerweisTypes {
@@ -85,10 +85,10 @@ export class Verweis extends GsmbResource {
 export class DisplayVerweis extends Verweis {
   static readonly tableName = 'verweis';
   private _srcCarObj?: InformationCarrier;
-  private _srcTextObj?: DisplayCarrierText;
+  private _srcTextObj?: CarrierText;
   private _srcBelegstelleObj?: Belegstelle;
   private _targetCarObj?: InformationCarrier;
-  private _targetTextObj?: DisplayCarrierText;
+  private _targetTextObj?: CarrierText;
   private _targetBelegstelleObj?: Belegstelle;
 
   constructor(data: VerweisData) {
@@ -103,11 +103,11 @@ export class DisplayVerweis extends Verweis {
     this._srcCarObj = value;
   }
 
-  get srcTextObj(): DisplayCarrierText | undefined {
+  get srcTextObj(): CarrierText | undefined {
     return this._srcTextObj;
   }
 
-  set srcTextObj(value: DisplayCarrierText | undefined) {
+  set srcTextObj(value: CarrierText | undefined) {
     this._srcTextObj = value;
   }
 
@@ -135,21 +135,16 @@ export class DisplayVerweis extends Verweis {
     return this._srcTextObj?.title || '';
   }
 
-  get targetTextObj(): DisplayCarrierText | undefined {
+  get targetTextObj(): CarrierText | undefined {
     return this._targetTextObj;
   }
 
-  set targetTextObj(value: DisplayCarrierText | undefined) {
+  set targetTextObj(value: CarrierText | undefined) {
     this._targetTextObj = value;
   }
 
   get targetTextTitle(): string {
     return this._targetTextObj?.title || '';
-  }
-
-  get targetBelegstelleText(): string {
-    const pageText = this.targetBelegstelleObj?.belegstelleText ? `, ${this.targetBelegstelleObj?.belegstelleText}` : '';
-    return `${this.targetCarObj?.fullTitle || ''}${pageText}`;
   }
 
   get targetBelegstelleObj(): Belegstelle | undefined {

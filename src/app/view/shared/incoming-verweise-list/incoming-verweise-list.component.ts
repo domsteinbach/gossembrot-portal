@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { DisplayVerweis } from '../../../model/verweis';
 import { InformationCarrier } from '../../../model/infoCarrier';
-import { DisplayCarrierText } from '../../../model/carriertext';
+import { CarrierText } from '../../../model/carriertext';
 import { ScrollIntoViewDirective } from '../../../directives/scroll-into-view.directive';
 import { Store } from '@ngxs/store';
 import { SelectedVerweisState, UpdateSelectedVerweis } from '../../../state/belegstelle-state.service';
@@ -26,7 +26,7 @@ import { AuthService } from '../../../auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() texts: DisplayCarrierText[] = [];
+  @Input() texts: CarrierText[] = [];
   @Input() loading = false;
   @Input() forceSelectFirstVerweis? : object;
 

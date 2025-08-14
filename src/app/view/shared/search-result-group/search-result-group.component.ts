@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges
 import { SearchResult, SearchResultTable } from '../../../model/search-result';
 import { take } from 'rxjs';
 import { CarrierTextRepository } from '../../../data/repository/carrier-text-repository';
-import { DisplayCarrierText } from '../../../model/carriertext';
+import { CarrierText } from '../../../model/carriertext';
 import { LinkService } from '../../pages/page-manuscript/link.service';
 import { InfoCarrierRepository } from '../../../data/repository/info-carrier-repository';
 import { InformationCarrier } from '../../../model/infoCarrier';
@@ -25,15 +25,15 @@ export class SearchResultGroupComponent implements OnChanges {
   expanded = true;
   showAll = false;
 
-  private _carrierTexts: DisplayCarrierText[] = [];
+  private _carrierTexts: CarrierText[] = [];
 
-  get carrierTexts(): DisplayCarrierText[] {
+  get carrierTexts(): CarrierText[] {
     return this._carrierTexts.slice(0, this.showAll ? undefined : this.search.OFFSET);
   }
 
   private _authorsWithTexts: {
     author: SearchResult;
-    texts: DisplayCarrierText[],
+    texts: CarrierText[],
     foundByAlias?: string
   }[] = [];
 

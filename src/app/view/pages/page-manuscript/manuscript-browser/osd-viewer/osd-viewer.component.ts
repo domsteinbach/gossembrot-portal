@@ -59,15 +59,8 @@ export class OsdViewerComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!tileSources) {
           return;
         }
-        if ( // the same tile sources are already set, no need to update
-          this.tileSources.length &&
-          tileSources.length &&
-          this.tileSources[0].id === tileSources[0].id
-        ) {
-          return;
-        }
           this.tileSources = tileSources;
-        console.log('OSD Viewer tile sources updated:', this.tileSources);
+          console.log('OSD Viewer tile sources updated:', this.tileSources);
           this.updateOpenSeadragonPages();
       });
   }

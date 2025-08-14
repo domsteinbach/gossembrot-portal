@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { SearchResult } from '../../../../../model/search-result';
-import { DisplayCarrierText } from '../../../../../model/carriertext';
+import { CarrierText } from '../../../../../model/carriertext';
 import { SearchType } from '../../../../../data/repository/search-data-repository';
 
 @Component({
@@ -13,7 +13,7 @@ import { SearchType } from '../../../../../data/repository/search-data-repositor
 export class SearchResultAuthorComponent {
   @Input() authorsWithTexts: {
     author: SearchResult;
-    texts: DisplayCarrierText[],
+    texts: CarrierText[],
     foundByAlias?: string,
   }[] = [];
 

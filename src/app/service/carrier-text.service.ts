@@ -8,7 +8,7 @@ import {
   UpdateSelectedCarrierText, UpdateSelectedPage,
 } from '../state/app-state';
 import { Observable, take } from 'rxjs';
-import { DisplayCarrierText } from '../model/carriertext';
+import { CarrierText } from '../model/carriertext';
 import {CarrierTextsState} from '../state/carriertext-state';
 import { Page } from '../model/page';
 
@@ -17,8 +17,8 @@ import { Page } from '../model/page';
 })
 export class CarrierTextService {
 
-  private _existingTexts: DisplayCarrierText[] = [];
-  private _selectedText!: DisplayCarrierText | undefined;
+  private _existingTexts: CarrierText[] = [];
+  private _selectedText!: CarrierText | undefined;
 
   private _lastTextId = '';
   private _firstTextId = '';
@@ -63,7 +63,7 @@ export class CarrierTextService {
     );
   }
 
-  jumpToText(text: DisplayCarrierText) {
+  jumpToText(text: CarrierText) {
     this._selectedText = text;
     this._store.dispatch(new UpdateSelectedCarrierText(text));
     const firstPageIdx = this.getFirstPageIdxOfText(text.id);
@@ -108,7 +108,7 @@ export class CarrierTextService {
       .pipe(take(1))
       .subscribe((pages: Page[]) => {
         let textIdToJump = '';
-        let textToJump: DisplayCarrierText | undefined;
+        let textToJump: CarrierText | undefined;
 
         const currentPageIdx = pages.findIndex((p) => p.id === pageId);
         if (currentPageIdx > -1) {
@@ -132,7 +132,7 @@ export class CarrierTextService {
       .pipe(take(1))
       .subscribe((pages: Page[]) => {
         let textIdToJump: string | undefined = undefined;
-        let textToJump: DisplayCarrierText | undefined;
+        let textToJump: CarrierText | undefined;
 
         const currentPageIdx = pages.findIndex((p) => p.id === pageId);
         if (currentPageIdx > -1) {

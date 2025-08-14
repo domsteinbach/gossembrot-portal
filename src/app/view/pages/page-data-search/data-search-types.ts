@@ -1,7 +1,7 @@
 import { DisplayVerweis } from '../../../model/verweis';
 import { Belegstelle } from '../../../model/belegstelle';
 import { InformationCarrier } from '../../../model/infoCarrier';
-import { DisplayCarrierText } from '../../../model/carriertext';
+import { CarrierText } from '../../../model/carriertext';
 import { Author } from '../../../model/author';
 import { Page } from '../../../model/page';
 import { PrimitiveDataType } from './page-verweis-search/search.types';
@@ -14,7 +14,7 @@ type VerweisColumn =
   | keyof Belegstelle
   | keyof InformationCarrier;
 
-export type Column = VerweisColumn | keyof DisplayCarrierText | keyof Author | keyof GndAuthor | keyof Page | 'srcTextAuthor' | 'targetTextAuthor' | 'gndData.dateOfBirth';
+export type Column = VerweisColumn | keyof CarrierText | keyof Author | keyof GndAuthor | keyof Page | 'srcTextAuthor' | 'targetTextAuthor' | 'gndData.dateOfBirth';
 
 export interface ColumnDef {
   column: Column; // define the column name; subobjects are allowed, e.g. gndData.dateOfBirth, but only one level deep

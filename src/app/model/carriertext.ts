@@ -7,36 +7,41 @@ import { Belegstelle } from './belegstelle';
 
 /***
  * The texts of a carrier like in the database. Usable for writing to the database.
- */
-export class CarrierText extends GsmbResource {
+ */export class CarrierText extends GsmbResource {
   static readonly tableName = 'carrier_text';
+
   private _authorId: string;
   private _carId: string;
-  private _description: string;
   private _isLost: boolean;
-  private _short: string;
   private _sortInCar: number;
-  protected _title: string;
-  protected _text_range: string;
+  private _title: string;
+  private _text_range: string;
+  private _incipit = '';
+  private _additionalSource = '';
+  private _author!: Author | undefined;
+  private _carrier: InformationCarrier | undefined;
+  private _outgoingVerweise: DisplayVerweis[] = [];
+  private _incomingVerweise: DisplayVerweis[] = [];
 
-  constructor(data: CarrierTextData) {
+  constructor(data: CarrierTextData, carrier?: InformationCarrier) {
     super(data.id);
     this._authorId = data.author_id;
     this._carId = data.car_id;
-    this._description = data.description;
     this._isLost = data.is_lost === 1;
-    this._short = data.short;
     this._sortInCar = data.sort_in_car;
     this._title = data.title;
     this._text_range = data.text_range;
-  }
-
-  get carId(): string {
-    return this._carId;
+    this._incipit = data.incipit;
+    this._additionalSource = data.additional_source || '';
+    this._carrier = carrier;
   }
 
   get authorId(): string {
     return this._authorId;
+  }
+
+  get carId(): string {
+      return this._carId;
   }
 
   get isLost(): boolean {
@@ -48,29 +53,12 @@ export class CarrierText extends GsmbResource {
   }
 
   get title(): string {
-    if (this._title.includes('<incipit>')) {
-      return  this._title.split('<incipit>')[0].trim();
-    }
-    return this._title.trim();
+    return this._title;
   }
 
   get textRange(): string {
-    const prefix = this._text_range.startsWith('Karta') ? '' : 'Bl. ';
+    const prefix = this._text_range?.startsWith('Karta') ? '' : 'Bl. ';
     return this._text_range ? `${prefix}${this._text_range}` : '';
-  }
-}
-
-export class DisplayCarrierText extends CarrierText {
-  private _author!: Author | undefined;
-  private _carrier: InformationCarrier | undefined;
-
-  private _outgoingVerweise: DisplayVerweis[] = [];
-  private _incomingVerweise: DisplayVerweis[] = [];
-  private _incipit = '';
-
-  constructor(data: CarrierTextData, carrier?: InformationCarrier) {
-    super(data);
-    this._carrier = carrier;
   }
 
   get author(): Author | undefined {
@@ -94,19 +82,18 @@ export class DisplayCarrierText extends CarrierText {
   }
 
   get fullTitle(): string {
-    let title = this._title;
-    if (this._title.includes('<incipit>')) {
-      title = this._title.split('<incipit>')[0].trim();
-      this._incipit = this._title.split('<incipit>')[1].replace('</incipit>', '').trim();
-    }
     const c = this.cognomen ? `${this.cognomen}: ` : '';
-    const t = `${c}${title}`;
-    return this.textRange && !this._incipit ? `${t} (${this.textRange})` : t;
+    const t = `${c}${this.title}`;
+    return this.textRange ? `${t} (${this.textRange})` : t;
   }
 
   get incipit(): string {
     return this._incipit;
   }
+
+    get additionalSource(): string {
+        return this._additionalSource;
+    }
 
   get carrier(): InformationCarrier | undefined {
     return this._carrier;
@@ -119,7 +106,6 @@ export class DisplayCarrierText extends CarrierText {
   get outgoingVerweise() {
     return this._outgoingVerweise;
   }
-
   set outgoingVerweise(v) {
     this._outgoingVerweise = v;
   }
@@ -127,7 +113,6 @@ export class DisplayCarrierText extends CarrierText {
   get incomingVerweise() {
     return this._incomingVerweise;
   }
-
   // incoming verweise including nennungen
   set incomingVerweise(val: DisplayVerweis[]) {
     this._incomingVerweise = val;
