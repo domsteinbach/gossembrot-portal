@@ -17,4 +17,14 @@
         </div>
     </div>
 </div>
-<div *ngIf="hsLinkText" class="steckbrief-entry" [innerHTML]="hsLinkText"></div>
+<div *ngIf="hsLinkText && infoCarrier.id !== 'TR_A_0018'" class="steckbrief-entry" [innerHTML]="hsLinkText"></div>
+<div *ngIf="infoCarrier.id === 'TR_A_0018'" class="steckbrief-entry">
+    <span>Link zum </span>
+    <a href="https://www.digitale-sammlungen.de/de/view/bsb00131282" target="_blank">Digitalisat (Clm 17848)</a>
+    <span> der Bibliothek und zum Handschriftenportal (</span>
+    <a href="https://handschriftenportal.de/search?hspobjectid=HSP-768239a2-8d98-383a-952b-2ca0e16fb042" target="_blank">Clm 17848</a>
+    <span>, </span>
+    <a href="https://handschriftenportal.de/search?hspobjectid=HSP-312753e4-0e5b-3db9-a8dc-03bf2c4bc070" target="_blank">Clm 26346</a>
+    <span>).</span>
+</div>
+

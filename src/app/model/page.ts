@@ -102,15 +102,13 @@ export class Page extends GsmbResource {
     if ( this.isMissingBlatt) {
       return this.folio === 'v' ? EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_V : EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_R;
     }  else {
-      return this._imgDir;
+      return `${EnvConstants.LOCAL_IMG_FALLBACK_DIR}${this._imgDir}`;
     }
   }
 
   get isMissingBlatt(): boolean {
     return this._isMissingBlatt;
   }
-
-
 
   get externalImgUrl(): string {
     return this._externalImgUrl;
@@ -199,6 +197,10 @@ export class NullPage extends Page {
     pageData.img_dir = EnvConstants.NULL_IMG_PATH;
     super(pageData);
   }
+
+  override get imgDir(): string {
+    return this._imgDir;
+  }
 }
 
 // a page to be displayed when a page is referred to by a verweis but the carrier is lost or there is no carrier available
@@ -211,6 +213,11 @@ export class PageOfMissingCarrier extends Page {
 
     super(pageData);
   }
+
+  override get imgDir(): string {
+    return this._imgDir;
+  }
+
 }
 
 // a page to be displayed when a page is referred to by a verweis but the carrier is lost or there is no carrier available
@@ -266,6 +273,6 @@ export const emptyPageData: PageData = {
   local_img_is_corrupt: 0,
   autocompared_iiif: 0,
   match_percentage: 0,
-  manually_defined_info_json: 0, // 0 = 'no', 1 = 'yes',
-  is_missing_blatt: 0 // 0 = 'no', 1 = 'yes'
+  manually_defined_info_json: 0,
+  is_missing_blatt: 0
 };

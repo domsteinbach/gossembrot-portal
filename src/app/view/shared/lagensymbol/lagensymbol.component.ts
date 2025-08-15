@@ -4,7 +4,6 @@ import { Page } from '../../../model/page';
 import { map } from 'rxjs';
 import { GsmbTheme } from '../../../model/theme';
 import { SelectedThemeState } from '../../../state/theme-state';
-import { environment } from '../../../../environments/environment';
 import { EnvConstants } from '../../../constants';
 
 @Component({

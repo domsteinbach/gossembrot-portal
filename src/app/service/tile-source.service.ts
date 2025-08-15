@@ -80,7 +80,7 @@ export class TileSourceService {
 
 
   getSingleTileSource(page: Page | undefined): Observable<GsmbTileSource | undefined> {
-    if (page?.iiifInfoUrl) {
+    if (page?.iiifInfoUrl && (!page.autocomparedIiif || page.matchPercentage >= 25 || page.manuallyAddedIiif))  {
       return this._dataService.getIIIFinfo(page.iiifInfoUrl).pipe(
         map((infoJson) => new GsmbTileSource('iiif', infoJson)),
         catchError((error) => {

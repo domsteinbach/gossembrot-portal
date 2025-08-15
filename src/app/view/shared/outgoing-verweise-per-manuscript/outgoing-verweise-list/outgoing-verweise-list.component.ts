@@ -63,8 +63,6 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
           return;
         }
         setTimeout(() => {
-          console.log('OUTGOING this.selectedScrollTarget', this.selectedScrollTarget);
-
           this.scrollDirective.scrollToElement(this.selectedScrollTarget);
           this._cdr.detectChanges();
         }, 0);

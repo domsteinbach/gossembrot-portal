@@ -44,7 +44,6 @@ export class OsdEditorComponent implements OnChanges {
 
   ngOnChanges() {
     if (!this.page) {
-      console.warn('no page');
       return;
     }
     this._tileSourceService
