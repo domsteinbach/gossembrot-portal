@@ -4,9 +4,9 @@ export const environment = {
   useSqlJs: false,
   apiUrl: 'http://localhost:3000',
   prefixUrl: '/gossembrot-db/images/', // openseadragon's button images locally: no images folder in dist
-  localImageBaseUrl: 'http://130.92.252.118:8090/',
-  assetTileSourceBaseUrl: 'http://localhost:4200/',
+  localImageBaseUrl: '/gossembrot-db',
+  assetTileSourceBaseUrl: '../',
   defaultDbName: 'gossembrot',
-  gsmbRoot: '/',
+  gsmbRoot: '',
   loggerImagePath: ''
 };
