@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map, Observable, combineLatest, take, tap, of } from 'rxjs';
 import { DataService } from '../dataservice.service';
-import { BelegstelleData, VerweisData } from '../repository-model';
 import { DisplayVerweis } from '../../model/verweis';
 import { Store } from '@ngxs/store';
-import { Belegstelle } from '../../model/belegstelle';
 import { CarriersState } from '../../state/information-carrier-state.service';
 import { InformationCarrier } from '../../model/infoCarrier';
 
