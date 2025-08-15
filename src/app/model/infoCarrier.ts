@@ -243,7 +243,7 @@ export class InformationCarrier extends GsmbResource {
   }
 
   get inGsmBLibText(): string {
-    return this._inGsmbsLib ? 'aus Gossembrots Bibliothek' : 'ausserhalb Gossembrots Bibliothek';
+    return this._inGsmbsLib ? 'aus Gossembrots Bibliothek' : 'außerhalb Gossembrots Bibliothek';
   }
 
   // Helper methods

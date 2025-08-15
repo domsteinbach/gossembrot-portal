@@ -13,7 +13,7 @@ export class VerweisAdvancedFilterService {
     []
   );
   private _targetBlattIsFragmentFilter = new BehaviorSubject<boolean[]>([]);
-  private _isNennungFilter = new BehaviorSubject<VerweisType[]>([]);
+  private _isErwaehnungFilter = new BehaviorSubject<VerweisType[]>([]);
   private _targetBlattIsLostFilter = new BehaviorSubject<boolean[]>([]);
 
   get targetPhysicalityFilter$(): Observable<Physicality[]> {
@@ -40,12 +40,12 @@ export class VerweisAdvancedFilterService {
     this._targetBlattIsFragmentFilter.next(filters);
   }
 
-  get isNennungFilter$(): Observable<VerweisType[]> {
-    return this._isNennungFilter.asObservable();
+  get isErwaehnungFilter$(): Observable<VerweisType[]> {
+    return this._isErwaehnungFilter.asObservable();
   }
 
-  setIsNennungFilter(filters: VerweisType[]) {
-    this._isNennungFilter.next(filters);
+  setIsErwaehnungFilter(filters: VerweisType[]) {
+    this._isErwaehnungFilter.next(filters);
   }
 
   get targetBlattIsLostFilter$(): Observable<boolean[]> {
@@ -72,7 +72,7 @@ export class VerweisAdvancedFilterService {
             this._filterByTargetBlattIsFragment(verweis)
           )
           .filter((verweis: DisplayVerweis) =>
-            this._filterByIsNennung(verweis)
+            this._filterByIsErwaehnung(verweis)
           )
           .filter((verweis: DisplayVerweis) =>
             this._filterByTargetBlattIsLost(verweis)
@@ -114,8 +114,8 @@ export class VerweisAdvancedFilterService {
     );
   }
 
-  private _filterByIsNennung(verweis: DisplayVerweis): boolean {
-    const activeFilters = this._isNennungFilter.getValue();
+  private _filterByIsErwaehnung(verweis: DisplayVerweis): boolean {
+    const activeFilters = this._isErwaehnungFilter.getValue();
     return activeFilters.some((filter) => filter === verweis.type);
   }
 }

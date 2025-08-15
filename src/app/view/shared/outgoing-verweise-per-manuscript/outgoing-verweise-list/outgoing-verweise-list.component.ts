@@ -25,6 +25,7 @@ import { AuthService } from '../../../../auth/auth.service';
 export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() texts: CarrierText[] = [];
   @Input() loading = false;
+  @Input() highlightErwaehnungen = false;
   @Output() verweisSelected = new EventEmitter<DisplayVerweis>();
 
   @ViewChild('scrollDirective') scrollDirective!: ScrollIntoViewDirective;
@@ -120,7 +121,7 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   displayPage(v: DisplayVerweis): boolean {
-    if (!v.srcBelegstelleObj || v.type === 'Nennung') {
+    if (!v.srcBelegstelleObj || v.type === 'Erwaehnung') {
       return false;
     }
     const printedBy = this._alreadyPrintedPageMap.get(v.srcBelegstelleText);

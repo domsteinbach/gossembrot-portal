@@ -20,11 +20,11 @@ export class VerweisService {
   public getTextsWithOutgoingVerweiseOfCarrier$(
     carrierId: string,
     selfVerweise = true,
-    includeNennungen = false
+    includeErwaehnungen = false
   ): Observable<CarrierText[]> {
 
     const outgoingVerweise$: Observable<DisplayVerweis[]> =
-      this._vr.outgoingVerweiseFromCarrier$(carrierId, includeNennungen);
+      this._vr.outgoingVerweiseFromCarrier$(carrierId, includeErwaehnungen);
 
     const sourceBelegstellen$: Observable<Belegstelle[]> =
       this._br.getSourceBelegstellenOfCarrier$(carrierId);
@@ -36,7 +36,7 @@ export class VerweisService {
 
     const targetTexts$ = this._tr.getTargetTextsOfSrcCarrier$(carrierId);
 
-    // if Nennungen should not be included, then filter them out by filtering the stream of verweise by verweis.type !== 'Nennung'
+    // if Erwaehnungen should not be included, then filter them out by filtering the stream of verweise by verweis.type !== 'Erwaehnung'
     if (!selfVerweise) {
       return this._mergeAllIntoTexts$(
         outgoingVerweise$.pipe(
@@ -50,7 +50,7 @@ export class VerweisService {
         targetTexts$
       );
     } else {
-      // return all the verweise including the nennungen
+      // return all the verweise including the Erwaehnungen
       return this._mergeAllIntoTexts$(
         outgoingVerweise$,
         sourceBelegstellen$,

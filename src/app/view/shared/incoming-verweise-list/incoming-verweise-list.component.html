@@ -15,7 +15,7 @@
                 <span *ngIf="t.author?.linkToGnd" matTooltip="Autor #{{t?.author?.gndId}} in der Deutschen Nationalbibliothek öffnen"><a class="author-link" [href]="t?.author?.linkToGnd || ''" target="_blank">{{t.author?.cognomen}}</a>: </span>
               </span>
               <span>{{t.title}}</span>
-              <span *ngIf="t.isOnlyNennung"> (Nennung) </span>
+              <span *ngIf="t.isOnlyErwaehnung"> (Erwähnung) </span>
             </h4>
             <div *ngFor="let v of t.incomingVerweise; let i = index">
 

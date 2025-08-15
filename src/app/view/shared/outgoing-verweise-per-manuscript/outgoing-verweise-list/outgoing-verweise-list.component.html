@@ -21,7 +21,7 @@
             </h4>
         </div>
         <div *ngFor="let v of t.outgoingVerweise">
-            <div *ngIf="v.insecurity <=1 && displayWortlaut(v);" [ngStyle]="{'color': v.type === 'Nennung' ? 'red' : 'inherit'}" id="{{OUTGOING_PREFIX}}{{v.id}}">
+            <div *ngIf="v.insecurity <=1 && displayWortlaut(v);" [ngStyle]="{'color': v.type === 'Erwaehnung' && this.highlightErwaehnungen ? 'red' : 'inherit'}" id="{{OUTGOING_PREFIX}}{{v.id}}">
                 <div *ngIf="(v.srcBelegstelleObj?.abschnitt && displayAbschnitt(v)) || closingAbschnitt(v)" class="abschnitt-container">
                   <hr class="abschnitt-line">
                   <div class="abschnitt-text">{{closingAbschnitt(v) ? 'Ohne Zuordnung' : v.srcBelegstelleObj?.abschnitt }}</div>

@@ -188,7 +188,7 @@ FROM
     verweis
 WHERE
     verweis.src_text IS NOT NULL
-    AND verweis.type = 0 -- no nennung
+    AND verweis.type = 0 -- no "Erwaehnung"
 UNION
 SELECT DISTINCT
     target_car AS source,
@@ -198,7 +198,7 @@ SELECT DISTINCT
 FROM
     verweis
 WHERE
-    verweis.type = 0 -- no nennung
+    verweis.type = 0 -- no "Erwaehnung"
     AND verweis.target_text IS NOT NULL`;
     return this._dataService.getData<VisualisationNodeLinkData>(q);
   }
@@ -229,7 +229,7 @@ WHERE
     ${sourcesClause}
     verweis.src_text IS NOT NULL
     AND verweis.src_belegstelle IS NOT NULL
-    AND verweis.type = 0 -- no nennung
+    AND verweis.type = 0 -- no Erwaehnung
 UNION
 SELECT DISTINCT
     target_text AS source,
@@ -242,7 +242,7 @@ WHERE
      ${targetClause}
     verweis.target_text IS NOT NULL
     AND verweis.target_belegstelle IS NOT NULL
-    AND verweis.type = 0 -- no nennung;
+    AND verweis.type = 0 -- no "Erwähnung";
     ;`;
     return this._dataService.getData<VisualisationNodeLinkData>(q);
   }

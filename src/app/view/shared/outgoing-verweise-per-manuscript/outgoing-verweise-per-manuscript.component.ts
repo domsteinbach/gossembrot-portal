@@ -63,8 +63,8 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
 
   loading = false;
 
-  private _includeNennungen = new BehaviorSubject<boolean>(false);
-  includeNennungen$ = this._includeNennungen.asObservable();
+  private _highlightErwaehnungen = new BehaviorSubject<boolean>(false);
+  highlightErwaehnungen$ = this._highlightErwaehnungen.asObservable();
 
   get isAuthenticated(): boolean {
     return this._authService.isAuthenticated();
@@ -86,7 +86,7 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
     }
     if (changes['selectedCarrier'] && this.selectedCarrier) {
       this.loading = true;
-      this._getTextsWithOutgoingVerweise$(this.selectedCarrier.id, this._includeNennungen.value)
+      this._getTextsWithOutgoingVerweise$(this.selectedCarrier.id, true)
         .pipe(take(1))
         .subscribe(texts => {
           this.texts = texts;
@@ -113,13 +113,13 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
 
   private _getTextsWithOutgoingVerweise$(
     carrierId: string,
-    includeNennungen: boolean
+    includeErwaehnungen: boolean
   ) {
     return this._verweisService
       .getTextsWithOutgoingVerweiseOfCarrier$(
         carrierId,
         true,
-        includeNennungen
+          includeErwaehnungen
       )
       .pipe(
         map((texts: CarrierText[]) => {
@@ -134,7 +134,7 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
       ;
   }
 
-  onIncludeNennungenChange(includeNennungen: boolean): void {
-    this._includeNennungen.next(includeNennungen);
+  onIncludeErwaehnungenChange(include: boolean): void {
+    this._highlightErwaehnungen.next(include);
   }
 }

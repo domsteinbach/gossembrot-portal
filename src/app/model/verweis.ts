@@ -8,10 +8,10 @@ import { GsmbResource } from '../data/repository/gsmb-resource';
 
 export enum VerweisTypes {
   Verweis = 0,
-  Nennung = 1,
+  Erwaehnung = 1,
 }
 
-export type VerweisType = 'Verweis' | 'Nennung';
+export type VerweisType = 'Verweis' | 'Erwaehnung';
 
 export class Verweis extends GsmbResource {
   protected _type: VerweisType;

@@ -94,7 +94,7 @@ export interface BelegstelleData {
 }
 
 export interface VerweisData {
-  type: number; // 0 = 'Nennung', 1 = 'Verweis
+  type: number; // 0 = 'Erwaehnung', 1 = 'Verweis
   file_name: string;
   id: string;
   insecurity: number;

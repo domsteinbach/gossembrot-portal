@@ -4,15 +4,15 @@
     <h3 class="subtitle" *ngIf="selectedCarrier && selectedCarrier?.has_outgoing_verweis">Verweise in dieser Handschrift</h3>
     <h3 class="subtitle" *ngIf="selectedCarrier && !selectedCarrier.has_outgoing_verweis">In dieser Handschrift sind keine Verweise enthalten</h3>
     <div *ngIf="isAuthenticated">
-      <!-- checkbox to include nennungen -->
+      <!-- checkbox to include Erwaehnungen -->
       <mat-checkbox
         matTooltip="* Blendet Nennungen in der Liste ein oder aus. Die Nennungen werden rot gedruckt."
-        [checked]="includeNennungen$ | async"
-        (change)="onIncludeNennungenChange($event.checked)"
-      >* Nennungen anzeigen
+        [checked]="highlightErwaehnungen$ | async"
+        (change)="onIncludeErwaehnungenChange($event.checked)"
+      >* Erwähnungen anzeigen
       </mat-checkbox>
     </div>
   </div>
   <app-outgoing-verweise-list
-    class="scroll-container" [loading]="loading" [texts] = "texts || []" (verweisSelected)="onVerweisSelected($event)"/>
+    class="scroll-container" [loading]="loading" [texts] = "texts || []" [highlightErwaehnungen]="(highlightErwaehnungen$ | async) || false" (verweisSelected)="onVerweisSelected($event)"/>
 </div>

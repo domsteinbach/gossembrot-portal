@@ -42,20 +42,20 @@ export class VerweisRepository {
   /***
    * get all outgoing Verweise from a given information carrier
    * @param car_id
-   * @param includeNennungen
+   * @param includeErwaehnungen
    */
   outgoingVerweiseFromCarrier$(
     car_id: string,
-    includeNennungen = false
+    includeErwaehnungen = false
   ): Observable<DisplayVerweis[]> {
     const verweise$ = this._cachedVerweise.length
       ? this.verweise$().pipe(
         map((data) =>
-          data.filter((v) => v.srcCar === car_id && (includeNennungen || v.type !== 'Nennung'))
+          data.filter((v) => v.srcCar === car_id && (includeErwaehnungen || v.type !== 'Erwaehnung'))
         )
       )
       : this._getOutgoingVerweiseFromCarrier$(car_id).pipe(
-        map((data) => data.filter((v) => includeNennungen || v.type !== 'Nennung'))
+        map((data) => data.filter((v) => includeErwaehnungen || v.type !== 'Erwaehnung'))
       );
 
 

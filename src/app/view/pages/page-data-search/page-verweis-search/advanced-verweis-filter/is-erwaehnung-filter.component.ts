@@ -4,36 +4,36 @@ import { VerweisAdvancedFilterService } from '../verweis-advanced-filter.service
 import { VerweisType } from '../../../../../model/verweis';
 
 @Component({
-  selector: 'app-is-nennung-filter',
+  selector: 'app-is-erwaehnung-filter',
   template: `
     <mat-checkbox
-      *ngFor="let type of isNennungControls"
-      [checked]="isChecked(type)"
-      (change)="onCheckboxChange($event, type)"
+        *ngFor="let type of isErwaehnungControls"
+        [checked]="isChecked(type)"
+        (change)="onCheckboxChange($event, type)"
     >
       {{ type.label }}
     </mat-checkbox>
   `,
 })
-export class IsNennungFilterComponent {
-  isNennungControls: BooleanControl[] = [
+export class IsErwaehnungFilterComponent {
+  isErwaehnungControls: BooleanControl[] = [
     { checkboxValue: true, value: 'Verweis', label: 'Verweise' },
     {
       checkboxValue: true,
-      value: 'Nennung',
-      label: 'Nennungen ohne Verweis',
+      value: 'Erwaehnung',
+      label: 'Erwähnung ohne Verweis',
     },
   ];
 
-  selectedFilters: VerweisType[] = this.isNennungControls.map((t) => t.value);
+  selectedFilters: VerweisType[] = this.isErwaehnungControls.map((t) => t.value);
 
   constructor(private filterService: VerweisAdvancedFilterService) {
-    this.filterService.setIsNennungFilter(this.selectedFilters);
+    this.filterService.setIsErwaehnungFilter(this.selectedFilters);
   }
 
   isChecked(filter: BooleanControl): boolean {
     return (
-      this.isNennungControls.filter(
+      this.isErwaehnungControls.filter(
         (t) => t.label == filter.label && t.checkboxValue
       ).length > 0
     );
@@ -47,6 +47,6 @@ export class IsNennungFilterComponent {
         (t) => t !== filter.value
       );
     }
-    this.filterService.setIsNennungFilter(this.selectedFilters);
+    this.filterService.setIsErwaehnungFilter(this.selectedFilters);
   }
 }

@@ -102,7 +102,7 @@ import { PhysicalityFilterComponent } from './view/pages/page-data-search/page-v
 import { AdvancedVerweisFilterComponent } from './view/pages/page-data-search/page-verweis-search/advanced-verweis-filter/advanced-verweis-filter.component';
 import { InfocarTypeFilterComponent } from './view/pages/page-data-search/page-verweis-search/advanced-verweis-filter/infocar-type-filter.component';
 import { TargetBlattIsFragmentFilterComponent } from './view/pages/page-data-search/page-verweis-search/advanced-verweis-filter/target-blatt-is-fragment-filter.component';
-import { IsNennungFilterComponent } from './view/pages/page-data-search/page-verweis-search/advanced-verweis-filter/is-nennung-filter.component';
+import { IsErwaehnungFilterComponent } from './view/pages/page-data-search/page-verweis-search/advanced-verweis-filter/is-erwaehnung-filter.component';
 import { PageDataSearchComponent } from './view/pages/page-data-search/page-data-search.component';
 import { CarrierTextSearchComponent } from './view/pages/page-data-search/page-carrier-text-search/carrier-text-search.component';
 import { MatButtonLoading } from '@ng-matero/extensions/button';
@@ -180,7 +180,7 @@ export function tokenGetter() {
     ManuscriptCompareComponent,
     InfoCarrierSelectComponent,
     InfocarTypeFilterComponent,
-    IsNennungFilterComponent,
+    IsErwaehnungFilterComponent,
     TargetBlattIsFragmentFilterComponent,
     IncomingVerweiseComponent,
     HeaderComponent,

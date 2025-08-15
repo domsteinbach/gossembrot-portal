@@ -18,7 +18,7 @@
                                 <span *ngIf="selectedCarrier.physicality === 'Lost'">Aus Verweisen </span>
                                 <span>{{selectedCarrier.getCarrierTypeDescDe()}}</span>
                                 <span *ngIf="selectedCarrier.carrierType !== 'Classic' && selectedCarrier.inGsmbsLib"> aus Gossembrots Bibliothek</span>
-                                <span *ngIf="selectedCarrier.carrierType !== 'Classic' && !selectedCarrier.inGsmbsLib"> ausserhalb Gossembrots Bibliothek</span>
+                                <span *ngIf="selectedCarrier.carrierType !== 'Classic' && !selectedCarrier.inGsmbsLib"> außerhalb Gossembrots Bibliothek</span>
                             </h4>
                         </mat-card-subtitle>
                       <mat-card-subtitle class="subtitle" *ngIf="selectedCarrier && selectedCarrier.carrierType === 'NonHabeo'">

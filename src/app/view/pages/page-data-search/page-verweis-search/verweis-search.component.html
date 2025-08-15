@@ -44,7 +44,7 @@
                     >
                         <!-- Conditional rendering for "srcBelegstelleText" column -->
                         <ng-container *ngIf="col.column === 'srcBelegstelleText'" style="display: flex;">
-                            {{ element[col.column] }}
+                            <span>{{ element[col.column] }} </span>
                             <app-verweis-link-icon-component
                                     [displayedAgent]="'incoming'"
                                     [verweis]="element"
@@ -70,7 +70,7 @@
                         <ng-container *ngIf="col.column === 'targetCarFullTitle'">
                             <span>{{ element.targetCarObj?.fullTitle }}</span>
                             <span *ngIf="element.targetBelegstelleObj?.originalText">, </span>
-                            <span>{{ element.targetBelegstelleObj?.originalText }}</span>
+                            <span>{{ element.targetBelegstelleObj?.originalText }} </span>
                             <app-verweis-link-icon-component
                                     [displayedAgent]="'outgoing'"
                                     [verweis]="element"

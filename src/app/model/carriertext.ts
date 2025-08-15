@@ -113,7 +113,7 @@ import { Belegstelle } from './belegstelle';
   get incomingVerweise() {
     return this._incomingVerweise;
   }
-  // incoming verweise including nennungen
+  // incoming verweise including erwaehnungen
   set incomingVerweise(val: DisplayVerweis[]) {
     this._incomingVerweise = val;
   }
@@ -122,16 +122,16 @@ import { Belegstelle } from './belegstelle';
     return this.incomingVerweise.length > 0;
   }
 
-  get incomingNennungen() {
-    return this._incomingVerweise.filter((v) => v.type === 'Nennung');
+  get incomingErwaehnungen() {
+    return this._incomingVerweise.filter((v) => v.type === 'Erwaehnung');
   }
 
-  get hasIncomingNennung() {
-    return this.incomingNennungen.filter((v) => v.type === 'Nennung').length > 0;
+  get hasIncomingErwaehnung() {
+    return this.incomingErwaehnungen.filter((v) => v.type === 'Erwaehnung').length > 0;
   }
 
-  get isOnlyNennung() {
-    return this.hasIncomingNennung && this.incomingVerweise.length === this.incomingNennungen.length;
+  get isOnlyErwaehnung() {
+    return this.hasIncomingErwaehnung && this.incomingVerweise.length === this.incomingErwaehnungen.length;
   }
 
   get carrierFulltitle(): string {

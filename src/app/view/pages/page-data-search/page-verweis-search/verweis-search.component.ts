@@ -205,7 +205,7 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
       this._advancedFilterService.targetInfoCarrierTypeFilter$,
       this._advancedFilterService.targetBlattIsFragmentFilter$,
       this._advancedFilterService.targetBlattIsLostFilter$,
-      this._advancedFilterService.isNennungFilter$,
+      this._advancedFilterService.isErwaehnungFilter$,
       this._fs.activeNullFilters$
     ])
       .pipe(
