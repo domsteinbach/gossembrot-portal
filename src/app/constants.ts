@@ -1,8 +1,8 @@
 import { environment } from '../environments/environment';
 
 export class EnvConstants {
-  static readonly ASSET_IMG_PATH = `${environment.assetTileSourceBaseUrl}${environment.gsmbRoot}/assets/img`;
-  static readonly LAGENSYM_BASE_PATH = `${environment.assetTileSourceBaseUrl}${environment.gsmbRoot}/assets/Lagensymbole`;
+  static readonly ASSET_IMG_PATH = `${environment.localImageBaseUrl}${environment.gsmbRoot}/assets/img`;
+  static readonly LAGENSYM_BASE_PATH = `${environment.localImageBaseUrl}${environment.gsmbRoot}/assets/Lagensymbole`;
   static readonly NULL_IMG_PATH = `${this.ASSET_IMG_PATH}/transparent.svg`; // for resetting viewer
   static readonly NOT_FOUND_IMG_PATH = `${this.ASSET_IMG_PATH}/NotFound.png`; // for technically not found images
   static readonly BLATT_OF_MISSING_CARRIER_PATH = `${this.ASSET_IMG_PATH}/lost.jpg`; // for lost belegstellen, lost pages onto which a verweis is pointing

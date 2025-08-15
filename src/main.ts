@@ -7,9 +7,12 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
-navigator.serviceWorker?.getRegistrations().then(regs => {
-  regs.forEach(reg => reg.unregister());
-});
+
+if ('serviceWorker' in navigator && environment.useSqlJs) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(`${environment.gsmbRoot}sw.js`, { scope: environment.gsmbRoot });
+  });
+}
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)

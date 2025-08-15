@@ -4,13 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "postinstall": "node ./scripts/set-version.js",
-    "prebuild": "node ./scripts/set-version.js",
     "build": "ng build",
-    "prebuild:test": "node ./scripts/set-version.js",
     "build:test": "ng build --configuration=test-server && ./copy-htaccess.sh test-server",
-    "prebuild:prod": "node ./scripts/set-version.js",
     "build:prod": "ng build --configuration=production && ./copy-htaccess.sh production",
+    "build:static": "ng build --configuration static",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "node api/local-server.js",
@@ -48,6 +45,7 @@
     "openseadragon": "^4.1.1",
     "rxjs": "^7.8.1",
     "sass": "^1.80.3",
+    "sql.js": "^1.13.0",
     "tslib": "^2.8.0",
     "zone.js": "^0.14.0"
   },
