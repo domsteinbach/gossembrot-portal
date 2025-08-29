@@ -83,7 +83,7 @@ Run `npm run lint`
 
 Run `npm run format`
 
-## Authetication and user management
+## Authentication and user management
 
 Authentication and user management is only implemented for the mysql database (not for the sqlite database).
 It's sole purpose is feature flagging during development. There are no CUD operations implemented (Create, Update, Delete) anyway.
