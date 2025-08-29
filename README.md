@@ -53,6 +53,8 @@ If you need to kill the process (Be aware you kill the right one of course):
 ## Data updates for static hosting (sqlite database)
 
 - Change or replace the csv files in src/assets/import
+- Increase the version number in the "dbUrl" property in src/environments/environment.*.ts, e.g.: "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.1' to "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.2'
+  Otherwise the browser might use a cached version of the sqlite database
 - Rebuild the static page (see above). The csv files are imported into the sqlite database during build.
 
 ## Running unit tests
