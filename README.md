@@ -1,29 +1,32 @@
 # Gossembrot-Portal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17
 A project of the Swiss Nationalfonds (2021–2025); Lead: Prof. Dr. Michael Stolz (University of Bern).
 
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17. It uses a mysql database or sqlite for static hosting and a node.js server as api.
 
-## Development server with a mysql database running locally
+## Development
 You need a local mysql database running on localhost:3306 - if not, try serve the static version (see below)
 
 ### Start the api (local-server.js) locally
-Run `npm run api` to start the api locally in order to connect to a local mysql server running on localhost:3306. Make sure you have a local mysql database running.
+- Run `npm run api` to start the api locally in order to connect to a local mysql server running on localhost:3306. Make sure you have a local mysql database running.
+
 ### Serve locally
-Run `ng serve` or `ng s` for a dev server. Navigate to `http://localhost:4200/gossembrot-portal/`. 
+- Run `ng serve` or `ng s` for a dev server. Navigate to `http://localhost:4200/gossembrot-portal/`.
 
 ## Build and serve the page locally without a local mysql database (sqlite is used instead)
-Run `npm run serve:static` builds and serves the static files on port 4201. Navigate to `http://localhost:4201/gossembrot-portal/`. (The build artifacts are created in `dist/gossembrot-portal_static/`.)
-Run `npm run build:static:local` to build the project for static hosting. The build artifacts are created in `dist/gossembrot-portal_static/`. It is not served automatically.
 
-## Build a static page for production hosting with apache webserver without a mysql database (sqlite is used instead)
+- Run `npm run serve:static` to build and serve the page. Navigate to `http://localhost:4201/gossembrot-portal/`. The build artifacts are be created in the `dist/gossembrot-portal_static/` directory, so the same used for production hosting with apache webserver (see below).
+
+## Build a static page for hosting with apache webserver without a mysql database (sqlite is used instead)
 - Run `npm run build:static-apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
 - Place the content of the "dist" directory (the whole directory "gossembrot-portal_static") onto the server (e.g. in `/var/www/`)
+- Make sure the apache webserver is configured to serve the page/directory correctly
+- Note the .htaccess file created in the dist/gossembrot-portal_static
 
 ## Build for production hosting with a mysql database
 - Run `npm run build:test` or `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-### Deploy productively with a mysql database
+### Deploy productively alongside a mysql database
 
 - Place the build "dist/gossembrot-portal" into /var/www/gossembrot/
 - If there are changes in server.js, replace the server.js file from the root project directory in `/var/www/mysql-server-gsmb` and restart the server (see below)
@@ -46,6 +49,11 @@ If you need to kill the process (Be aware you kill the right one of course):
 - check if the website displays data
 - in the same terminal disown the process by enter: `disown` (this will prevent the process from being killed when you close the terminal)ß
 - See ./server.log for errors
+
+## Data updates for static hosting (sqlite database)
+
+- Change or replace the csv files in src/assets/import
+- Rebuild the static page (see above). The csv files are imported into the sqlite database during build.
 
 ## Running unit tests
 
