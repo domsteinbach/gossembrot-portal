@@ -32,7 +32,7 @@ Run `npm run build:static:local` to build the project for static hosting. The bu
 
 The server.js file from the root project directory is placed in `/var/www/mysql-server-gsmb`
 
-To see if process is already running, you can:
+Debug:
 
 - Check what's running on port 3000 `lsof -i :3000`
 - Check node processes and see if it is in the list `ps aux | grep node`
@@ -45,9 +45,7 @@ If you need to kill the process (Be aware you kill the right one of course):
 `nohup node server.js > ./server.log 2>&1 &` (after cd into the directory where the server.js file is located)
 - check if the website displays data
 - in the same terminal disown the process by enter: `disown` (this will prevent the process from being killed when you close the terminal)ß
-
-Trouble shooting:
-- check the LOG file ./server.log for errors
+- See ./server.log for errors
 
 ## Running unit tests
 
