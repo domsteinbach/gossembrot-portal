@@ -1,6 +1,8 @@
-# GossembrotDb
+# Gossembrot-Portal
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17
+A project of the Swiss Nationalfonds (2021–2025); Lead: Prof. Dr. Michael Stolz (University of Bern).
+
 
 ## Development server with a mysql database running locally
 You need a local mysql database running on localhost:3306 - if not, try serve the static version (see below)
@@ -10,22 +12,20 @@ Run `npm run api` to start the api locally in order to connect to a local mysql 
 ### Serve locally
 Run `ng serve` or `ng s` for a dev server. Navigate to `http://localhost:4200/gossembrot-portal/`. 
 
-## Build and serve page locally without a local mysql database (sqlite is used instead)
-Run `npm run serve:static` to build and serve the static files on port 4201. Navigate to `http://localhost:4201/gossembrot-portal/`. (The build artifacts are created in `dist/gossembrot-portal_static/`.)
+## Build and serve the page locally without a local mysql database (sqlite is used instead)
+Run `npm run serve:static` builds and serves the static files on port 4201. Navigate to `http://localhost:4201/gossembrot-portal/`. (The build artifacts are created in `dist/gossembrot-portal_static/`.)
 Run `npm run build:static:local` to build the project for static hosting. The build artifacts are created in `dist/gossembrot-portal_static/`. It is not served automatically.
 
 ## Build a static page for production hosting with apache webserver without a mysql database (sqlite is used instead)
 - Run `npm run build:static-apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
 - Place the content of the "dist" directory (the whole directory "gossembrot-portal_static") onto the server (e.g. in `/var/www/`)
 
-
 ## Build for production hosting with a mysql database
 - Run `npm run build:test` or `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+### Deploy productively with a mysql database
 
-### Deploy on prod
-
-- Place the content of the "dist" directory (the whole directory "gossembrot-portal") onto the server
+- Place the build "dist/gossembrot-portal" into /var/www/gossembrot/
 - If there are changes in server.js, replace the server.js file from the root project directory in `/var/www/mysql-server-gsmb` and restart the server (see below)
 
 ### Start node server (mysql api) on production
