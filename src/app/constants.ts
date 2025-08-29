@@ -1,10 +1,8 @@
 import { environment } from '../environments/environment';
 
 export class EnvConstants {
-  static readonly OSD_PREFIX_URL = environment.name !== 'dev' ? `${environment.gsmbRoot}images/` : 'images/'; // for OSD button images
-
-  static readonly ASSET_IMG_PATH = `${environment.gsmbRoot}assets/img`;
-  static readonly LAGENSYM_BASE_PATH = `${environment.gsmbRoot}assets/Lagensymbole`;
+  static readonly ASSET_IMG_PATH = `${environment.assetsRoot}/img`;
+  static readonly LAGENSYM_BASE_PATH = `${environment.assetsRoot}/Lagensymbole`;
 
   static readonly NULL_IMG_PATH = `${this.ASSET_IMG_PATH}/transparent.svg`; // for resetting viewer
   static readonly NOT_FOUND_IMG_PATH = `${this.ASSET_IMG_PATH}/NotFound.png`; // for technically not found images

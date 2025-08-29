@@ -7,4 +7,7 @@ export const environment = {
   localImageBaseUrl: '../',
   defaultDbName: 'gossembrot_test',
   gsmbRoot: 'gossembrot-portal_test',
+  assetsRoot: './assets',
+  osdPrefixUrl: './images/', // for OSD button images
+
 };

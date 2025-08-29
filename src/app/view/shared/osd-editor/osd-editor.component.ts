@@ -81,7 +81,7 @@ export class OsdEditorComponent implements OnChanges {
       element: this.osdEditor.nativeElement,
       tileSources: this.tileSource?.tileSource,
       zoomPerClick: 1,
-      prefixUrl: EnvConstants.OSD_PREFIX_URL,
+      prefixUrl: environment.osdPrefixUrl,
       // Increase maxZoomPixelRatio to allow deeper zooming
       maxZoomPixelRatio: 5, // Allows zooming to 5 times the native resolution of the image
       // Reduce the animationTime to reduce the animation delay. The closer to 0, the faster the animation

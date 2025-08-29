@@ -78,7 +78,7 @@ export class OsdViewerComponent implements OnInit, AfterViewInit, OnDestroy {
     const osdOptions: Options = {
       id: 'someID', // todo: Change
       element: this.osdContainer.nativeElement,
-      prefixUrl: EnvConstants.OSD_PREFIX_URL, // the path to the openseadragon buttons images like zoom-in etc.
+      prefixUrl: environment.osdPrefixUrl, // the path to the openseadragon buttons images like zoom-in etc.
       showNavigator: true,
       navigatorPosition: 'BOTTOM_RIGHT',
       navigatorHeight: 100,

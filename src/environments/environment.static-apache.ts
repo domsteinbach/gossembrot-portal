@@ -8,4 +8,6 @@ export const environment = {
   dbUrl: '/gossembrot-portal_static/assets/db/app.sqlite?v=1',
   defaultDbName: 'gossembrot',
   localImageBaseUrl: 'http://130.92.252.118:8090/',
+  osdPrefixUrl: '/gossembrot-portal_static/images/', // for OSD button images
+  assetsRoot: '/gossembrot-portal_static/assets',
 };

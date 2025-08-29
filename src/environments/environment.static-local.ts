@@ -8,4 +8,6 @@ export const environment = {
   dbUrl: '/assets/db/app.sqlite?v=LOCAL', // can keep the same DB file
   defaultDbName: 'gossembrot',
   localImageBaseUrl: 'http://localhost:4201/',
+  osdPrefixUrl: 'images/',
+  assetsRoot: 'assets',
 };

@@ -7,4 +7,6 @@ export const environment = {
   gsmbRoot: './',
   gsmbDirUp: '',
   defaultDbName: 'gossembrot',
+  osdPrefixUrl: 'images/', // for OSD button images
+  assetsRoot: 'assets',
 };

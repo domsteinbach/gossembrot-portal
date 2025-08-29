@@ -3,8 +3,10 @@ export const environment = {
   production: true,
   name: 'prod',
   useSqlJs: false,
-  apiUrl: '/api', // redirects via proxy to port 3000 where the node server is running
+  apiUrl: '/api',
   localImageBaseUrl: '../',
   defaultDbName: 'gossembrot',
-  gsmbRoot: 'gossembrot-portal',
+  gsmbRoot: 'gossembrot-portal/',
+  assetsRoot: './assets',
+  osdPrefixUrl: './images/', // for OSD button images
 };
