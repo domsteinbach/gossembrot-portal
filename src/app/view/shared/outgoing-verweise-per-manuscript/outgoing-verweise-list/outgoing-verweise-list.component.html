@@ -47,7 +47,7 @@
                             <span *ngIf="v.isSelfTargeting">Interner Verweis: </span>
                             <div *ngIf="!v.isSelfTargeting && v.targetCarObj?.mainNamingGossembrot">{{v.targetCarObj.mainNamingGossembrot}} =</div>
                           <div>
-                            <span>{{v.targetCarObj.fullTitle}}</span>
+                            <span>{{v.targetCarObj?.fullTitle}}</span>
                             <span *ngIf="v.targetBelegstelleObj">, {{v.targetBlattangabe}}</span>
                           </div>
                         </div>

@@ -14,7 +14,7 @@ import { RouteConstants } from '../../../routeConstants';
 export class VerweisLinkIconComponentComponent implements OnInit {
   @Input({required: true}) verweis!: DisplayVerweis;
   @Input({required: true}) displayedAgent!: 'incoming' | 'outgoing';
-  @Input() hideDetail = true; // If true, the target icon is shown, otherwise only the source icon
+  @Input() hideDetail = false; // If true, the target icon is shown, otherwise only the source icon
   @Input() embed = false; // If true, the icon is embedded in text, otherwise as absolute icons above the parent
 
   hideIfSynopsys = false;
