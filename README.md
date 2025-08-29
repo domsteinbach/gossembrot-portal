@@ -17,23 +17,17 @@ You need a local mysql database running on localhost:3306 - if not, try serve th
 
 - Run `npm run serve:static` to build and serve the page. Navigate to `http://localhost:4201/gossembrot-portal/`. The build artifacts are be created in the `dist/gossembrot-portal_static/` directory, so the same used for production hosting with apache webserver (see below).
 
-## Build a static page for hosting with apache webserver without a mysql database (sqlite is used instead)
+## Build and host with apache webserver without a mysql database (sqlite is used instead)
 - Run `npm run build:static-apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
 - Place the content of the "dist" directory (the whole directory "gossembrot-portal_static") onto the server (e.g. in `/var/www/`)
 - Make sure the apache webserver is configured to serve the page/directory correctly
 - Note the .htaccess file created in the dist/gossembrot-portal_static
 
-## Build for production hosting with a mysql database
+## Build and host with a mysql database running
 - Run `npm run build:test` or `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-### Deploy productively alongside a mysql database
-
-- Place the build "dist/gossembrot-portal" into /var/www/gossembrot/
-- If there are changes in server.js, replace the server.js file from the root project directory in `/var/www/mysql-server-gsmb` and restart the server (see below)
-
-### Start node server (mysql api) on production
-
-The server.js file from the root project directory is placed in `/var/www/mysql-server-gsmb`
+- Make sure you have a mysql database running
+- place and start this api/server.js (via nohub, so it is not killed when you close the terminal and it writes the output to a log file):
+  `nohup node server.js > ./server.log 2>&1 &`
 
 Debug:
 
@@ -43,10 +37,6 @@ Debug:
 
 If you need to kill the process (Be aware you kill the right one of course):
 - `kill -9 [PID]` (replace [PID] with the process id)
-
-- Start the server (via nohub, so it is not killed when you close the terminal and it writes the output to a log file):
-`nohup node server.js > ./server.log 2>&1 &` (after cd into the directory where the server.js file is located)
-- check if the website displays data
 - in the same terminal disown the process by enter: `disown` (this will prevent the process from being killed when you close the terminal)ß
 - See ./server.log for errors
 
