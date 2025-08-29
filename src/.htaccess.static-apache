@@ -12,7 +12,7 @@
 AddType application/wasm .wasm
 
 RewriteEngine On
-RewriteBase /gossembrot-db_static/
+RewriteBase /gossembrot-portal_static/
 
 # 1) If a real file or directory exists, serve it
 RewriteCond %{REQUEST_FILENAME} -f [OR]
@@ -24,4 +24,4 @@ RewriteRule ^ - [L]
 RewriteRule ^api($|/) - [L]
 
 # 3) SPA fallback: everything else → index.html
-RewriteRule . /gossembrot-db_static/index.html [L]
+RewriteRule . /gossembrot-portal_static/index.html [L]

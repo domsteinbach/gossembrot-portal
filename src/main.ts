@@ -10,5 +10,12 @@ import { environment } from './environments/environment';
 
   platformBrowserDynamic()
       .bootstrapModule(AppModule)
+      .then(() => {
+        const splash = document.getElementById('app-splash');
+        if (splash) {
+          splash.classList.add('fade-out');
+          setTimeout(() => splash.remove(), 300);
+        }
+      })
       .catch(err => console.error(err));
 })();

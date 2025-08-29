@@ -1,6 +1,6 @@
 {
-  "name": "gossembrot-db",
-  "version": "1.21.0",
+  "name": "gossembrot-portal",
+  "version": "1.22.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +10,7 @@
     "build:prod": "ng build --configuration=production && ./tools/copy-htaccess.sh production",
     "build:static:apache": "npm run db:build && ng build --configuration static-apache && ./tools/copy-htaccess.sh static-apache",
     "build:static:local": "ng build --configuration=static-local",
-    "serve:static": "npm run build:static:local && http-server dist/gossembrot-db_static -p 4201 -c-1 --cors",
+    "serve:static": "npm run build:static:local && http-server dist/gossembrot-portal_static -p 4201 -c-1 --cors",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "node api/local-server.js",

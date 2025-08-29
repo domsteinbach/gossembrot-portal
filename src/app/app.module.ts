@@ -1,6 +1,6 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataService } from './data/dataservice.service';
@@ -233,7 +233,7 @@ export function tokenGetter() {
     VerweisViewComponent,
     VerweisViewBlattInfoComponent,
     VisualisationDataComponent,
-    VisDataInteractionComponent,
+    VisDataInteractionComponent
   ],
   imports: [
     NgxsModule.forRoot([

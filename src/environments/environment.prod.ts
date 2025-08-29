@@ -6,5 +6,5 @@ export const environment = {
   apiUrl: '/api', // redirects via proxy to port 3000 where the node server is running
   localImageBaseUrl: '../',
   defaultDbName: 'gossembrot',
-  gsmbRoot: 'gossembrot-db',
+  gsmbRoot: 'gossembrot-portal',
 };

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gossembrot-db": {
+    "gossembrot-portal": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,8 +17,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/gossembrot-db",
-            "baseHref": "/gossembrot-db/",
+            "outputPath": "dist/gossembrot-portal",
+            "baseHref": "/gossembrot-portal/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "optimization": true,
@@ -103,8 +103,8 @@
                   "with": "src/environments/environment.test-server.ts"
                 }
               ],
-              "baseHref": "/gossembrot-db_test/",
-              "outputPath": "dist/gossembrot-db_test",
+              "baseHref": "/gossembrot-portal_test/",
+              "outputPath": "dist/gossembrot-portal_test",
               "outputHashing": "all"
             },
             "development": {
@@ -115,7 +115,7 @@
               "sourceMap": true,
               "namedChunks": true
             },
-            "static": {
+            "static-apache": {
               "budgets": [
                 { "type": "initial", "maximumWarning": "4mb", "maximumError": "6mb" },
                 { "type": "anyComponentStyle", "maximumWarning": "100kb", "maximumError": "200kb" }
@@ -128,12 +128,12 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.static.ts"
+                  "with": "src/environments/environment.static-apache.ts"
                 }
               ],
-              "baseHref": "/gossembrot-db_static/",
-              "deployUrl": "/gossembrot-db_static/",
-              "outputPath": "dist/gossembrot-db_static",
+              "baseHref": "/gossembrot-portal_static/",
+              "deployUrl": "/gossembrot-portal_static/",
+              "outputPath": "dist/gossembrot-portal_static",
               "outputHashing": "all",
 
               "assets": [
@@ -168,7 +168,7 @@
               ],
               "baseHref": "/",
               "deployUrl": "/",
-              "outputPath": "dist/gossembrot-db_static",
+              "outputPath": "dist/gossembrot-portal_static",
               "outputHashing": "all",
               "assets": [
                 "src/favicon.ico",
@@ -186,13 +186,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "gossembrot-db:build:production"
+              "buildTarget": "gossembrot-portal:build:production"
             },
             "development": {
-              "buildTarget": "gossembrot-db:build:development"
+              "buildTarget": "gossembrot-portal:build:development"
             },
             "static": {
-              "buildTarget": "gossembrot-db:build:static"
+              "buildTarget": "gossembrot-portal:build:static"
             }
           },
           "defaultConfiguration": "development",
@@ -203,7 +203,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "gossembrot-db:build"
+            "browserTarget": "gossembrot-portal:build"
           }
         },
         "test": {

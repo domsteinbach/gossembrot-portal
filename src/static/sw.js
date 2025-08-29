@@ -1,4 +1,31 @@
-/* --- scope helpers --- */
+async function signalDbReady() {
+    const clients = await self.clients.matchAll({ type: 'window' });
+    for (const c of clients) c.postMessage({ type: 'DB_READY' });
+}
+
+self.addEventListener('activate', (e) => {
+    e.waitUntil((async () => {
+        await self.clients.claim();
+        try {
+            await initDb();
+            await signalDbReady();        // <— notify controlled pages
+        } catch (_) {}
+    })());
+});
+
+self.addEventListener('message', async (event) => {
+    if (!event || !event.data) return;
+    if (event.data.type === 'PING_DB') {
+        try {
+            await initDb();
+            event.source?.postMessage?.({ type: 'DB_READY' }); // reply to the sender
+        } catch (e) {
+            event.source?.postMessage?.({ type: 'DB_ERROR', error: String(e?.message || e) });
+        }
+    }
+});
+
+
 const SCOPE  = (self.registration && self.registration.scope) || new URL('./', self.location.href).toString();
 const scoped = (p) => new URL(p, SCOPE).toString();
 
@@ -28,8 +55,8 @@ async function initDb() {
 }
 
 /* --- paths inside scope --- */
-const scopeRootPath = new URL('.', SCOPE).pathname;    // e.g. "/gossembrot-db_static/"
-const apiPath       = new URL('api', SCOPE).pathname;  // e.g. "/gossembrot-db_static/api"
+const scopeRootPath = new URL('.', SCOPE).pathname;    // e.g. "/gossembrot-portal_static/"
+const apiPath       = new URL('api', SCOPE).pathname;  // e.g. "/gossembrot-portal_static/api"
 const loginPath     = new URL('login', SCOPE).pathname;
 const updatePath    = new URL('update', SCOPE).pathname;
 

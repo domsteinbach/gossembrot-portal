@@ -1,14 +1,42 @@
 import { environment } from '../environments/environment';
 
-export function waitForSwReadyFactory() {
-    return () => {
-        if (!environment.useSqlJs || !('serviceWorker' in navigator)) {
-            return Promise.resolve();
+function waitForMessage<T = any>(type: string, timeoutMs = 10000): Promise<T> {
+    return new Promise((resolve, reject) => {
+        const t = setTimeout(() => {
+            navigator.serviceWorker.removeEventListener('message', onMsg);
+            reject(new Error(`Timeout waiting for ${type}`));
+        }, timeoutMs);
+
+        function onMsg(ev: MessageEvent) {
+            const data = ev?.data;
+            if (data?.type === type) {
+                clearTimeout(t);
+                navigator.serviceWorker.removeEventListener('message', onMsg);
+                resolve(data as T);
+            }
         }
-        // Register at the app scope and wait until it controls the page
+        navigator.serviceWorker.addEventListener('message', onMsg);
+    });
+}
+
+export function waitForSwReadyFactory() {
+    return async () => {
+        if (!environment.useSqlJs || !('serviceWorker' in navigator)) return;
+
         const scope = environment.gsmbRoot || '/';
-        return navigator.serviceWorker.register(`${scope}sw.js`, { scope })
-            .then(() => navigator.serviceWorker.ready) // active + controlling on next nav
-            .catch(() => void 0); // fail open: app still runs (will hit real API if any)
+        // Register early
+        await navigator.serviceWorker.register(`${scope}sw.js`, { scope }).catch(() => {});
+        // Wait for an active worker controlling this page
+        await navigator.serviceWorker.ready.catch(() => {});
+
+        // Ask SW to ensure DB is loaded and wait for the explicit signal
+        const controller = navigator.serviceWorker.controller;
+        if (controller) controller.postMessage({ type: 'PING_DB' });
+
+        try {
+            await waitForMessage('DB_READY', 15000); // up to 15s on a cold first load
+        } catch {
+            // Fallback: fail-open (your splash is still visible until app boots)
+        }
     };
 }

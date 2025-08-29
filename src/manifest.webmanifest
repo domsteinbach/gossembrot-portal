@@ -1,6 +1,6 @@
 {
-  "name": "gossembrot-db",
-  "short_name": "gossembrot-db",
+  "name": "gossembrot-portal",
+  "short_name": "gossembrot-portal",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
