@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -153,6 +153,8 @@ import {
 import { ManuscriptCompareComponent } from './view/pages/manuscript-compare/manuscript-compare.component';
 import { BlattSelectComponent } from './view/shared/blatt-select/blatt-select.component';
 import { NonHabeoComponent } from './view/pages/page-incoming-verweise/non-habeo/non-habeo.component';
+import {environment} from "../environments/environment";
+import {waitForSwReadyFactory} from "./sw-ready.initializer";
 
 export function tokenGetter() {
   return localStorage.getItem('token'); // Ensure this matches how you store the token
@@ -305,6 +307,11 @@ export function tokenGetter() {
     VerweisService,
     ThemeHandlerService,
     VisualizationRepository,
+    ...(environment.useSqlJs ? [{
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: waitForSwReadyFactory
+    }] : [])
   ],
   bootstrap: [AppComponent],
   exports: [

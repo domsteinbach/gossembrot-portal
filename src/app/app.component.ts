@@ -32,9 +32,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject<void>();
 
-  loggerImagePath = environment.loggerImagePath;
-
-
   constructor(
     private _localStorageService: LocalStorageService, // do not remove; to initialize the local storage service
     private _icr: InfoCarrierRepository,

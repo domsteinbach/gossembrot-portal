@@ -131,8 +131,9 @@
                   "with": "src/environments/environment.static.ts"
                 }
               ],
-              "baseHref": "./",
-              "deployUrl": "./",
+              "baseHref": "/gossembrot-db_static/",
+              "deployUrl": "/gossembrot-db_static/",
+              "outputPath": "dist/gossembrot-db_static",
               "outputHashing": "all",
 
               "assets": [
@@ -148,7 +149,34 @@
                 "src/manifest.webmanifest",
                 { "glob": "**/*", "input": "node_modules/sql.js/dist", "output": "assets/sqljs" },
                 { "glob": "app.sqlite", "input": "src/assets/db", "output": "assets/db" },
-                { "glob": "sw.js", "input": "src/static", "output": "/" }
+                { "glob": "sw.js", "input": "src/static", "output": "" }
+              ]
+            },
+            "static-local": {
+              "budgets": [
+                { "type": "initial", "maximumWarning": "4mb", "maximumError": "6mb" },
+                { "type": "anyComponentStyle", "maximumWarning": "100kb", "maximumError": "200kb" }
+              ],
+              "optimization": {
+                "scripts": true,
+                "styles": { "minify": true, "inlineCritical": false },
+                "fonts": true
+              },
+              "fileReplacements": [
+                { "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.static-local.ts" }
+              ],
+              "baseHref": "/",
+              "deployUrl": "/",
+              "outputPath": "dist/gossembrot-db_static",
+              "outputHashing": "all",
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                "src/Lagensymbole",
+                { "glob": "sw.js",              "input": "src/static",         "output": "" },
+                { "glob": "**/*",               "input": "node_modules/sql.js/dist", "output": "assets/sqljs" },
+                { "glob": "app.sqlite",         "input": "src/assets/db",      "output": "assets/db" }
               ]
             }
           },
@@ -162,9 +190,6 @@
             },
             "development": {
               "buildTarget": "gossembrot-db:build:development"
-            },
-            "prodServer": {
-              "buildTarget": "gossembrot-db:build:prodServer"
             },
             "static": {
               "buildTarget": "gossembrot-db:build:static"

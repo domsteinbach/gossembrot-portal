@@ -15,6 +15,7 @@ import { DoubleTileSourcesState, LocalDoubleTileSourcesState } from '../../../..
 import { distinctUntilChanged, Observable, Subject } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
+import {EnvConstants} from "../../../../../constants";
 
 // tile source interface for non iiif images
 export interface LocalTileSource {
@@ -77,7 +78,7 @@ export class OsdViewerComponent implements OnInit, AfterViewInit, OnDestroy {
     const osdOptions: Options = {
       id: 'someID', // todo: Change
       element: this.osdContainer.nativeElement,
-      prefixUrl: environment.prefixUrl, // the path to the openseadragon buttons images like zoom-in etc.
+      prefixUrl: EnvConstants.OSD_PREFIX_URL, // the path to the openseadragon buttons images like zoom-in etc.
       showNavigator: true,
       navigatorPosition: 'BOTTOM_RIGHT',
       navigatorHeight: 100,

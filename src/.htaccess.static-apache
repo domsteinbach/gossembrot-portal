@@ -1,0 +1,27 @@
+# Serve index.html with no cache so deploys update quickly
+<Files "index.html">
+  FileETag None
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </IfModule>
+</Files>
+
+# (Optional) correct MIME for wasm
+AddType application/wasm .wasm
+
+RewriteEngine On
+RewriteBase /gossembrot-db_static/
+
+# 1) If a real file or directory exists, serve it
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 2) Never rewrite the in-scope API endpoint — let SW intercept it.
+#    If the SW isn't active yet, Apache will 404 instead of serving index.html.
+RewriteRule ^api($|/) - [L]
+
+# 3) SPA fallback: everything else → index.html
+RewriteRule . /gossembrot-db_static/index.html [L]

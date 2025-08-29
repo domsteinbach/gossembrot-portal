@@ -1,52 +1,55 @@
-/* src/static/sw.js — sql.js + subpath-safe */
+/* --- scope helpers --- */
+const SCOPE  = (self.registration && self.registration.scope) || new URL('./', self.location.href).toString();
+const scoped = (p) => new URL(p, SCOPE).toString();
+
+// bump this when you publish a new DB
+const DB_URL = 'assets/db/app.sqlite?v=2';
+
+/* --- load sql.js at parse/install time (required by SW rules) --- */
+importScripts(scoped('assets/sqljs/sql-wasm.js'));
+const SQL_READY = initSqlJs({
+    locateFile: (f) => scoped(`assets/sqljs/${f}`)
+});
+
+/* --- lifecycle --- */
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
 
+/* --- lazy-open DB --- */
 let dbPromise;
-
-function scoped(path) {
-    // Ensures assets resolve under the SW’s scope (works at / or /repo/)
-    const scope = self.registration?.scope || '/';
-    return new URL(path, scope).toString();
-}
-
-/** init the in-memory SQLite DB from assets/db/app.sqlite */
 async function initDb() {
     if (dbPromise) return dbPromise;
-
-    // sql.js exposes initSqlJs via the file we copy to assets/sqljs
-    importScripts(scoped('assets/sqljs/sql-wasm.js'));
-    const SQL = await initSqlJs({
-        locateFile: (f) => scoped(`assets/sqljs/${f}`) // finds sql-wasm.wasm
-    });
-
-    const resp = await fetch(scoped('assets/db/app.sqlite?v=1'), { cache: 'force-cache' });
-    const buf = await resp.arrayBuffer();
-    const db = new SQL.Database(new Uint8Array(buf));
-
-    dbPromise = Promise.resolve(db);
+    const SQL  = await SQL_READY;
+    const resp = await fetch(scoped(DB_URL), { cache: 'force-cache' });
+    const buf  = await resp.arrayBuffer();
+    const db   = new SQL.Database(new Uint8Array(buf));
+    dbPromise  = Promise.resolve(db);
     return dbPromise;
 }
 
-function isUsersTable(sql) {
-    return /(^|\W)users(\W|$)/i.test(sql);
-}
+/* --- paths inside scope --- */
+const scopeRootPath = new URL('.', SCOPE).pathname;    // e.g. "/gossembrot-db_static/"
+const apiPath       = new URL('api', SCOPE).pathname;  // e.g. "/gossembrot-db_static/api"
+const loginPath     = new URL('login', SCOPE).pathname;
+const updatePath    = new URL('update', SCOPE).pathname;
 
+/* --- fetch handler --- */
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // Intercept same-origin:
-    const sameOrigin = url.origin === location.origin;
+    // intercept same-origin POSTs to /<scope>/api
+    // (temporarily also accept POSTs to the scope root for safety)
+    const isSqlPost =
+        url.origin === location.origin &&
+        request.method === 'POST' &&
+        (url.pathname === apiPath || url.pathname === scopeRootPath); // remove root later
 
-    const isSqlPost = sameOrigin && request.method === 'POST' && url.pathname === new URL('.', self.registration.scope).pathname;
-    // Equivalent to path "<scope>" (e.g., "/" or "/gossembrot-db/")
-
-    const loginPath  = new URL('login', self.registration.scope).pathname;
-    const updatePath = new URL('update', self.registration.scope).pathname;
-
-    const isLogin  = sameOrigin && request.method === 'POST' && url.pathname === loginPath;
-    const isUpdate = sameOrigin && (request.method === 'PUT' || request.method === 'POST') && url.pathname === updatePath;
+    const isLogin  = url.origin === location.origin && request.method === 'POST' &&
+        url.pathname === loginPath;
+    const isUpdate = url.origin === location.origin &&
+        (request.method === 'PUT' || request.method === 'POST') &&
+        url.pathname === updatePath;
 
     if (!(isSqlPost || isLogin || isUpdate)) return;
 
@@ -58,13 +61,18 @@ self.addEventListener('fetch', (event) => {
                 });
             }
 
+            // Debug trace so you can confirm interception in DevTools
+            // (remove once stable)
+            // eslint-disable-next-line no-console
+            console.log('[SW] intercept', request.method, url.pathname, 'scope=', scopeRootPath);
+
             const { query, data } = await request.clone().json();
             if (typeof query !== 'string' || !query.trim()) {
                 return new Response(JSON.stringify({ error: 'Bad Request' }), {
                     status: 400, headers: { 'Content-Type': 'application/json' }
                 });
             }
-            if (isUsersTable(query)) {
+            if (/(^|\W)users(\W|$)/i.test(query)) {
                 return new Response(JSON.stringify({ error: 'Forbidden' }), {
                     status: 403, headers: { 'Content-Type': 'application/json' }
                 });
@@ -82,12 +90,13 @@ self.addEventListener('fetch', (event) => {
             }
 
             return new Response(JSON.stringify(rows), {
-                status: 200, headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' }
             });
         } catch (e) {
-            return new Response(JSON.stringify({ error: 'Internal Server Error', details: String(e && e.message || e) }), {
-                status: 500, headers: { 'Content-Type': 'application/json' }
-            });
+            return new Response(
+                JSON.stringify({ error: 'Internal Server Error', details: String(e && e.message || e) }),
+                { status: 500, headers: { 'Content-Type': 'application/json' } }
+            );
         }
     })());
 });

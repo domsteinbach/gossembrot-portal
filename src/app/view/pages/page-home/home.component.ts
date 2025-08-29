@@ -4,6 +4,7 @@ import { Select } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
 import { GsmbTheme, ThemeBrightness } from '../../../model/theme';
 import { takeUntil } from 'rxjs/operators';
+import {EnvConstants} from "../../../constants";
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,11 @@ export class HomeComponent implements OnDestroy {
   private _selectedTheme$!: Observable<GsmbTheme>;
 
   private _destroy$ = new Subject<void>();
+
+  readonly gsmbLogoLight = `${EnvConstants.ASSET_IMG_PATH}/SNF_logo_standard_web_color_pos_d.png`;
+  readonly gsmbLogoDark = `${EnvConstants.ASSET_IMG_PATH}/SNF_logo_standard_web_color_neg_d.png`;
+  readonly gsmbImage = `${EnvConstants.ASSET_IMG_PATH}/Gossembrot_s.jpg`;
+
 
   constructor() {
     this._selectedTheme$

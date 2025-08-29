@@ -1,0 +1,12 @@
+CREATE INDEX IF NOT EXISTS idx_carrier_text_car    ON carrier_text(car_id);
+CREATE INDEX IF NOT EXISTS idx_page_car            ON page(car_id);
+CREATE INDEX IF NOT EXISTS idx_page_text           ON page(text_id);
+CREATE INDEX IF NOT EXISTS idx_belegstelle_page    ON belegstelle(page_id);
+CREATE INDEX IF NOT EXISTS idx_belegstelle_text    ON belegstelle(text_id);
+CREATE INDEX IF NOT EXISTS idx_verweis_src         ON verweis(src_car, src_text);
+CREATE INDEX IF NOT EXISTS idx_verweis_target      ON verweis(target_car, target_text);
+CREATE INDEX IF NOT EXISTS idx_region_page         ON region(page_id);
+CREATE INDEX IF NOT EXISTS idx_info_carrier_lib    ON info_carrier(lib_id);
+CREATE INDEX IF NOT EXISTS idx_author_gnd          ON author(gnd_id);
+CREATE INDEX IF NOT EXISTS idx_external_entities_obj ON external_entities(obj_id, obj_type);
+CREATE INDEX IF NOT EXISTS idx_annotation_carrier  ON annotation(info_carrier);
