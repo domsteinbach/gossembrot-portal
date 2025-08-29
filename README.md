@@ -85,7 +85,12 @@ Run `npm run lint`
 
 Run `npm run format`
 
-### Resetting a password for a user
-- run here `npm run registerPassword thePasswordYouLikeToHash`
+## Authetication and user management
+
+Authentication and user management is only implemented for the mysql database (not for the sqlite database).
+It's sole purpose is feature flagging during development. There are no CUD operations implemented (Create, Update, Delete) anyway.
+
+### Register or Reset a password for a user
+- run `npm run registerPassword thePasswordYouLikeToHash`
 - then copy the hash (the output of the command; this is the new password hash)
 - Go to the database and enter the password hash for the user as password

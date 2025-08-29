@@ -80,7 +80,7 @@
     <button color="primary" mat-icon-button id="brightness-toggle" (click)="toggleBrightness()">
       <mat-icon class="interactive">{{currentBrightness === 'dark' ? 'brightness_6': 'brightness_3'}}</mat-icon>
     </button>
-    <button color="primary" mat-icon-button (click)="openLoginDialog()">
+    <button *ngIf="isStaticBuild" color="primary" mat-icon-button (click)="openLoginDialog()">
       <mat-icon class="interactive">{{ authService.tokenValue && authService.isAuthenticated()? 'account_circle' : 'input' }}</mat-icon>
     </button>
     <button *ngIf="false" color="primary" mat-icon-button [matMenuTriggerFor]="themeMenu">

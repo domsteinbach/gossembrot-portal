@@ -14,7 +14,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "node api/local-server.js",
-    "registerPassword": "node registerPassword.js",
+    "registerPassword": "node tools/registerPassword.js",
     "compodoc": "npx compodoc -p tsconfig.doc.json",
     "export-structure-png": "npx dependency-cruiser --exclude \"node_modules\" --include-only \"\\.ts$\" --output-type dot src/ > dependency-graph.dot && dot -Tpng -o dependency-graph.png dependency-graph.dot",
     "generate-docs": "npm run compodoc && npm run export-structure-png",

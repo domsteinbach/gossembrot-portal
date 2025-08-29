@@ -7,6 +7,7 @@ import { LoginComponent } from '../../../auth/login/login.component';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { GsmbTheme, ThemeBrightness, THEMES } from '../../../model/theme';
 import { ThemeHandlerService } from '../../../service/theme.service';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,9 @@ export class HeaderComponent {
   currentBrightness: ThemeBrightness = 'light';
   themes = THEMES;
 
+  get isStaticBuild(): boolean {
+    return environment.useSqlJs;
+  }
 
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
