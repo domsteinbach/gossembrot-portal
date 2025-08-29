@@ -18,9 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 const pool = mysql.createPool({
     host: 'localhost',
     port: 3306,
-    //user: 'gossembrot-web', // prod
     user: 'steinbach',  // dev
-    //password: 'gsmbReadOnly.23', // prod
     password: 'test12345.6', // dev
     database: 'gossembrot',
     connectionLimit: 100, // Adjust the connection limit as needed

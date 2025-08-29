@@ -8,7 +8,7 @@ const Papa = require("papaparse");
 const ROOT = path.resolve(__dirname, "..");
 
 const DB_PATH = path.join(ROOT, "src/assets/db/app.sqlite");
-const CSV_DIR = path.join(ROOT, "src/assets/import");
+const CSV_DIR = path.join(ROOT, "data-import");
 const SCHEMA_DIR = path.join(ROOT, "schema");
 
 // 1) fresh DB

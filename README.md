@@ -18,15 +18,15 @@ You need a local mysql database running on localhost:3306 - if not, try serve th
 - Run `npm run serve:static` to build and serve the page. Navigate to `http://localhost:4201/gossembrot-portal/`. The build artifacts are be created in the `dist/gossembrot-portal_static/` directory, so the same used for production hosting with apache webserver (see below).
 
 ## Build and host with apache webserver without a mysql database (sqlite is used instead)
-- Run `npm run build:static-apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
+- Run `npm run build:static:apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
 - Place the content of the "dist" directory (the whole directory "gossembrot-portal_static") onto the server (e.g. in `/var/www/`)
 - Make sure the apache webserver is configured to serve the page/directory correctly
 - Note the .htaccess file created in the dist/gossembrot-portal_static
 
 ## Build and host with a mysql database running
-- Run `npm run build:test` or `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Run `npm run build:test` or `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/gossembrot-portal` directory.
 - Make sure you have a mysql database running
-- place and start this api/server.js (via nohub, so it is not killed when you close the terminal and it writes the output to a log file):
+- place and start this api/server.js (via nohub, output to a log file):
   `nohup node server.js > ./server.log 2>&1 &`
 
 Debug:
