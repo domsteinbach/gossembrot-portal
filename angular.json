@@ -179,7 +179,7 @@
                 { "glob": "app.sqlite",         "input": "src/assets/db",      "output": "assets/db" }
               ]
             },
-            "ghpages": {
+            "static-ghpages": {
               "budgets": [
                 { "type": "initial", "maximumWarning": "4mb", "maximumError": "6mb" },
                 { "type": "anyComponentStyle", "maximumWarning": "100kb", "maximumError": "200kb" }
