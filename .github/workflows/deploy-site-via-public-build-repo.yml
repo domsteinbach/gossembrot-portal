@@ -2,7 +2,7 @@ name: Build & Publish to GitHub Pages (public site repo)
 
 on:
   push:
-    branches: [ main ]    # adjust if your default branch is different
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -13,13 +13,10 @@ jobs:
 
     env:
       NODE_VERSION: 20
-      # If you ever move/rename the site repo, just change these:
       TARGET_OWNER: domsteinbach
       TARGET_REPO: gossembrot-portal-site
       TARGET_BRANCH: main
 
-      # IMPORTANT: set this to your *actual* Angular static output folder
-      # If your angular.json "static" build outputs somewhere else, change it.
       PUBLISH_DIR: dist/gossembrot-portal_static
 
     steps:
@@ -40,10 +37,9 @@ jobs:
         run: node tools/build-db.js
 
       - name: Build Angular (static)
-        run: npm run build:static
+        run: npm run build:static:local
 
-      # Optional: SPA fallback for GitHub Pages deep links (404 → app)
-      # If you use hash routing, you can skip this step.
+      # SPA fallback for GitHub Pages deep links (404 → app)
       - name: Add 404 fallback
         run: |
           if [ -f "${{ env.PUBLISH_DIR }}/index.html" ]; then
