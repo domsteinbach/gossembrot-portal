@@ -40,7 +40,7 @@ jobs:
         run: node tools/build-db.js
 
       - name: Build Angular (static)
-        run: npm run build:static
+        run: npm run build:static:gh-pages
 
       # Optional: SPA fallback for GitHub Pages deep links (404 → app)
       # If you use hash routing, you can skip this step.
