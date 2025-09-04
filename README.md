@@ -2,11 +2,13 @@
 
 A project of the Swiss Nationalfonds (2021–2025); Lead: Prof. Dr. Michael Stolz (University of Bern).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17. This project uses two different database technologies depending on the environment. As a backend it uses either a mysql database and a node.js server as api or sql.js — SQLite compiled to WebAssembly — for static hosting.
+In order to be archivable and to minimise platform dependencies the project implements two different database technologies depending on the desired environment. It can be either hosted alongside a mysql database (with a node.js server as api) or as a static hosted website with SQLite compiled to WebAssembly (sqlite3 & sql.js).
 
 The main projects page is deployed at https://gossembrot.unibe.ch/gossembrot-portal. A static version of the page is available at: https://domsteinbach.github.io/gossembrot-portal-site/. The static version is built and deployed automatically on every push to the main branch via github actions (.github/workflows/deploy-gh-pages.yml)
 
 # Prerequisites
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17. 
 
 - Make sure you have node.js installed (v18 or higher)
 - Make sure you have angular cli installed globally: `npm install -g @angular/cli`
