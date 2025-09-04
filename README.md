@@ -25,13 +25,13 @@ The static way is recommended as building and hosting the page as it is much eas
 
 - Make sure you have the sqlite3 package installed globally: `npm install -g sqlite3`
 
-### 1.) Local build and serve a static page with baked in database
+### 1.) Local build and serve the static page with baked in database
 
 To serve the page with live reload (changes to the code will be reflected immediately)
 - Run `npm run db:build ` to build and import the data (csv files) into the sqlite database. The database file will be created in `src/assets/db/app.sqlite`.
-- Run `ng serve --configuration=static-local` to serve the page. Changes to the code will be reflected immediately without rebuilding the whole project.
+- Run `ng serve --configuration=static-local` to serve the page at localhost:4200. Changes to the code will be reflected immediately without rebuilding the whole project.
 
-### 2.) Build and host with apache webserver without a mysql database (sqlite is used instead)
+### 2.) Build and host the static page with an apache webserver
 - Run `npm run build:static:apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
 - Place the content of the "dist" directory (the whole directory "gossembrot-portal_static") onto the server (e.g. in `/var/www/`)
 - Make sure the apache webserver is configured to serve the page/directory correctly
@@ -45,9 +45,9 @@ To serve the page with live reload (changes to the code will be reflected immedi
 - Run `npm run db:build ` to rebuild the database and import (see above) for local development or rebuild the whole project for static hosting e.g. with `npm run build:static:apache` (see above)
 - commit and push the changes to the main branch (auto deployed to github pages)
 
-## B. Dynamic: Build & host alongside a mysql database and the node.js server as api (see section 2. below for building/serving without a mysql database)
+## B. Dynamic: Build & host alongside a mysql database and a node.js server as api
 
-### 1.) local development with a mysql database and node.js server as api
+### 1.) local development
 
 ### Prerequisites
 - Make sure you have a local mysql database running on localhost:3306
@@ -72,7 +72,7 @@ The database name ("gossembrot" or "gossembrot_test") is defined in server.js an
 - put the node server ./api/server.js onto the server (e.g. in /var/www/gsmb/api/)
 - run `npm install` to install the dependencies
 
-### Build and host with the mysql database
+### Build and host
 
 - Run `npm run build:test` or `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/gossembrot-portal` directory.
 - Make sure you have the mysql database running on the server at the specified host and port
