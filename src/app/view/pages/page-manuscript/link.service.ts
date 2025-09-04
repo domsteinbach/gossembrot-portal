@@ -113,15 +113,11 @@ export class LinkService {
       hideSynopsisButton
     }
 
-    const dialogRef = this._dialog.open(VerweisViewComponent, {
+    this._dialog.open(VerweisViewComponent, {
       data: verweisViewData,
       autoFocus: false,
       height: '90vh',
       width: '90vw',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      // Handle the result if needed
     });
   }
 

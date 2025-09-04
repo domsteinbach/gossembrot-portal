@@ -4,7 +4,7 @@ import {
   SelectedSrcInformationCarrierState,
   UpdateSelectedSrcInformationCarrier,
 } from '../../../state/information-carrier-state.service';
-import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, switchMap, take } from 'rxjs';
 import { InformationCarrier } from '../../../model/infoCarrier';
 import { Store } from '@ngxs/store';
 import { ManuscriptNavService } from '../../../service/manuscript-nav.service';

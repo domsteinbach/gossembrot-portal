@@ -38,28 +38,6 @@ export class DataService {
     );
   }
 
-  updateData<T>(query: string, data: T): Observable<T> {
-    const url = environment.apiUrl;
-    const body = { query, data };
-    return this.http.put<T>(url, body).pipe(
-      catchError((error: any) => {
-        console.error('Error:', error, 'For query:', query);
-        return throwError(error);
-      })
-    );
-  }
-
-  createData<T>(query: string): Observable<T> {
-    const url = environment.apiUrl;
-    const body = { query };
-    return this.http.post<T>(url, body).pipe(
-      catchError((error: any) => {
-        console.error('Error:', error, 'For query:', query);
-        return throwError(error);
-      })
-    );
-  }
-
   getIIIFinfo(url: string): Observable<IiifTile> {
     return this.http.get<IiifTile>(url).pipe(
       map((response) => {
@@ -71,20 +49,6 @@ export class DataService {
           renamed.sizes.sort((a: any, b: any) => a.width - b.width);
         }
         return renamed;
-      })
-    );
-  }
-
-  deleteData(query: string): Observable<any> {
-    const url = `${environment.apiUrl}/delete`;
-    const body = { query };
-    return this.http.post(url, body).pipe(
-      map((response) => {
-        return response;
-      }),
-      catchError((error: any) => {
-        console.error('Error:', error);
-        return throwError(error);
       })
     );
   }

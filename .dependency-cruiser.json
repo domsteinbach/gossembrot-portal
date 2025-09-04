@@ -1,0 +1,8 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sverweij/dependency-cruiser/develop/schema.json",
+  "options": {
+    "tsConfig": { "fileName": "tsconfig.app.json" },
+    "exclude": "node_modules|dist|coverage",
+    "includeOnly": "\\.ts$"
+  }
+}

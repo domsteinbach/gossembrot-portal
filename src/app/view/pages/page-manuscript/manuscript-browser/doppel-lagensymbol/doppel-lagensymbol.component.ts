@@ -3,7 +3,6 @@ import { Select, Store } from '@ngxs/store';
 import { map, Observable, Subject } from 'rxjs';
 import { Page } from '../../../../../model/page';
 import { DisplayedPagesState } from '../../../../../state/app-state';
-import { environment } from '../../../../../../environments/environment';
 import { SelectedThemeState } from '../../../../../state/theme-state';
 import { GsmbTheme } from '../../../../../model/theme';
 import { takeUntil } from 'rxjs/operators';

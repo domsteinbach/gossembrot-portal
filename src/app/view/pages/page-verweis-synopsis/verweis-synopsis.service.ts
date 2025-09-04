@@ -10,7 +10,6 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import {PageOfMissingCarrier, NullPage, Page, MissingPageOfExistingCarrier} from '../../../model/page';
 import { VerweisService } from '../../../service/verweis.service';
-import {EnvConstants} from "../../../constants";
 
 @Injectable()
 export class VerweisSynopsisService implements OnDestroy {

@@ -1,9 +1,40 @@
-import { Component, Input } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-advanced-verweis-filter',
-  templateUrl: './advanced-verweis-filter.component.html',
+  template: `<div>
+    <mat-card class="filter-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Ziele</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <h3>Verfügbarkeit Ziel-Textträger</h3>
+          <app-physicality-filter/>
+        </div>
+        <div>
+          <h3>Beschaffenheit Ziel-Textträger</h3>
+          <app-infocar-type-filter/>
+        </div>
+        <div>
+          <h3>Zielblatt</h3>
+          <div><app-target-blatt-is-fragment-filter/> </div>
+          <div><app-target-blatt-is-lost-filter/></div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="filter-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Verweise</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <h3>Verweis-Typ</h3>
+          <app-is-erwaehnung-filter/>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>`,
   styleUrls: ['../../page-data-search.component.scss']
 })
 export class AdvancedVerweisFilterComponent {

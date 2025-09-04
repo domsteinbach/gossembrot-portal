@@ -1,6 +1,5 @@
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { PageData } from '../repository-model';
 import { Page } from '../../model/page';
 import { DataService } from '../dataservice.service';
 

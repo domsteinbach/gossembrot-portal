@@ -1,9 +1,6 @@
-import { combineLatest, map, Observable, shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DataService } from '../dataservice.service';
-import {
-  ExternalEntity,
-} from '../../model/external_entity';
 import { Einband } from '../../model/einband';
 
 @Injectable({

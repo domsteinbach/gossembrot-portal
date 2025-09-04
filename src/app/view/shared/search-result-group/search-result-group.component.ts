@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { SearchResult, SearchResultTable } from '../../../model/search-result';
 import { take } from 'rxjs';
 import { CarrierTextRepository } from '../../../data/repository/carrier-text-repository';
@@ -115,7 +115,7 @@ export class SearchResultGroupComponent implements OnChanges {
           const c = carriers.find(c => c.namingsGossembrot.some(n => n.id === result.id));
           return {
             naming: result,
-            carrier: carriers.find(c => c.namingsGossembrot.some(n => n.id === result.id))
+            carrier: c
           };
         })
       console.log('Namings with carriers:', this._namingsWithCarriers);
@@ -180,7 +180,7 @@ export class SearchResultGroupComponent implements OnChanges {
         });
         break;
       case 'naming_gossembrot':
-        this._icr.getCarrierByNamingGsmbId$(result.id).pipe(take(1)).subscribe((carrier) => {;
+        this._icr.getCarrierByNamingGsmbId$(result.id).pipe(take(1)).subscribe((carrier) => {
           if (carrier) {
             this._ls.openCarrierInNewTab(carrier);
           }

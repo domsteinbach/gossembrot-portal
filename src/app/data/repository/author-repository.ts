@@ -1,10 +1,8 @@
 import { combineLatest, map, Observable, of, shareReplay, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DataService } from '../dataservice.service';
-import { Author, AuthorData } from '../../model/author';
-import { GndAuthorData } from '../repository-model';
+import { Author } from '../../model/author';
 import { GndAuthor } from '../../model/gnd-authors';
-import { Einband } from '../../model/einband';
 
 @Injectable({
   providedIn: 'root',

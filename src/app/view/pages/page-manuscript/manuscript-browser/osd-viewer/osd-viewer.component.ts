@@ -15,7 +15,6 @@ import { DoubleTileSourcesState, LocalDoubleTileSourcesState } from '../../../..
 import { distinctUntilChanged, Observable, Subject } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
-import {EnvConstants} from "../../../../../constants";
 
 // tile source interface for non iiif images
 export interface LocalTileSource {
@@ -155,16 +154,16 @@ export class OsdViewerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   centerViewport() {
-    const originalAnimationTime = (this._osd as any).animationTime;
+    const originalAnimationTime = (this._osd as unknown as OpenSeadragon.Spring).animationTime;
 
     // Temporarily disable animation
-    (this._osd as any).animationTime = 0;
+    (this._osd as unknown as OpenSeadragon.Spring).animationTime = 0;
 
     // Go to the "home" view which centers the image and resizes it to fit the viewport
     this._osd.viewport.goHome(true);
 
     // Restore the original animation time
-    (this._osd as any).animationTime = originalAnimationTime;
+    (this._osd as unknown as OpenSeadragon.Spring).animationTime = originalAnimationTime;
   }
 
   private addTileHandlers() {

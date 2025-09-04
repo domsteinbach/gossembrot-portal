@@ -2,12 +2,12 @@
   <div class="carrier-info">
     <h3 class="carrier-title">
         <div>{{carrierTitle}}</div>
-        <div *ngIf="!isMissingPageOfExistingCarrier" (click)="openCarrierInNewTab()" class="blattangabe">{{blattangabe}}</div>
+        <div tabindex="0" (keydown.enter)="openCarrierInNewTab()" *ngIf="!isMissingPageOfExistingCarrier" (click)="openCarrierInNewTab()" class="blattangabe">{{blattangabe}}</div>
         <div *ngIf="isMissingPageOfExistingCarrier" [matTooltip]="missingTooltip">
           <span class="cursor-tooltip" [class.missing-blatt] ="!!alternativePageBlattangabe">{{blattangabe}}</span>
           <span class="cursor-tooltip" *ngIf="!alternativePageBlattangabe"> ist verloren.</span>
           <mat-icon *ngIf="alternativePageBlattangabe" class="missing-blatt-arrow cursor-tooltip">arrow_forward</mat-icon>
-          <span (click)="openCarrierInNewTab()" *ngIf="alternativePageBlattangabe" class="blattangabe">{{alternativePageBlattangabe}}</span>
+          <span tabindex="0" (keydown.enter)="openCarrierInNewTab()" (click)="openCarrierInNewTab()" *ngIf="alternativePageBlattangabe" class="blattangabe">{{alternativePageBlattangabe}}</span>
         </div>
     </h3>
   </div>

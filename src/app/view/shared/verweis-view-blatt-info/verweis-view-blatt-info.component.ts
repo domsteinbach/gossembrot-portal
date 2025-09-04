@@ -29,7 +29,7 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject<void>();
 
   get blattangabe(): string {
-    let belegstelle = this.agency === 'Src' ? this.verweis?.srcBelegstelleObj : this.verweis?.targetBelegstelleObj;
+    const belegstelle = this.agency === 'Src' ? this.verweis?.srcBelegstelleObj : this.verweis?.targetBelegstelleObj;
     return belegstelle ? belegstelle.blattangabeWIthBlPrefix : '';
   }
 
@@ -89,10 +89,14 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   }
 
   openCarrierInNewTab() {
+    if (!this.verweis) {
+      console.error('Verweis is undefined');
+      return;
+    }
     if (this.agency === 'Src') {
-      this._vls.openSourceCarrierOfVerweis(this.verweis!);
+      this._vls.openSourceCarrierOfVerweis(this.verweis);
     } else {
-      this._vls.openTargetCarrierOfVerweis(this.verweis!);
+      this._vls.openTargetCarrierOfVerweis(this.verweis);
     }
   }
 

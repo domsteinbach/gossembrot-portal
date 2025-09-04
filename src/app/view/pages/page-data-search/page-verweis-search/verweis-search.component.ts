@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { VerweisRepository } from '../../../../data/repository/verweis-repository';
-import { DisplayVerweis, Verweis } from '../../../../model/verweis';
+import { DisplayVerweis } from '../../../../model/verweis';
 import {
   combineLatest,
   map,
@@ -341,7 +341,7 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
   }
 
   toggleAdvancedFilterDrawer() {
-    this.advancedFilterDrawer!.toggle();
+    this.advancedFilterDrawer?.toggle();
   }
 
   onDrawerStateChange(isOpened: boolean) {

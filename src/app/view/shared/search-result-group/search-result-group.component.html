@@ -1,4 +1,4 @@
-<div [id]="type" class="group-header" (click)="toggle()">
+<div [id]="type" class="group-header" (click)="toggle()" tabindex="0" (keydown.enter)="toggle()" (keydown.space)="toggle(); $event.preventDefault()">
   <mat-icon class="group-toggle-icon">
     {{ expanded && results.length > 0? 'expand_more' : 'chevron_right' }}
   </mat-icon>
@@ -19,7 +19,10 @@
   <div
     class="suggestion-item"
     *ngFor="let result of displayedResults; let i = index"
+    tabindex="0"
     (click)="onResultItemClicked(result)"
+    (keydown.enter)="onResultItemClicked(result)"
+    (keydown.space)="onResultItemClicked(result); $event.preventDefault()"
     [class.hidden]="i > 9 && !showAll"
     [ngSwitch]="type">
     <div *ngSwitchCase="'info_carrier'">

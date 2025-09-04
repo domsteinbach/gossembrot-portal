@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable} from 'rxjs';
 import { DataService } from '../dataservice.service';
 import { environment} from "../../../environments/environment";
 import { SearchResult, SearchResultTable } from '../../model/search-result';

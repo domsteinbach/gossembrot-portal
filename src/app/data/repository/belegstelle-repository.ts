@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, filter, map, Observable, of, shareReplay, switchMap, take, tap } from 'rxjs';
 import { DataService } from '../dataservice.service';
-import { BelegstelleData } from '../repository-model';
 import { Belegstelle } from '../../model/belegstelle';
 import { VerweisRepository } from './verweis-repository';
 import { Page } from '../../model/page';

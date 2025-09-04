@@ -59,7 +59,6 @@ export function waitForSwReadyFactory() {
             if (!sessionStorage.getItem(key)) {
                 sessionStorage.setItem(key, '1');
                 location.reload();
-                await new Promise(()=>{}); // never reached
             }
         } else {
             sessionStorage.removeItem('SW_RELOAD_ONCE');

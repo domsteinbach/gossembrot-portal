@@ -4,7 +4,7 @@ import { InformationCarrier } from '../../../../../../model/infoCarrier';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Select } from '@ngxs/store';
 import { CarriersState } from '../../../../../../state/information-carrier-state.service';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { VisualisationVerweis } from '../../../../../../model/visualisations';
 import { VisualisationSettingsService } from '../../visualisation-settings.service';
 

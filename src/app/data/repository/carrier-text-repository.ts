@@ -5,8 +5,6 @@ import { DataService } from '../dataservice.service';
 import { CarrierText } from '../../model/carriertext';
 import { AuthorRepository } from './author-repository';
 import { InfoCarrierRepository } from './info-carrier-repository';
-import { Author } from '../../model/author';
-import { InformationCarrier } from '../../model/infoCarrier';
 
 @Injectable({
   providedIn: 'root',

@@ -1,12 +1,14 @@
 <span class="transcription"
       *ngIf="currentTooltip === ''"
       (mouseover)="updateTooltip($event)"
+      (focus)="updateTooltip($event)"
       [innerHTML]="htmlString"
 >
 </span>
 <span class="transcription"
       *ngIf="currentTooltip !== ''"
       (mouseover)="updateTooltip($event)"
+      (focus)="updateTooltip($event)"
       [innerHTML]="htmlString"
       [mtxTooltip]="tooltipTpl">
 </span>

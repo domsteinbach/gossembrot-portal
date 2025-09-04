@@ -28,5 +28,5 @@ import { Component, EventEmitter, Output } from '@angular/core';
   `
 })
 export class UiCloseButtonComponent {
-  @Output() close = new EventEmitter<void>();
+  @Output() closeClicked = new EventEmitter<void>();
 }

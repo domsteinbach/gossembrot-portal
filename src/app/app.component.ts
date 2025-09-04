@@ -12,7 +12,6 @@ import { Observable, Subject, take } from 'rxjs';
 import { GsmbTheme, GsmbThemeClass } from './model/theme';
 import { LocalStorageService } from './service/local-storage.service';
 import { takeUntil } from 'rxjs/operators';
-import { environment } from '../environments/environment';
 import { InfoCarrierRepository } from './data/repository/info-carrier-repository';
 import { UpdateCarriers } from './state/information-carrier-state.service';
 

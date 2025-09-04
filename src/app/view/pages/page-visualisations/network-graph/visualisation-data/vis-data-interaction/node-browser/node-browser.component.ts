@@ -1,20 +1,17 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { InformationCarrier } from '../../../../../../../model/infoCarrier';
-import { Belegstelle } from '../../../../../../../model/belegstelle';
 import { VisualizationRepository } from '../../../../../../../data/repository/visualization-repository';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { InfoCarrierHitlistData } from '../../../../../../../data/repository-model';
 import { VisualisationDataService } from '../../../visualisation-data.service';
 import { NullCarrier } from '../../../../../../shared/steckbrief/steckbrief.component';
 import { DisplayVerweis } from '../../../../../../../model/verweis';
-import { RouteConstants } from '../../../../../../../routeConstants';
 import { BelegstelleRepository } from '../../../../../../../data/repository/belegstelle-repository';
 import { UpdateSelectedPage } from '../../../../../../../state/app-state';
 import { Store } from '@ngxs/store';
 import {
   UpdateSelectedSrcInformationCarrier,
 } from '../../../../../../../state/information-carrier-state.service';
-import { VerweisService } from '../../../../../../../service/verweis.service';
 import { CarrierText } from '../../../../../../../model/carriertext';
 
 @Component({

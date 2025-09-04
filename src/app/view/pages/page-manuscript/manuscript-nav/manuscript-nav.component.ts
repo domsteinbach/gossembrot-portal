@@ -9,7 +9,7 @@ import { Observable, Subject } from 'rxjs';
 import { Page } from '../../../../model/page';
 import {
   SelectedCarrierPagesState,
-  DisplayedPagesState, UpdateSelectedPage,
+  DisplayedPagesState
 } from '../../../../state/app-state';
 import { Store } from '@ngxs/store';
 import { takeUntil } from 'rxjs/operators';

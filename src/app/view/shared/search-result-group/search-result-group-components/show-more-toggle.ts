@@ -6,12 +6,16 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     <div
       *ngIf="results > offset && !showAll"
       (click)="toggle(true)"
+      tabindex="0"
+      (keydown.enter)="toggle(true)"
       class="show-more-link"
     >
       mehr anzeigen ...
     </div>
     <div
       *ngIf="results > offset && showAll"
+      tabindex="0"
+      (keydown.enter)="toggle(false)"
       (click)="toggle(false)"
       class="show-more-link"
     >

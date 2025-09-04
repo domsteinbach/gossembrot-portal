@@ -3,7 +3,6 @@ import { Author } from './author';
 import { GsmbResource } from '../data/repository/gsmb-resource';
 import { InformationCarrier } from './infoCarrier';
 import { DisplayVerweis } from './verweis';
-import { Belegstelle } from './belegstelle';
 
 /***
  * The texts of a carrier like in the database. Usable for writing to the database.

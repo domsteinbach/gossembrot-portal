@@ -1,30 +1,12 @@
 import {
   ChangeDetectorRef,
   Component,
-  ElementRef,
   Input,
   OnChanges,
-  OnInit,
-  TemplateRef,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { XmlTransformService } from '../../../service/xml-transform.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
-export interface TeiElement {
-  tagName: string;
-  attributes?: { [key: string]: string };
-  children?: TeiElement[];
-  text?: string;
-}
-
-// interface for the flat structure
-export interface FlatTeiElement {
-  tagName: string;
-  text?: string;
-  attributes?: { [key: string]: string };
-}
 
 @Component({
   selector: 'app-tei-render-component',
@@ -70,7 +52,7 @@ export class TeiRenderComponentComponent implements OnChanges {
     this._cdr.detectChanges();
   }
 
-  updateTooltip(event: MouseEvent): void {
+  updateTooltip(event: MouseEvent | FocusEvent): void {
     const target = event.target as HTMLElement;
     this.currentTooltip = this.findTooltip(target);
     this._cdr.detectChanges();

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Subject } from 'rxjs';
 import { VisualisationDataService } from './visualisation-data.service';
-import { CarrierTextRepository } from '../../../../data/repository/carrier-text-repository';
 import {
   Granularity,
   VisualisationSettingsService,

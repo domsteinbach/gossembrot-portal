@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { combineLatest, map, Observable, Subject, take } from 'rxjs';
+import { combineLatest, map, Observable, Subject } from 'rxjs';
 import { ColumnDef } from '../data-search-types';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatPaginator } from '@angular/material/paginator';

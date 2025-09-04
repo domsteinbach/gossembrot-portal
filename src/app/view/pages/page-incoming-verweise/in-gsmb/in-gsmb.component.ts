@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { RouteConstants } from '../../../../routeConstants';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { CarriersState } from '../../../../state/information-carrier-state.service';
 import { map } from 'rxjs';

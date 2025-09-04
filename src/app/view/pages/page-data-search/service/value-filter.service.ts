@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Column, NullFilter, TableName } from '../data-search-types';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DisplayVerweis } from '../../../../model/verweis';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class ValueFilterService {
   private _activeNullFiltersSubject = new BehaviorSubject<Map<TableName, NullFilter[]>>(new Map<TableName, NullFilter[]>());
   activeNullFilters$ = this._activeNullFiltersSubject.asObservable();
 
-  getMultiFilterPredicate<T extends Record<string, any>>(keysToSkip: (keyof T)[] = []) {
+  getMultiFilterPredicate<T extends Record<string, Column>>(keysToSkip: (keyof T)[] = []) {
     return (data: T, filter: string): boolean => {
       const filters = JSON.parse(filter);
 

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { SearchResult } from '../../../../../model/search-result';
 import { CarrierText } from '../../../../../model/carriertext';
-import { SearchType } from '../../../../../data/repository/search-data-repository';
 
 @Component({
   selector: 'app-search-result-author',

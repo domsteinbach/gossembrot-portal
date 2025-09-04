@@ -6,7 +6,7 @@ import { SearchResult } from '../../../../model/search-result';
 @Component({
   selector: 'app-search-results-naming-gsmb',
   template: `
-    <div class="suggestion-item" *ngFor="let result of results;" (click)="onTextClicked(result.carrier)">
+    <div class="suggestion-item" *ngFor="let result of results;" (click)="onTextClicked(result.carrier)" tabindex="0" (keydown.enter)="onTextClicked(result.carrier)" (keydown.space)="onTextClicked(result.carrier)">
       <div class="value-item">
         <span>📚 </span>
         <span [innerHTML]="result.naming.label | highlight:searchTerm"></span>

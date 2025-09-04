@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, defaultIfEmpty, map, Observable, tap } from 'rxjs';
+import { combineLatest, defaultIfEmpty, map, Observable } from 'rxjs';
 import { DataService } from '../dataservice.service';
 import {
   VisualisationVerweisData,

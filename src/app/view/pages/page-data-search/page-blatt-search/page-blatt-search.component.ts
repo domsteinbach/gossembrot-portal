@@ -137,7 +137,7 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
 
   private _getFilteredPages$(carrierId: string): Observable<Page[]> {
     return combineLatest([this._pr.pagesOfCarrier$(carrierId), this._fs.nullFilters$('page')]).pipe(
-      map(([pages, filters]) => this._fs.applyNullFilters<Page>(pages, 'page'))
+      map(([pages, _filters]) => this._fs.applyNullFilters<Page>(pages, 'page'))
     );
   }
 

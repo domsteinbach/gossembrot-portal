@@ -19,8 +19,8 @@ export class HomeComponent implements OnDestroy {
 
   private _destroy$ = new Subject<void>();
 
-  readonly gsmbLogoLight = `${EnvConstants.ASSET_IMG_PATH}/SNF_logo_standard_web_color_pos_d.png`;
-  readonly gsmbLogoDark = `${EnvConstants.ASSET_IMG_PATH}/SNF_logo_standard_web_color_neg_d.png`;
+  readonly snfLogoLight = `${EnvConstants.ASSET_IMG_PATH}/SNF_logo_standard_web_color_pos_d.png`;
+  readonly snfLogoDark = `${EnvConstants.ASSET_IMG_PATH}/SNF_logo_standard_web_color_neg_d.png`;
   readonly gsmbImage = `${EnvConstants.ASSET_IMG_PATH}/Gossembrot_s.jpg`;
 
 

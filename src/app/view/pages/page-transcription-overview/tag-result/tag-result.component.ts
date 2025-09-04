@@ -1,9 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { DisplayVerweis, Verweis } from '../../../../model/verweis';
 import { RouteConstants } from '../../../../routeConstants';
-import { PageRepository } from '../../../../data/repository/page-repository';
 import { take } from 'rxjs';
-import { BelegstelleRepository } from '../../../../data/repository/belegstelle-repository';
 import { Belegstelle } from '../../../../model/belegstelle';
 import { Store } from '@ngxs/store';
 import { CarriersState } from '../../../../state/information-carrier-state.service';
