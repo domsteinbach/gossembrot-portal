@@ -58,9 +58,9 @@ To serve the page with live reload (changes to the code will be reflected immedi
 - Run `npm run api` to start the api locally in order to connect to a local mysql server running on localhost:3306. Make sure your mysql database is running.
 - Run `ng serve` or `ng s` for a dev server. Navigate to `http://localhost:4200/gossembrot-portal/`.
 
-## 2.) Build and host with a mysql database
+### 2.) Build and host with a mysql database
 
-### Prerequisites
+#### Prerequisites
 - Make sure you have node.js installed (v18 or higher)
 - Make sure you have a mysql database running on the server
 - Create a database "gossembrot" in your mysql server (or change the db name in server.js and in src/environments/environment.*.ts accordingly)
@@ -72,7 +72,7 @@ The database name ("gossembrot" or "gossembrot_test") is defined in server.js an
 - put the node server ./api/server.js onto the server (e.g. in /var/www/gsmb/api/)
 - run `npm install` to install the dependencies
 
-### Build and host
+#### Build and host
 
 - Run `npm run build:test` or `npm run build:prod` to build the project. The build artifacts will be stored in the `dist/gossembrot-portal` directory.
 - Make sure you have the mysql database running on the server at the specified host and port
