@@ -4,8 +4,7 @@ A project of the Swiss Nationalfonds (2021–2025); Lead: Prof. Dr. Michael Stol
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17. This project uses two different database technologies depending on the environment. As a backend it uses either a mysql database and a node.js server as api or sql.js — SQLite compiled to WebAssembly — for static hosting.
 
-The main projects page is deployed at https://gossembrot.unibe.ch/gossembrot-portal
-A static version of the page is available at: https://domsteinbach.github.io/gossembrot-portal-site/
+The main projects page is deployed at https://gossembrot.unibe.ch/gossembrot-portal. A static version of the page is available at: https://domsteinbach.github.io/gossembrot-portal-site/. The static version is built and deployed automatically on every push to the main branch via github actions (.github/workflows/deploy-gh-pages.yml)
 
 # Prerequisites
 
@@ -38,17 +37,13 @@ To serve the page with live reload (changes to the code will be reflected immedi
 - Make sure the apache webserver is configured to serve the page/directory correctly
 - Note the .htaccess file created in the dist/gossembrot-portal_static
 
-### 3.) Auto deploy on github pages
-- Via the workflow .github/workflows/deploy-gh-pages.yml the project is automatically built and deployed to github pages on every push to the main branch.
-- The static page is available at: https://domsteinbach.github.io/gossembrot
-
-### 4.) Data updates for static hosting (sqlite database)
+### 3.) Data imports & updates for static hosting (sqlite database)
 
 - Change or replace the csv files in `./data-import`
 - Increase the version number in the "dbUrl" property in src/environments/environment.*.ts, e.g.: "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.1' to "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.2'
   Otherwise the browser might use a cached version of the sqlite database
 - Run `npm run db:build ` to rebuild the database and import (see above) for local development or rebuild the whole project for static hosting e.g. with `npm run build:static:apache` (see above)
-
+- commit and push the changes to the main branch (auto deployed to github pages)
 
 ## B. Dynamic: Build & host alongside a mysql database and the node.js server as api (see section 2. below for building/serving without a mysql database)
 
