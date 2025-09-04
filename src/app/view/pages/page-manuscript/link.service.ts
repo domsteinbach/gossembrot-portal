@@ -63,19 +63,19 @@ export class LinkService {
       default:
         break;
     }
-    return routeToNav ? `${this.baseUrl}/${routeToNav}` : '';
+    return routeToNav ? `${this.baseUrl}${routeToNav}` : '';
   }
 
   getSrcCarrierRoute(verweis: DisplayVerweis): string {
     const qParams = `?${RouteConstants.QUERY_VERWEIS_PARAM}=${verweis.id}`;
-    return `${this.baseUrl}/${RouteConstants.MANUSCRIPTS}/${verweis.srcCar}${qParams}`;
+    return `${this.baseUrl}${RouteConstants.MANUSCRIPTS}/${verweis.srcCar}${qParams}`;
   }
 
   getSrcTextRoute(verweis: DisplayVerweis): string {
     const qText = verweis.srcText
       ? `?${RouteConstants.QUERY_CARRIERTEXT_PARAM}=${verweis.srcText}`
       : '';
-    return `${this.baseUrl}/${RouteConstants.MANUSCRIPTS}/${verweis.srcCar}${qText}`;
+    return `${this.baseUrl}${RouteConstants.MANUSCRIPTS}/${verweis.srcCar}${qText}`;
   }
 
   openCarrierInNewTab(carrier: InformationCarrier): void {
@@ -95,14 +95,14 @@ export class LinkService {
     const qParams = verweis.id
       ? `?${RouteConstants.QUERY_VERWEIS_PARAM}=${verweis.id}`
       : '';
-    const r = `${this.baseUrl}/${RouteConstants.VERWEIS}/${qParams}`;
+    const r = `${this.baseUrl}${RouteConstants.VERWEIS}/${qParams}`;
     window.open(r, '_blank');
   }
 
   private _getExistingTargetRoute(verweis: DisplayVerweis): string {
     const page = verweis.targetBelegstelleObj?.pageId ? verweis.targetBelegstelleObj.pageId : verweis.targetBelegstelleObj?.alternativePageId || '';
     const qPage = page ? `?${RouteConstants.QUERY_PAGE_PARAM}=${page}` : '';
-    return `${this.baseUrl}/${RouteConstants.MANUSCRIPTS}/${verweis.targetCar}${qPage}`;
+    return `${this.baseUrl}${RouteConstants.MANUSCRIPTS}/${verweis.targetCar}${qPage}`;
   }
 
   openVerweisViewDialog(verweis: DisplayVerweis, view: View, hideSynopsisButton = false): void {

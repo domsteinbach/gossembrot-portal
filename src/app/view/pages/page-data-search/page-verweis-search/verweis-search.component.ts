@@ -354,22 +354,6 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openSourceInNewTab(verweis: DisplayVerweis) {
-    const r = this._verweisLinkService.getSrcCarrierRoute(verweis);
-    window.open(r, '_blank');
-  }
-
-  openSourceTextInNewTab(verweis: DisplayVerweis) {
-    const r = this._verweisLinkService.getSrcTextRoute(verweis);
-    window.open(r, '_blank');
-  }
-
-  openTargetInNewTab(element: Verweis) {
-    this._verweisLinkService.openTargetCarrierOfVerweis(
-      element as DisplayVerweis
-    );
-  }
-
   getWortlautFromHtml(html: string): string {
     const doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.textContent || '';

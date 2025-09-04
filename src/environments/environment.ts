@@ -4,7 +4,7 @@ export const environment = {
   name: 'dev',
   useSqlJs: false,
   apiUrl: 'http://localhost:3000',
-  gsmbRoot: './',
+  gsmbRoot: 'gossembrot-portal/',
   gsmbDirUp: '',
   defaultDbName: 'gossembrot',
   osdPrefixUrl: 'images/', // for OSD button images
