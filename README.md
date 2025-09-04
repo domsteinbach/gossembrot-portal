@@ -16,10 +16,10 @@ The main projects page is deployed at https://gossembrot.unibe.ch/gossembrot-por
 
 There are two major ways to build and serve the page:
 
-- Static: Build and serve without a mysql database (using sqlite3 and sql.js instead, so all data is baked into the build)
-- Dynamic: Build & host alongside a mysql database and the node.js server as api
+- Static: Build and serve using sqlite3 and sql.js. All data is baked into the build.
+- Dynamic: Build & host alongside a mysql database and a node.js server as api
 
-The static way is the recommended way to build and host the page as it is much easier to set up and maintain. It is also the way the page is hosted on github pages (https://domsteinbach.github.io/gossembrot-portal-site/).
+The static way is recommended as building and hosting the page as it is much easier to set up and maintain. It is also the way the page is hosted on github pages (https://domsteinbach.github.io/gossembrot-portal-site/).
 
 ## A. Static: Build and serve without a mysql database (using sql.js instead)
 
