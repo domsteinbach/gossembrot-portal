@@ -192,7 +192,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.ghpages.ts"
+                  "with": "src/environments/environment.static-ghpages.ts"
                 }
               ],
               "baseHref": "./",
