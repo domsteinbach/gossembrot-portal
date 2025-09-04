@@ -222,8 +222,8 @@
             "development": {
               "buildTarget": "gossembrot-portal:build:development"
             },
-            "static": {
-              "buildTarget": "gossembrot-portal:build:static"
+            "static-local": {
+              "buildTarget": "gossembrot-portal:build:static-local"
             }
           },
           "defaultConfiguration": "development",
