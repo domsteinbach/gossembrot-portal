@@ -37,7 +37,7 @@ jobs:
         run: node tools/build-db.js
 
       - name: Build Angular (static)
-        run: npm run build:static
+        run: npm run build:static:gh-pages
 
       # SPA fallback for GitHub Pages deep links (404 → app)
       - name: Add 404 fallback
