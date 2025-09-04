@@ -21,7 +21,7 @@ There are two major ways to build and serve the page:
 
 The static way is recommended as building and hosting the page as it is much easier to set up and maintain. It is also the way the page is hosted on github pages (https://domsteinbach.github.io/gossembrot-portal-site/).
 
-## A. Static: Build and serve without a mysql database (using sql.js instead)
+## A. Static: Build and serve without a mysql database (using sqlite3 and sql.js instead)
 
 - Make sure you have the sqlite3 package installed globally: `npm install -g sqlite3`
 
