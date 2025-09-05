@@ -43,18 +43,23 @@
                         *ngIf="v?.id === selectedVerweis?.id"
                         [displayedAgent]="'outgoing'"
                         [verweis]="v"/>
-                        <div *ngIf="v.targetCarObj && v.targetCarObj.physicality === 'Available'">
-                            <span *ngIf="v.isSelfTargeting">Interner Verweis: </span>
-                            <div *ngIf="!v.isSelfTargeting && v.targetCarObj?.mainNamingGossembrot">{{v.targetCarObj.mainNamingGossembrot}} =</div>
-                          <div>
-                            <span>{{v.targetCarObj?.fullTitle}}</span>
-                            <span *ngIf="v.targetBelegstelleObj">, {{v.targetBlattangabe}}</span>
-                          </div>
-                        </div>
-                        <div *ngIf="v.targetCarObj?.physicality && v.targetCarObj?.physicality !== 'Available'">
-                            <span>{{v.targetCarObj?.fullTitle}} </span>
-                            <span>({{v.targetCarObj?.getCarrierTypeDescDeLowerCased()}}) </span>
-                        </div>
+                        <ng-container *ngIf="v.targetCarObj as car">
+                            <div *ngIf="car.physicality === 'Available'">
+                                <span *ngIf="v.isSelfTargeting">Interner Verweis: </span>
+                                <div *ngIf="!v.isSelfTargeting && car.mainNamingGossembrot">
+                                    {{ car.mainNamingGossembrot }} =
+                                </div>
+                                <div>
+                                    <span>{{ car.fullTitle }}</span>
+                                    <span *ngIf="v.targetBelegstelleObj">, {{ v.targetBlattangabe }}</span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="car.physicality && car.physicality !== 'Available'">
+                                <span>{{ car.fullTitle }}</span>
+                                <span>({{ car.getCarrierTypeDescDeLowerCased() }})</span>
+                            </div>
+                        </ng-container>
                     </div>
                 </div>
             </div>
