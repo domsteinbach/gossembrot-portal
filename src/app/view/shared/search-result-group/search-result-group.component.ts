@@ -118,7 +118,6 @@ export class SearchResultGroupComponent implements OnChanges {
             carrier: c
           };
         })
-      console.log('Namings with carriers:', this._namingsWithCarriers);
     });
   }
 

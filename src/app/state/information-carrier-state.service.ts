@@ -68,7 +68,6 @@ export class SelectedSrcInformationCarrierState {
       this._tr.getCarrierTextsOfCarrier$(informationCarrier.id).pipe(take(1)),
       this._pr.pagesOfCarrier$(informationCarrier.id).pipe(take(1)),
     ]).pipe(take(1)).subscribe(([texts = [], pages = []]) => {
-      console.log(pages);
       this._store.dispatch(new UpdateSelectedCarriersTexts(texts.sort((a, b) => a.sortInCar - b.sortInCar)));
       this._store.dispatch(new UpdateSelectedSrcCarrierPages(pages));
 

@@ -125,7 +125,6 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
       return false;
     }
     const previousVerweis = this.texts.flatMap(t => t.incomingVerweise)[currentIndex - 1];
-    // console.log('closingAbschnitt', v, previousVerweis);
     return !!previousVerweis.targetBelegstelleObj?.abschnitt
   }
 

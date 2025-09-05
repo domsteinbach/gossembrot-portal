@@ -46,7 +46,6 @@ export class HeaderSearchComponent implements OnInit, OnDestroy {
   }
 
   doSearch(searchTerm: string): void {
-    console.log(searchTerm, this.searchType);
     this.searchTerm = searchTerm;
     this._search.doSearch(searchTerm, this.searchType);
   }

@@ -60,8 +60,6 @@ export class InfoCarrierRepository {
   getCarrierByNamingGsmbId$(namingId: string): Observable<InformationCarrier | undefined> {
     return this.informationCarriers$().pipe(
       switchMap(carriers => {
-        console.log('Searching for carrier with naming ID:', namingId);
-        console.log('Searching for carrier with naming ID:', carriers);
         const foundCarrier = carriers.find(c => c.namingsGossembrot.some(n => n.id === namingId));
         return of(foundCarrier);
       })

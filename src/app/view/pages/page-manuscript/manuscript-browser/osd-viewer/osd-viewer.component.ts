@@ -60,7 +60,6 @@ export class OsdViewerComponent implements OnInit, AfterViewInit, OnDestroy {
           return;
         }
           this.tileSources = tileSources;
-          console.log('OSD Viewer tile sources updated:', this.tileSources);
           this.updateOpenSeadragonPages();
       });
   }

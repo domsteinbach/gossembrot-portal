@@ -55,9 +55,7 @@ export class VerweisSynopsisService implements OnDestroy {
       }
       this._selectedVerweisId = verweis.id;
       this._srcPage.next(verweis.srcBelegstelleObj?.page);
-      console.log(verweis.targetBelegstelleObj)
       const targetPage = verweis.targetCarObj?.physicality === 'Available' ? verweis.targetBelegstelleObj?.getPageOrAlternativePage() || new MissingPageOfExistingCarrier(): new PageOfMissingCarrier()
-      console.log('targetPage', targetPage)
       this._targetPage.next(targetPage);
 
       if (verweis.srcCarObj && verweis.srcCar !== this._srcCarrier.value?.id) {

@@ -26,8 +26,6 @@ export class VerweisLinkIconComponentComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(' initialized with verweis', this.verweis)
-    ;
     this.hideIfSynopsys = this._route.snapshot.url[0].path === RouteConstants.VERWEIS
   }
 

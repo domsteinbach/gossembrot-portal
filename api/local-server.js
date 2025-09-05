@@ -99,7 +99,6 @@ app.post('/login', (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
-            console.log('Invalid password');
             res.status(401).json({ error: 'Invalid password' });
             return;
         }
@@ -146,7 +145,6 @@ app.post('/delete', (req, res) => {
     const { query, data } = req.body;
     // Perform the delete query on the database
     pool.query(query, data, (err, results) => {
-        console.log('query in server.js', query);
         if (err) {
             console.error('Error executing delete query:', err.message, 'Code:', err.code);
             res.status(500).json({ error: 'Internal Server Error', details: err.message });

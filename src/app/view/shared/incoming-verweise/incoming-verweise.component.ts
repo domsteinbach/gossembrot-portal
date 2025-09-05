@@ -88,7 +88,6 @@ export class IncomingVerweiseComponent implements OnInit, OnChanges {
   }
 
   onVerweisSelected(verweis: DisplayVerweis) {
-    console.log('verweis', verweis);
     this.selectedVerweis = verweis;
   }
 }
