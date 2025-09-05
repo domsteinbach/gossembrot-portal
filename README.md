@@ -30,7 +30,7 @@ The static way is recommended as building and hosting the page as it is much eas
 ### 1.) Local build and serve the static page with baked in database
 
 To serve the page with live reload (changes to the code will be reflected immediately)
-- Run `npm run static:watch` to import the data to the build and serve the page at http://127.0.0.1:4201. Changes to the code will be reflected without rebuilding the whole project (but it might still take some time). The page must be reloaded in the browser to see the changes.
+- Run `npm run static:watch` to import the data to the build and serve the page at http://localhost:4201/. Changes to the code will be reflected and the browser reloads without rebuilding the whole project (but it might still take some time).
 
 For proper development with live reload use the mysql database and the node.js server as api (see below).
 
