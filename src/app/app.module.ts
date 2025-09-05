@@ -76,10 +76,8 @@ import { TranscriptionOverviewComponent } from './view/pages/page-transcription-
 import { MatTableModule } from '@angular/material/table';
 import { TagResultComponent } from './view/pages/page-transcription-overview/tag-result/tag-result.component';
 import { MatRadioModule } from '@angular/material/radio';
-import { DirectedChordComponent } from './view/pages/page-visualisations/directed-chord/directed-chord.component';
 import { PageVisualisationsComponent } from './view/pages/page-visualisations/page-visualisations.component';
 import { VisualizationRepository } from './data/repository/visualization-repository';
-import { HierarchicalEdgeDiagramComponent } from './view/pages/page-visualisations/hierarchical-edge-diagram/hierarchical-edge-diagram.component';
 import { ForceDirectedGraphComponent } from './view/pages/page-visualisations/network-graph/force-directed-graph/force-directed-graph.component';
 import { NodeBrowserComponent } from './view/pages/page-visualisations/network-graph/visualisation-data/vis-data-interaction/node-browser/node-browser.component';
 import { MtxTooltipModule } from '@ng-matero/extensions/tooltip';
@@ -206,9 +204,7 @@ export function tokenGetter() {
     ErlaeuterungenComponent,
     TranscriptionOverviewComponent,
     TagResultComponent,
-    DirectedChordComponent,
     PageVisualisationsComponent,
-    HierarchicalEdgeDiagramComponent,
     ForceDirectedGraphComponent,
     NetworkGraphComponent,
     PageDataSearchComponent,

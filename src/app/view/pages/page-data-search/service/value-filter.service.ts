@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Column, NullFilter, TableName } from '../data-search-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import {GsmbResource} from "../../../../data/repository/gsmb-resource";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ValueFilterService {
   private _activeNullFiltersSubject = new BehaviorSubject<Map<TableName, NullFilter[]>>(new Map<TableName, NullFilter[]>());
   activeNullFilters$ = this._activeNullFiltersSubject.asObservable();
 
-  getMultiFilterPredicate<T extends Record<string, Column>>(keysToSkip: (keyof T)[] = []) {
+  getMultiFilterPredicate<T extends GsmbResource>(keysToSkip: (keyof T)[] = []) {
     return (data: T, filter: string): boolean => {
       const filters = JSON.parse(filter);
 
@@ -24,7 +25,7 @@ export class ValueFilterService {
 
         const filterValue = filters[key as string];
         const dataValue = data[key] ? data[key]?.toString().toLowerCase() : '';
-        return filterValue ? dataValue.includes(filterValue.toLowerCase()) : true;
+        return filterValue ? dataValue?.includes(filterValue.toLowerCase()) : true;
       });
     };
   }

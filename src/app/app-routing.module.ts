@@ -7,8 +7,6 @@ import { IncomingVerweiseMenuComponent } from './view/pages/page-incoming-verwei
 import { ErlaeuterungenComponent } from './view/pages/page-erlaeuterungen/erlaeuterungen.component';
 import { TranscriptionOverviewComponent } from './view/pages/page-transcription-overview/transcription-overview.component';
 import { PageVisualisationsComponent } from './view/pages/page-visualisations/page-visualisations.component';
-import { DirectedChordComponent } from './view/pages/page-visualisations/directed-chord/directed-chord.component';
-import { HierarchicalEdgeDiagramComponent } from './view/pages/page-visualisations/hierarchical-edge-diagram/hierarchical-edge-diagram.component';
 import { authGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { NetworkGraphComponent } from './view/pages/page-visualisations/network-graph/network-graph.component';
@@ -125,14 +123,6 @@ const routes: Routes = [
       {
         path: RouteConstants.FORCE_DIRECTED,
         component: NetworkGraphComponent,
-      },
-      {
-        path: RouteConstants.HIERARCHICAL_EDGE_DIAGRAM,
-        component: HierarchicalEdgeDiagramComponent,
-      },
-      {
-        path: RouteConstants.DIRECTED_CHORD,
-        component: DirectedChordComponent,
       },
     ],
   },
