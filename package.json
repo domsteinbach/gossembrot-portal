@@ -11,7 +11,7 @@
     "build:static:apache": "npm run db:build && ng build --configuration static-apache && ./tools/copy-htaccess.sh static-apache",
     "build:static:local": "ng build --configuration=static-local",
     "build:static:gh-pages": "npm run db:build && ng build --configuration static-ghpages",
-    "serve:static": "npm run build:static:local && http-server dist/gossembrot-portal_static -p 4201 -c-1 --cors",
+    "serve:static": "npm run db:build && ng serve --configuration=static-local",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "node api/local-server.js",

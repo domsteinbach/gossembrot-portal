@@ -7,20 +7,20 @@ const Papa = require("papaparse");
 // resolve project root as one level up from ./tools
 const ROOT = path.resolve(__dirname, "..");
 
-const DB_PATH = path.join(ROOT, "src/assets/db/app.sqlite");
+const DB_PATH = path.join(ROOT, "src/db/app.sqlite");
 const CSV_DIR = path.join(ROOT, "data-import");
 const SCHEMA_DIR = path.join(ROOT, "schema");
 
-// 1) fresh DB
+// CREATE NEW DB
 fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 if (fs.existsSync(DB_PATH)) fs.unlinkSync(DB_PATH);
 const db = sqlite3(DB_PATH);
 
-// 2) apply base schema
+// Apply base schema
 const schema = fs.readFileSync(path.join(SCHEMA_DIR, "00_schema.sql"), "utf8");
 db.exec(schema);
 
-// 3) import CSVs
+// Import CSV files
 const csvFiles = fs.readdirSync(CSV_DIR).filter(f => f.endsWith(".csv"));
 if (csvFiles.length === 0) {
     console.error("No CSV files found in", CSV_DIR);
@@ -83,7 +83,7 @@ for (const file of csvFiles) {
     console.log(`  ✓ Inserted ${rows.length} rows into ${table}`);
 }
 
-// 4) apply post-import SQL if present
+// apply post-import SQL if present
 for (const extra of ["02_post_import_tables.sql", "20_indexes.sql"]) {
     const f = path.join(SCHEMA_DIR, extra);
     if (fs.existsSync(f)) {
@@ -92,10 +92,10 @@ for (const extra of ["02_post_import_tables.sql", "20_indexes.sql"]) {
     }
 }
 
-// 5) optimize
+// optimize
 db.exec("VACUUM; ANALYZE;");
 
-// 6) row counts
+// row counts
 console.log("\nRow counts:");
 const tables = db
     .prepare(

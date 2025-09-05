@@ -164,7 +164,7 @@
                 },
                 {
                   "glob": "app.sqlite",
-                  "input": "src/assets/db",
+                  "input": "src/db",
                   "output": "assets/db"
                 },
                 {
@@ -221,7 +221,7 @@
                 },
                 {
                   "glob": "app.sqlite",
-                  "input": "src/assets/db",
+                  "input": "src/db",
                   "output": "assets/db"
                 }
               ]
@@ -274,7 +274,7 @@
                 },
                 {
                   "glob": "app.sqlite",
-                  "input": "src/assets/db",
+                  "input": "src/db",
                   "output": "assets/db"
                 },
                 {

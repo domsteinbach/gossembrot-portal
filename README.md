@@ -30,8 +30,12 @@ The static way is recommended as building and hosting the page as it is much eas
 ### 1.) Local build and serve the static page with baked in database
 
 To serve the page with live reload (changes to the code will be reflected immediately)
+- Run `npm run serve:static` to import the data to the build and serve the page at localhost:4200. Changes to the code will be reflected immediately without rebuilding the whole project.
+
+This command does two things:
 - Run `npm run db:build ` to build and import the data (csv files) into the sqlite database. The database file will be created in `src/assets/db/app.sqlite`.
-- Run `ng serve --configuration=static-local` to serve the page at localhost:4200. Changes to the code will be reflected immediately without rebuilding the whole project.
+- Run `ng serve --configuration=static-local` 
+
 
 ### 2.) Build and host the static page with an apache webserver
 - Run `npm run build:static:apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
