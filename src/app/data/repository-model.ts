@@ -91,6 +91,7 @@ export interface BelegstelleData {
   wortlaut_tei_xml: string;
   wortlaut_searchstring: string;
   alternative_page: string;
+  missing_comment: string;
 }
 
 export interface VerweisData {

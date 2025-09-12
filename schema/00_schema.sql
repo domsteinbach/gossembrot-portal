@@ -88,8 +88,9 @@ CREATE TABLE belegstelle (
                              lost                    INTEGER,          -- boolean 0/1
                              is_fragment             INTEGER,          -- boolean 0/1
                              non_habes               INTEGER,          -- boolean 0/1
-                             alternative_page        TEXT,
                              belegstelle_text        TEXT,
+                             alternative_page        TEXT,
+                             missing_comment         TEXT,
                              annotat                 TEXT
 );
 

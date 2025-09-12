@@ -23,6 +23,7 @@ export class Belegstelle extends GsmbResource {
   private _wortlaut_searchstring: string;
   private _page?: Page; // The page on which the belegstelle is located
   private _alternativePage?: Page; // If the page is lost: The page which is closest to the actual page and which should be opened instead
+  private _missingComment: string;
   outgoingVerweise: DisplayVerweis[] = [];
 
 
@@ -44,6 +45,7 @@ export class Belegstelle extends GsmbResource {
     this._wortlaut_tei_xml = data.wortlaut_tei_xml;
     this._wortlaut_searchstring = data.wortlaut_searchstring;
     this._alternativePageId = data.alternative_page;
+    this._missingComment = data.missing_comment;
   }
 
   get carId(): string {
@@ -134,6 +136,10 @@ export class Belegstelle extends GsmbResource {
 
   set alternativePage(value: Page | undefined) {
     this._alternativePage = value;
+  }
+
+  get missingComment(): string {
+    return this._missingComment;
   }
 
   getPageOrAlternativePage(): Page | undefined {

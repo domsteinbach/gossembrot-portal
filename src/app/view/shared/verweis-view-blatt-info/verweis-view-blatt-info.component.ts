@@ -39,7 +39,7 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
 
   get missingTooltip(): string {
     const alternativeBlattangabe = this.alternativePageBlattangabe ?  ` Es wird stattdessen ${this.alternativePageBlattangabe} angezeigt.` : '';
-    return `${this.blattangabe} ist verloren.${alternativeBlattangabe}`;
+    return `${this.verweis?.srcBelegstelleObj?.missingComment}${alternativeBlattangabe}`;
   }
 
   get carrierTitle(): string {

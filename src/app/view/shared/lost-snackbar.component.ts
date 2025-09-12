@@ -6,7 +6,7 @@ import { DisplayVerweis } from '../../model/verweis';
   template: `
     <div class="lost-snackbar-wrapper">
       <div class="lost-snackbar-content">
-        {{ data.targetBelegstelleObj?.blattangabeWIthBlPrefix }} ist in {{ data.targetCarObj?.title }} verloren.
+        {{ data.targetBelegstelleObj?.missingComment }}
       </div>
       <div class="bottom-container">
         <button color="primary" mat-raised-button (click)="close()">Schließen</button>
