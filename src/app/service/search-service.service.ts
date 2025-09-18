@@ -56,7 +56,7 @@ export class SearchService {
       return;
     }
 
-    if (this._startSearchTerm !== searchTerm.substring(0,this.START_SEARCH_OFFSET) || this.searchType !== searchType) {
+    if (this._startSearchTerm !== searchTerm.substring(0,this.START_SEARCH_OFFSET) || this.searchType !== searchType || this.searchType !== 'unset') {
       this.searchType = searchType;
       this._restartSearch(searchTerm);
       return;
@@ -73,7 +73,7 @@ export class SearchService {
 
   private _restartSearch(searchTerm: string): void {
     this._startSearchTerm = searchTerm.substring(0, this.START_SEARCH_OFFSET);
-    const termsToSearch = SearchService.expandWithAlternativeWritings(this._startSearchTerm);
+    const termsToSearch = this.searchType === 'unset' ? SearchService.expandWithAlternativeWritings(this._startSearchTerm) : searchTerm;
     this._search.fullTextSearch$(termsToSearch, this.searchType)
       .pipe(take(1))
       .subscribe((result: SearchResult[]) => {

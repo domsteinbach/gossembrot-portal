@@ -20,15 +20,18 @@ export class SearchDataRepository {
   ): Observable<SearchResult[]> {
 
     const terms = (Array.isArray(searchTerms) ? searchTerms : [searchTerms]).map(escapeSql);
+    if (searchType !== 'unset') {
+      // only take the first term for non-substring searches as we need to compare exactly
+      terms.splice(1);
+    }
     const limitClause = limit ? `LIMIT ${limit}` : '';
     const typesClause = types.length ? `AND type IN (${types.map(t => `'${escapeSql(t)}'`).join(', ')})` : '';
-
     if (!this.useSqlite) {
-      // ===== MySQL path (unchanged) =======================================
       let sqlClause = '';
       switch (searchType) {
         case 'fullWord':
-          sqlClause = `MATCH(search_string) AGAINST('${terms.map(t => `+${t}`).join(' ')}' IN BOOLEAN MODE)`;
+          const term = terms[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          sqlClause = `search_string REGEXP '[[:<:]]${term}[[:>:]]'`;
           break;
         case 'prefix':
           sqlClause = `MATCH(search_string) AGAINST('${terms.map(t => `${t}*`).join(' OR ')}' IN BOOLEAN MODE)`;
