@@ -17,7 +17,6 @@ export class LostPageNotificationService {
     const brightness: ThemeBrightness = this._store.selectSnapshot(SelectedThemeState).brightness;
     const panelClass: GsmbThemeClass = brightness === 'dark' ? 'dark-theme' : 'old-brick-theme';
     this._store.select(SelectedVerweisState).subscribe((verweis: DisplayVerweis) => {
-      console.debug('LostPageNotificationService: selected verweis', verweis?.targetBelegstelleObj?.lost);
       if (verweis && verweis.targetBelegstelleObj && verweis.targetCarPhysicality === 'Available' && verweis?.targetBelegstelleObj?.lost && !verweis?.targetBelegstelleObj?.pageId) {
         this._snackBar.openFromComponent(LostSnackbarComponent, {
           data: verweis,

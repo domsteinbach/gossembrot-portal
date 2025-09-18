@@ -112,20 +112,6 @@ export class Belegstelle extends GsmbResource {
     return this._belegstelleText;
   }
 
-  get blattangabeWIthBlPrefix(): string {
-    let blattangabe = this._belegstelleText?.replace('Bl.', '').trim();
-    const isCommonBlatt = !this._belegstelleText?.includes('Cedula') || !this._belegstelleText?.includes('Karta');
-    let prefix = '';
-    if ((this.isTarget && !this?.lost) && isCommonBlatt || this.isSource) {
-      prefix = 'Bl. ';
-    }
-    if (this._belegstelleText?.startsWith('(alt') && this._belegstelleText?.endsWith(')')) {
-      blattangabe = blattangabe.substring(1, blattangabe.length - 1).trim();
-    }
-
-    return blattangabe ? `${prefix}${blattangabe}` : '';
-  }
-
   get alternativePageId(): string | undefined {
     return this._alternativePageId;
   }

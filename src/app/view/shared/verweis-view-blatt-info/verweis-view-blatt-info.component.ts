@@ -30,7 +30,8 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
 
   get blattangabe(): string {
     const belegstelle = this.agency === 'Src' ? this.verweis?.srcBelegstelleObj : this.verweis?.targetBelegstelleObj;
-    return belegstelle ? belegstelle.blattangabeWIthBlPrefix : '';
+    const prefix = belegstelle?.lost ? '' : 'Bl. ';
+    return belegstelle ? `${prefix}${belegstelle.belegstelleText}` : '';
   }
 
   get alternativePageBlattangabe(): string {
@@ -39,7 +40,7 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
 
   get missingTooltip(): string {
     const alternativeBlattangabe = this.alternativePageBlattangabe ?  ` Es wird stattdessen ${this.alternativePageBlattangabe} angezeigt.` : '';
-    return `${this.verweis?.srcBelegstelleObj?.missingComment}${alternativeBlattangabe}`;
+    return `${this.verweis?.targetBelegstelleObj?.missingComment}${alternativeBlattangabe}`;
   }
 
   get carrierTitle(): string {
@@ -71,7 +72,7 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   }
 
   get isMissingPageOfExistingCarrier(): boolean {
-    return this.agency === 'Target' && this.verweis?.targetCarPhysicality !== undefined && this.verweis.targetCarPhysicality === 'Available' && this.verweis?.targetBelegstelleObj?.lost === true;
+    return this.agency === 'Target' && this.verweis?.targetCarPhysicality === 'Available' && this.verweis?.targetBelegstelleObj?.lost === true;
   }
 
   constructor(
@@ -84,6 +85,7 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((verweis: DisplayVerweis) => {
       this.verweis = verweis;
+      console.log('VerweisViewBlattInfoComponent - verweis updated:', verweis);
       this._cdr.detectChanges();
     });
   }
