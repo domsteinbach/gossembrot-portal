@@ -85,7 +85,7 @@ export class SearchService {
   private _filterAndApplySearchResults(searchTerm: string): void {
     const filterTerms = SearchService.expandWithAlternativeWritings(searchTerm);
     const filteredResults = this._startSearchResults.filter(r =>
-      filterTerms.some(term => r.searchString.toLowerCase().includes(term))
+      filterTerms.some(term => r.searchString.toLowerCase().includes(term.toLowerCase()))
     );
     this._searchResults.next(filteredResults);
   }
