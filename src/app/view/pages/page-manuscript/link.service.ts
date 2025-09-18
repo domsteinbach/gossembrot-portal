@@ -17,7 +17,7 @@ export class LinkService {
     ) {
   }
 
-  baseUrl = `${window.location.origin}/${RouteConstants.GSMB_ROOT}`;
+  baseUrl = `${window.location.origin}${RouteConstants.GSMB_ROOT}`;
 
   openSourceCarrierOfVerweis(verweis: DisplayVerweis): void {
     window.open(this.getSrcCarrierRoute(verweis), '_blank');
