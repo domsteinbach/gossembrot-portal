@@ -170,6 +170,7 @@ export class TileSourceService {
   }
 
   private _getLocalTileSource(url = EnvConstants.NOT_FOUND_IMG_PATH): GsmbTileSource {
+    console.log('Using local tile source with URL:', url);
     return new GsmbTileSource('local', {
       type: 'image',
       url,

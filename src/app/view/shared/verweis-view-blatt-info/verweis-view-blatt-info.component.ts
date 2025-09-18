@@ -30,7 +30,8 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
 
   get blattangabe(): string {
     const belegstelle = this.agency === 'Src' ? this.verweis?.srcBelegstelleObj : this.verweis?.targetBelegstelleObj;
-    const prefix = belegstelle?.lost ? '' : 'Bl. ';
+    const physicality = this.agency === 'Src' ? this.verweis?.srcCarObj?.physicality : this.verweis?.targetCarPhysicality;
+    const prefix = !belegstelle?.lost && physicality === 'Available' ?  'Bl. ' : '';
     return belegstelle ? `${prefix}${belegstelle.belegstelleText}` : '';
   }
 
@@ -85,7 +86,6 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((verweis: DisplayVerweis) => {
       this.verweis = verweis;
-      console.log('VerweisViewBlattInfoComponent - verweis updated:', verweis);
       this._cdr.detectChanges();
     });
   }
@@ -95,11 +95,8 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
       console.error('Verweis is undefined');
       return;
     }
-    if (this.agency === 'Src') {
-      this._vls.openSourceCarrierOfVerweis(this.verweis);
-    } else {
-      this._vls.openTargetCarrierOfVerweis(this.verweis);
-    }
+    this._vls.openTargetCarrierOfVerweis(this.verweis);
+
   }
 
   ngOnDestroy() {

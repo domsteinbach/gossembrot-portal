@@ -99,11 +99,7 @@ export class Page extends GsmbResource {
   }
 
   get imgDir(): string {
-    if ( this.isMissingBlatt) {
-      return this.folio === 'v' ? EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_V : EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_R;
-    }  else {
       return `${EnvConstants.LOCAL_IMG_FALLBACK_DIR}${this._imgDir}`;
-    }
   }
 
   get isMissingBlatt(): boolean {
@@ -212,7 +208,7 @@ export class PageOfMissingCarrier extends Page {
     pageData.lagen_sym = '';
 
     super(pageData);
-  }
+    }
 
   override get imgDir(): string {
     return this._imgDir;
@@ -228,6 +224,24 @@ export class MissingPageOfExistingCarrier extends Page {
     pageData.img_dir = folio === 'v' ? EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_V : EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_R;
     pageData.lagen_sym = '';
     super(pageData);
+  }
+
+  override get imgDir(): string {
+    return this._imgDir;
+  }
+}
+
+export class PageOfClassicText extends Page {
+  constructor() {
+    const pageData = emptyPageData;
+    pageData.id = UuId.generateUuid();
+    pageData.img_dir = EnvConstants.BLATT_OF_CLASSIC_TEXT_PATH;
+    pageData.lagen_sym = '';
+    super(pageData);
+  }
+
+  override get imgDir(): string {
+    return this._imgDir;
   }
 }
 

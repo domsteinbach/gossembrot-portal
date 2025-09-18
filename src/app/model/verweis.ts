@@ -5,6 +5,7 @@ import { Belegstelle } from './belegstelle';
 import { InformationCarrier, Physicality } from './infoCarrier';
 import { CarrierText } from './carriertext';
 import { GsmbResource } from '../data/repository/gsmb-resource';
+import {MissingPageOfExistingCarrier, NullPage, Page, PageOfClassicText} from "./page";
 
 export enum VerweisTypes {
   Verweis = 0,
@@ -145,6 +146,20 @@ export class DisplayVerweis extends Verweis {
 
   get targetTextTitle(): string {
     return this._targetTextObj?.title || '';
+  }
+
+  get targetPage() {
+    switch (this.targetCarObj?.physicality) {
+      case 'Available':
+        return this.targetBelegstelleObj?.getPageOrAlternativePage()
+            || new MissingPageOfExistingCarrier();
+      case 'Classic':
+        return new PageOfClassicText();
+      case 'Lost':
+        return new MissingPageOfExistingCarrier();
+      default:
+        return new NullPage();
+    }
   }
 
   get targetBelegstelleObj(): Belegstelle | undefined {

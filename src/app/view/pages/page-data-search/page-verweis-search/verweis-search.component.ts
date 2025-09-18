@@ -101,7 +101,7 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
       column: 'targetTextTitle',
       displayedName: 'Zieltext',
       primitiveType: 'string',
-      displayed: false,
+      displayed: true,
       displayFilter: true,
       nullOrEmptyFilter: true,
     },
@@ -118,6 +118,14 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
       primitiveType: 'number',
       displayed: false,
       displayFilter: false,
+    },
+    {
+      column: 'targetBelegstelle',
+      displayedName: 'Zielbelegstelle',
+      primitiveType: 'string',
+      displayed: true,
+      displayFilter: true,
+      nullOrEmptyFilter: true,
     },
     {
       column: 'alternativePageId',

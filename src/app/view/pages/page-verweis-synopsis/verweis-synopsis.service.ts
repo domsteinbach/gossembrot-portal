@@ -8,7 +8,13 @@ import {
   UpdateSelectedVerweis,
 } from '../../../state/belegstelle-state.service';
 import { takeUntil } from 'rxjs/operators';
-import {PageOfMissingCarrier, NullPage, Page, MissingPageOfExistingCarrier} from '../../../model/page';
+import {
+  PageOfMissingCarrier,
+  NullPage,
+  Page,
+  MissingPageOfExistingCarrier,
+  PageOfClassicText
+} from '../../../model/page';
 import { VerweisService } from '../../../service/verweis.service';
 
 @Injectable()
@@ -53,10 +59,11 @@ export class VerweisSynopsisService implements OnDestroy {
       if (!verweis || verweis.id === this._selectedVerweisId) {
         return;
       }
+      console.log('Set target page to', verweis);
       this._selectedVerweisId = verweis.id;
       this._srcPage.next(verweis.srcBelegstelleObj?.page);
-      const targetPage = verweis.targetCarObj?.physicality === 'Available' ? verweis.targetBelegstelleObj?.getPageOrAlternativePage() || new MissingPageOfExistingCarrier(): new PageOfMissingCarrier()
-      this._targetPage.next(targetPage);
+      this._targetPage.next(verweis.targetPage);
+
 
       if (verweis.srcCarObj && verweis.srcCar !== this._srcCarrier.value?.id) {
         this._srcCarrier.next(verweis.srcCarObj);

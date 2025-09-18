@@ -82,6 +82,9 @@
                         <ng-container *ngIf="col.column === 'targetText'">
                             {{ element.targetTextObj?.title || ''}}
                         </ng-container>
+                        <ng-container *ngIf="col.column === 'targetBelegstelle'">
+                            {{ element.targetBelegstelleObj?.belegstelleText || ''}}
+                        </ng-container>
                       <ng-container *ngIf="col.column === 'alternativePageId'">
                         {{ element.targetBelegstelleObj?.alternativePageId || ''}}
                       </ng-container>
@@ -99,7 +102,8 @@
                   col.column !== 'srcCar' &&
                     col.column !== 'targetTextAuthor' &&
                     col.column !== 'srcTextAuthor' &&
-                    col.column !== 'targetText'
+                    col.column !== 'targetText' &&
+                    col.column !== 'targetBelegstelle'
                 "
                         >
                             {{ element[col.column] }}

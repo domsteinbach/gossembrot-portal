@@ -152,13 +152,13 @@ export class InformationCarrier extends GsmbResource {
     }
     switch (this.carrierTypeDe) {
       case 'Handschrift':
-        return 'rekonstruiert';
+        return 'Rekonstruiert';
       case 'Druck':
-        return 'rekonstruiert';
+        return 'Rekonstruiert';
       case 'Werk':
-        return 'kanonisch';
+        return 'Kanonisch';
       case 'Textträger':
-        return 'rekonstruiert';
+        return 'Rekonstruiert';
     }
   }
 

@@ -12,7 +12,6 @@ import { GsmbTileSource } from '../../../service/tile-source.service';
 import { TileSourceService } from '../../../service/tile-source.service';
 import { environment } from '../../../../environments/environment';
 import { Page } from '../../../model/page';
-import {EnvConstants} from "../../../constants";
 
 @Component({
   selector: 'app-osd-editor',
