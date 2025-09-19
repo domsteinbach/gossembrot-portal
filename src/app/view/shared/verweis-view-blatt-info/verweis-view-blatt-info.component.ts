@@ -91,11 +91,11 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   }
 
   openCarrierInNewTab() {
-    if (!this.verweis) {
-      console.error('Verweis is undefined');
-      return;
+    if (this.agency === 'Src') {
+      this._vls.openSourceCarrierOfVerweis(this.verweis!);
+    } else {
+      this._vls.openTargetCarrierOfVerweis(this.verweis!);
     }
-    this._vls.openTargetCarrierOfVerweis(this.verweis);
 
   }
 
