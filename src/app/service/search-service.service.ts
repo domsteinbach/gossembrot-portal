@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Isophonem, SearchResult, SearchResultTable } from '../model/search-result';
-import { BehaviorSubject, take } from 'rxjs';
+import {BehaviorSubject, Subject, take} from 'rxjs';
 import { SearchDataRepository, SearchType } from '../data/repository/search-data-repository';
+import {takeUntil} from "rxjs/operators";
 
 @Injectable()
 export class SearchService {
+
+  //to cancel previous searches when a new search is triggered
+  private _cancelSearch$ = new Subject<void>();
+
 
   readonly OFFSET = 5; // Number of results to show before "show more" is needed
 
@@ -55,14 +60,8 @@ export class SearchService {
       this._searchResults.next([]);
       return;
     }
-
-    if (this._startSearchTerm !== searchTerm.substring(0,this.START_SEARCH_OFFSET) || this.searchType !== searchType || this.searchType !== 'unset') {
-      this.searchType = searchType;
-      this._restartSearch(searchTerm);
-      return;
-    }
-
-    this._filterAndApplySearchResults(searchTerm);
+    this.searchType = searchType;
+    this._restartSearch(searchTerm);
   }
 
   clearResults(): void {
@@ -72,10 +71,13 @@ export class SearchService {
   }
 
   private _restartSearch(searchTerm: string): void {
+    this._cancelSearch$.next();
+    this._cancelSearch$ = new Subject<void>();
     this._startSearchTerm = searchTerm.substring(0, this.START_SEARCH_OFFSET);
     const termsToSearch = this.searchType === 'unset' ? SearchService.expandWithAlternativeWritings(this._startSearchTerm) : searchTerm;
     this._search.fullTextSearch$(termsToSearch, this.searchType)
       .pipe(take(1))
+      .pipe(takeUntil(this._cancelSearch$))
       .subscribe((result: SearchResult[]) => {
         this._startSearchResults = result;
         this._filterAndApplySearchResults(searchTerm);

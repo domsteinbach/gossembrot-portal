@@ -82,6 +82,7 @@ The database name ("gossembrot" or "gossembrot_test") is defined in server.js an
 - Make sure you have the mysql database running on the server at the specified host and port
 - start the server.js (via nohub, output to a log file):
   `nohup node server.js > ./server.log 2>&1 &`
+- in the same terminal disown the process by enter: `disown` (this will prevent the process from being killed when you close the terminal)ß
 - Make sure the user running the node.js server has access to the node_modules directory
 - Navigate to `http://your-server/gossembrot-portal/`.
 
@@ -91,9 +92,8 @@ Hints for debugging if the server.js does not start or the page does not load:
 - Check node processes and see if it is in the list `ps aux | grep node`
 - Search for server js `ps aux | grep server.js`
 
-If you need to kill the process (Be aware you kill the right one of course):
+If you need to kill the process:
 - `kill -9 [PID]` (replace [PID] with the process id)
-- in the same terminal disown the process by enter: `disown` (this will prevent the process from being killed when you close the terminal)ß
 - See ./server.log for errors
 
 # Other scripts and commands

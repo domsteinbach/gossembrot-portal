@@ -24,28 +24,30 @@ export class SearchDataRepository {
     const typesClause = types.length ? `AND type IN (${types.map(t => `'${escapeSql(t)}'`).join(', ')})` : '';
     if (!this.useSqlite) {
       const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
       let sqlClause = '';
       switch (searchType) {
         case 'fullWord':
           sqlClause = '(' + terms
               .filter(Boolean)
-              .map(t => `search_string REGEXP '[[:<:]]${esc(t)}[[:>:]]'`)
+              .map(t => `search_string REGEXP '\\\\b${esc(t)}\\\\b'`)
               .join(' OR ') + ')';
           break;
 
         case 'prefix':
           sqlClause = '(' + terms
               .filter(Boolean)
-              .map(t => `search_string REGEXP '[[:<:]]${esc(t)}'`)
+              .map(t => `search_string REGEXP '\\\\b${esc(t)}'`)
               .join(' OR ') + ')';
           break;
 
         case 'suffix':
           sqlClause = '(' + terms
               .filter(Boolean)
-              .map(t => `search_string REGEXP '${esc(t)}[[:>:]]'`)
+              .map(t => `search_string REGEXP '${esc(t)}\\\\b'`)
               .join(' OR ') + ')';
           break;
+
         case 'unset':
         default:
           sqlClause = `(${terms.map(t => `search_string LIKE '%${t}%'`).join(' OR ')})`;

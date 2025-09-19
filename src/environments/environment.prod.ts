@@ -6,7 +6,7 @@ export const environment = {
   apiUrl: '/api',
   localImageBaseUrl: '../',
   defaultDbName: 'gossembrot',
-  gsmbRoot: 'gossembrot-portal/',
+  gsmbRoot: '/gossembrot-portal/',
   assetsRoot: './assets',
   osdPrefixUrl: './images/', // for OSD button images
 };
