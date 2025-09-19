@@ -1,6 +1,6 @@
 // For building static locally with sqlite database baked in
 export const environment = {
-  production: true,
+  production: false,
   name: 'static-local',
   useSqlJs: true,
   gsmbRoot: '/',                          // root when served locally

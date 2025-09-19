@@ -130,26 +130,26 @@ export class SearchResultGroupComponent implements OnChanges {
 
     if (!term || this.searchType === 'unset') {
       return result.searchString
-        .split('|')
-        .map(s => s.trim())
-        .find(s => s.toLowerCase().includes(term));
+          .split('|')
+          .map(s => s.trim())
+          .find(s => s.toLowerCase().includes(term));
     }
 
     const aliases = result.searchString
-      .toLowerCase()
-      .split('|')
-      .map(alias => alias.trim());
+        .split('|')
+        .map(alias => alias.trim());
 
     for (const alias of aliases) {
       const words = alias.split(/\s+/);
 
       for (const word of words) {
+        const lw = word.toLowerCase();
         if (
-          (this.searchType === 'prefix' && word.startsWith(term)) ||
-          (this.searchType === 'suffix' && word.endsWith(term)) ||
-          (this.searchType === 'fullWord' && word === term)
+            (this.searchType === 'prefix' && lw.startsWith(term)) ||
+            (this.searchType === 'suffix' && lw.endsWith(term)) ||
+            (this.searchType === 'fullWord' && lw === term)
         ) {
-          return alias;
+          return alias; // keep original casing
         }
       }
     }

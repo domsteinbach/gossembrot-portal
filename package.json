@@ -13,7 +13,7 @@
     "build:static:local": "ng build --configuration=static-local",
     "static:watch": "npm run db:build && npm-run-all -p build:static:watch serve:dist",
     "build:static:watch": "ng build --configuration=static-local --watch",
-    "serve:dist": "browser-sync start --server dist/gossembrot-portal_static --files 'dist/gossembrot-portal_static/index.html,dist/gossembrot-portal_static/*.js,dist/gossembrot-portal_static/*.css' --ignore 'dist/gossembrot-portal_static/**/*.map' --watchOptions.awaitWriteFinish true --watchOptions.stabilityThreshold 600 --watchOptions.pollInterval 100 --reload-delay 150 --port 4201 --no-ui --no-open --single",
+    "serve:dist": "browser-sync start --server dist/gossembrot-portal_static --files 'dist/gossembrot-portal_static/index.html,dist/gossembrot-portal_static/*.js,dist/gossembrot-portal_static/*.css' --ignore 'dist/gossembrot-portal_static/**/*.map' --watchOptions.awaitWriteFinish --watchOptions.awaitWriteFinish.stabilityThreshold 600 --watchOptions.awaitWriteFinish.pollInterval 100 --reload-delay 150 --port 4201 --no-ui --no-open --single",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "api": "node api/local-server.js",

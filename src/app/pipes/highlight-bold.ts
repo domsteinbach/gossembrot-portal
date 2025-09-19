@@ -6,9 +6,10 @@ export class HighlightBoldPipe implements PipeTransform {
     if (!searchTerm || !text) return text;
 
     const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return text.replace(
-      new RegExp(`(${escaped})`, 'gi'),
-      '<span class="highlighted-substr">$1</span>'
+    const regex = new RegExp(escaped, 'gi');
+
+    return text.replace(regex, match =>
+        `<span class="highlighted-substr">${match}</span>`
     );
   }
 }
