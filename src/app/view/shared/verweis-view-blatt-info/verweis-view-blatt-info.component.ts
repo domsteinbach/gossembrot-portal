@@ -69,7 +69,7 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   }
 
   get page(): Page | undefined {
-    return this.agency === 'Src' ? this.verweis?.srcBelegstelleObj?.page : this.verweis?.targetBelegstelleObj?.getPageOrAlternativePage();
+    return this.agency === 'Src' ? this.verweis?.srcBelegstelleObj?.page : this.verweis?.targetPage;
   }
 
   get isMissingPageOfExistingCarrier(): boolean {

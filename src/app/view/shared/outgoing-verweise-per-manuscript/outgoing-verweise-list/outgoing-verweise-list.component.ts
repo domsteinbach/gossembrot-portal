@@ -15,6 +15,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../auth/auth.service';
+import {GsmbResource} from "../../../../data/repository/gsmb-resource";
 
 @Component({
   selector: 'app-outgoing-verweise-list',
@@ -156,4 +157,9 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     this._destroy$.next();
     this._destroy$.complete();
   }
+
+  trackById(index: number, item: any) {
+    return item.id;
+  }
+
 }

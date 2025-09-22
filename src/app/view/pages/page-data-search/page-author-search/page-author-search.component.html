@@ -26,7 +26,7 @@
       <table id="author-text-table" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <!-- Loop through all headers to generate columns -->
-        <ng-container *ngFor="let col of columns$ | async" [matColumnDef]="col.column">
+        <ng-container *ngFor="let col of columns$ | async; trackBy: trackByDisplayedName" [matColumnDef]="col.column">
           <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">
             <div>{{ col.displayedName }}</div>
           </th>

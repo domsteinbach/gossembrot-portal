@@ -161,6 +161,10 @@ export class AuthorSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isDrawerClosed = !isOpened; // Set true when the drawer is closed
   }
 
+  trackByDisplayedName(index: number, item: ColumnDef) {
+    return item.displayedName;
+  }
+
   ngOnDestroy() {
     this._destroy$.next();
     this._destroy$.complete();

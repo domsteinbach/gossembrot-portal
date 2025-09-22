@@ -3,7 +3,7 @@
      id="outgoing-verweise-scroll-container"
      *ngIf="texts && !loading"
      appScrollIntoView #scrollDirective="scrollIntoView" [containerId]="'outgoing-verweise-scroll-container'">
-    <div *ngFor="let t of texts">
+    <div *ngFor="let t of texts; trackBy: trackById">
         <div class="sticky-wrapper">
             <h4 *ngIf="t.outgoingVerweise.length > 0" class="src-text-title sticky-title">
                 <mat-icon class="text-icon">bookmark_outline</mat-icon>
@@ -20,7 +20,7 @@
                 </span>
             </h4>
         </div>
-        <div *ngFor="let v of t.outgoingVerweise">
+        <div *ngFor="let v of t.outgoingVerweise; trackBy: trackById">
             <div *ngIf="v.insecurity <=1 && displayWortlaut(v);" [ngStyle]="{'color': v.type === 'Erwaehnung' && this.highlightErwaehnungen ? 'red' : 'inherit'}" id="{{OUTGOING_PREFIX}}{{v.id}}">
                 <div *ngIf="(v.srcBelegstelleObj?.abschnitt && displayAbschnitt(v)) || closingAbschnitt(v)" class="abschnitt-container">
                   <hr class="abschnitt-line">

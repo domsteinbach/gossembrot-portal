@@ -129,6 +129,6 @@ export class Belegstelle extends GsmbResource {
   }
 
   getPageOrAlternativePage(): Page | undefined {
-    return this.alternativePageId ? this.alternativePage : this.page || new MissingPageOfExistingCarrier();
+    return this.alternativePageId ? this.alternativePage : this.page;
   }
 }

@@ -9,11 +9,8 @@ import {
 } from '../../../state/belegstelle-state.service';
 import { takeUntil } from 'rxjs/operators';
 import {
-  PageOfMissingCarrier,
   NullPage,
   Page,
-  MissingPageOfExistingCarrier,
-  PageOfClassicText
 } from '../../../model/page';
 import { VerweisService } from '../../../service/verweis.service';
 

@@ -245,6 +245,10 @@ export class ManuscriptCompareComponent implements OnInit, OnDestroy {
     );
   }
 
+  trackById(index: number, item: any) {
+    return item.id;
+  }
+
   ngOnDestroy() {
     this._destroy$.next();
     this._destroy$.complete();

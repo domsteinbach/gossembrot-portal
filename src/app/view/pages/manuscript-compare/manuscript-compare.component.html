@@ -144,7 +144,7 @@
       <div class="legende-local osd-local">
         <h3>Lokale Bilder</h3>
         <ul *ngIf="local$ | async as local">
-          <li *ngFor="let tile of local">
+          <li *ngFor="let tile of local; trackBy: trackById">
             Link: <a [href]="tile.localTileSource.url" target="_blank">{{tile.localTileSource.url}}</a>
           </li>
         </ul>
@@ -152,7 +152,7 @@
       <div class="legende-external osd-external">
         <h3>Externe Bilder (IIIF)</h3>
         <div *ngIf="external$ | async as external">
-          <div *ngFor="let tile of external">Info-json: <a [href]="tile?.iiifTileSource?.id" target="_blank">{{tile?.iiifTileSource?.id}}</a></div>
+          <div *ngFor="let tile of external; trackBy: trackById">Info-json: <a [href]="tile?.iiifTileSource?.id" target="_blank">{{tile?.iiifTileSource?.id}}</a></div>
         </div>
       </div>
     </div>

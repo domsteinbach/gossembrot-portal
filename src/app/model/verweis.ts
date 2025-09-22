@@ -5,7 +5,7 @@ import { Belegstelle } from './belegstelle';
 import { InformationCarrier, Physicality } from './infoCarrier';
 import { CarrierText } from './carriertext';
 import { GsmbResource } from '../data/repository/gsmb-resource';
-import {MissingPageOfExistingCarrier, NullPage, Page, PageOfClassicText} from "./page";
+import {MissingPageOfExistingCarrier, NullPage, PageOfClassicText, PageOfMissingCarrier} from "./page";
 
 export enum VerweisTypes {
   Verweis = 0,
@@ -156,7 +156,7 @@ export class DisplayVerweis extends Verweis {
       case 'Classic':
         return new PageOfClassicText();
       case 'Lost':
-        return new MissingPageOfExistingCarrier();
+        return new PageOfMissingCarrier();
       default:
         return new NullPage();
     }

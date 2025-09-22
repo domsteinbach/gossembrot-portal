@@ -6,6 +6,11 @@ import { DisplayVerweis } from '../../../../model/verweis';
 import { LinkService } from '../../../pages/page-manuscript/link.service';
 import { SearchService } from '../../../../service/search-service.service';
 
+interface BelegstelleWithVerweis {
+    belegstelle: SearchResult;
+    verweis: DisplayVerweis | undefined;
+}
+
 @Component({
   selector: 'app-search-result-belegstelle',
   templateUrl: './search-result-belegstelle.component.html',
@@ -19,7 +24,7 @@ export class SearchResultBelegstelleComponent implements OnChanges{
 
   termsToHighlight: string[] = [];
 
-  belegstellen: { belegstelle: SearchResult; verweis: DisplayVerweis | undefined}[] = [];
+  belegstellen: BelegstelleWithVerweis[] = [];
 
   constructor(
     private _cdr: ChangeDetectorRef,
@@ -45,5 +50,9 @@ export class SearchResultBelegstelleComponent implements OnChanges{
     if (verweis) {
       this._vls.openSourceCarrierOfVerweis(verweis);
     }
+  }
+
+  trackByIds(index: number, item: BelegstelleWithVerweis) {
+    return `${item.belegstelle.id}-${item.verweis?.id}`;
   }
 }
