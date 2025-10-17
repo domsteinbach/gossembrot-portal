@@ -35,6 +35,7 @@ import { TableDisplayService } from '../service/table-display.service';
 import { ValueFilterService } from '../service/value-filter.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchService } from '../../../../service/search-service.service';
+import {AuthService} from "../../../../auth/auth.service";
 
 
 @Component({
@@ -107,17 +108,19 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
     },
     {
       column: 'type',
-      displayedName: 'Verweis-Typ',
+      displayedName: '* Verweis-Typ',
       primitiveType: 'string',
       displayed: false,
       displayFilter: false,
+      isInternal: true,
     },
     {
       column: 'insecurity',
-      displayedName: 'Priorität',
+      displayedName: '* Priorität',
       primitiveType: 'number',
       displayed: false,
       displayFilter: false,
+      isInternal: true,
     },
     {
       column: 'targetBelegstelle',
@@ -129,24 +132,27 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
     },
     {
       column: 'alternativePageId',
-      displayedName: 'alternatives Blatt',
+      displayedName: '* alternatives Blatt',
       primitiveType: 'string',
       displayed: true,
       displayFilter: false,
+      isInternal: true,
     },
     {
       column: 'missingComment',
-      displayedName: 'Kommentar zu fehlendem Blatt',
+      displayedName: '* Kommentar zu fehlendem Blatt',
       primitiveType: 'string',
-      displayed: true,
+      displayed: false,
       displayFilter: false,
+      isInternal: true,
     },
     {
       column: 'bemerkungen',
-      displayedName: 'Bemerkungen',
+      displayedName: '* Bemerkungen',
       primitiveType: 'string',
-      displayed: true,
+      displayed: false,
       displayFilter: false,
+      isInternal: true,
     },
   ] as const;
 
@@ -180,7 +186,8 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
-    private _br: BelegstelleRepository,
+      public authService: AuthService,
+      private _br: BelegstelleRepository,
     private _cdr: ChangeDetectorRef,
     private _ds: TableDisplayService,
     private _dialog: MatDialog,
@@ -386,7 +393,8 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
         Belegstelle: verweis.srcBelegstelleText || '',
         'Link zur Belegstelle':
           this._verweisLinkService.getSrcCarrierRoute(verweis) || '',
-        Autor: verweis.srcTextObj?.author?.cognomen || '',
+        Autor: verweis.srcTextObj?.authorsCognomen || '',
+        'Autor unsicher': verweis.srcTextObj?.isAuthorInsecure ? 'true' : 'false',
         Text: verweis.srcTextObj?.title || '',
         'Link zum Text': this._verweisLinkService.getSrcTextRoute(verweis) || '',
         Wortlaut: this.getWortlautFromTei(verweis.wortlautTeiXml) || '',
@@ -396,7 +404,8 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
         'Link zum Ziel':
           this._verweisLinkService.getReconstructedVerweisTargetRoute(verweis) || '',
         Zieltext: verweis.targetTextObj?.title || '',
-        'Autor (Zieltext)': verweis.targetTextObj?.author?.cognomen || '',
+        'Autor (Zieltext)': verweis.targetTextObj?.authorsCognomen|| '',
+        'Autor (Zieltext) unsicher': verweis.targetTextObj?.isAuthorInsecure ? 'true' : 'false',
       };
     });
 

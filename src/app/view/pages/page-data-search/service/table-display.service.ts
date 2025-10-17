@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ColumnDef,  TableName } from '../data-search-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import {AuthService} from "../../../../auth/auth.service";
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +13,23 @@ export class TableDisplayService {
   private _displayedFilters: Map<TableName, BehaviorSubject<ColumnDef[]>> = new Map<TableName, BehaviorSubject<ColumnDef[]>>();
   private _displayedNullFilters: Map<TableName, BehaviorSubject<ColumnDef[]>> = new Map<TableName, BehaviorSubject<ColumnDef[]>>();
 
+  constructor(private _authService: AuthService,) {
+  }
+
   initTable(tableName: TableName, columns: ColumnDef[]) {
     if (!this._displayedColumns.has(tableName)) {
-      this._displayedColumns.set(tableName, new BehaviorSubject<ColumnDef[]>(columns));
-      this._displayedFilters.set(tableName, new BehaviorSubject<ColumnDef[]>(columns.filter(col => !col.customFilter)));
-      this._displayedNullFilters.set(tableName, new BehaviorSubject<ColumnDef[]>(columns.filter(col => col.nullOrEmptyFilter)));
+
+      // filter columns based on authService.isAuthenticated and isInternal property
+        const filteredColumns = columns.filter(col => {
+            if (col.isInternal) {
+                return this._authService.isAuthenticated();
+            }
+            return true;
+        });
+
+      this._displayedColumns.set(tableName, new BehaviorSubject<ColumnDef[]>(filteredColumns));
+      this._displayedFilters.set(tableName, new BehaviorSubject<ColumnDef[]>(filteredColumns.filter(col => !col.customFilter)));
+      this._displayedNullFilters.set(tableName, new BehaviorSubject<ColumnDef[]>(filteredColumns.filter(col => col.nullOrEmptyFilter)));
     } else {
       console.warn(`Columns for table '${tableName}' are already initialized.`);
     }

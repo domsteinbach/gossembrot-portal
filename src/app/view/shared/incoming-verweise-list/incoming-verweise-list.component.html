@@ -10,9 +10,9 @@
         <div *ngFor="let t of texts" [id]="t.id">
             <h4 class="sticky-title" *ngIf="t.hasIncomingVerweis">
               <mat-icon class="text-icon">bookmark_outline</mat-icon>
-              <span *ngIf="t.author?.cognomen">
-                <span *ngIf="!t.author?.linkToGnd">{{t.author?.cognomen}}: </span>
-                <span *ngIf="t.author?.linkToGnd" matTooltip="Autor #{{t?.author?.gndId}} in der Deutschen Nationalbibliothek öffnen"><a class="author-link" [href]="t?.author?.linkToGnd || ''" target="_blank">{{t.author?.cognomen}}</a>: </span>
+              <span *ngIf="t.authorsCognomen">
+                <span *ngIf="!t.author?.linkToGnd">{{t.authorsCognomen}}: </span>
+                <span *ngIf="t.author?.linkToGnd" matTooltip="Autor #{{t?.author?.gndId}} in der Deutschen Nationalbibliothek öffnen"><a class="author-link" [href]="t?.author?.linkToGnd || ''" target="_blank">{{t.authorsCognomen}}</a>: </span>
               </span>
               <span>{{t.title}}</span>
               <span *ngIf="t.isOnlyErwaehnung"> (Erwähnung) </span>

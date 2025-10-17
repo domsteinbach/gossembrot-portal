@@ -21,6 +21,7 @@ import { DisplayVerweis } from './verweis';
   private _carrier: InformationCarrier | undefined;
   private _outgoingVerweise: DisplayVerweis[] = [];
   private _incomingVerweise: DisplayVerweis[] = [];
+  private _is_author_insecure: boolean;
 
   constructor(data: CarrierTextData, carrier?: InformationCarrier) {
     super(data.id);
@@ -33,6 +34,7 @@ import { DisplayVerweis } from './verweis';
     this._incipit = data.incipit;
     this._additionalSource = data.additional_source || '';
     this._carrier = carrier;
+    this._is_author_insecure = data.is_author_insecure === 1;
   }
 
   get authorId(): string {
@@ -68,8 +70,9 @@ import { DisplayVerweis } from './verweis';
     this._author = author;
   }
 
-  get cognomen(): string {
-    return this._author?.cognomen || '';
+  get authorsCognomen(): string {
+    const insecurrityMarker = this._author?.cognomen && this.isAuthorInsecure ? '?' : '';
+    return this._author?.cognomen ? this._author?.cognomen + insecurrityMarker : '';
   }
 
   get authorGndId(): string {
@@ -80,8 +83,12 @@ import { DisplayVerweis } from './verweis';
     return this._author?.gndIdAlternate || '';
   }
 
+    get isAuthorInsecure(): boolean {
+        return this._is_author_insecure;
+    }
+
   get fullTitle(): string {
-    const c = this.cognomen ? `${this.cognomen}: ` : '';
+    const c = this.authorsCognomen ? `${this.authorsCognomen}: ` : '';
     const t = `${c}${this.title}`;
     return this.textRange ? `${t} (${this.textRange})` : t;
   }

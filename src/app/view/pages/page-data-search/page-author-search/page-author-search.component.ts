@@ -14,6 +14,7 @@ import { TableDisplayService } from '../service/table-display.service';
 import { ValueFilterService } from '../service/value-filter.service';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
+import {AuthService} from "../../../../auth/auth.service";
 
 @Component({
   selector: 'app-page-author-search',
@@ -82,7 +83,8 @@ export class AuthorSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   private _destroy$ = new Subject<void>();
 
   constructor(
-    private _ar: AuthorRepository,
+      public authService: AuthService,
+      private _ar: AuthorRepository,
     private _ds: TableDisplayService,
     private _fs: ValueFilterService,
     private _dialog: MatDialog

@@ -158,6 +158,7 @@ export class CarrierTextRepository {
       text_range: '',
       incipit: '',
       additional_source: '',
+      is_author_insecure: 0,
     };
 
     return new CarrierText(nullTextData);

@@ -31,7 +31,8 @@ CREATE TABLE carrier_text (
                               is_lost           INTEGER,   -- 0 available, 1 lost
                               text_range        TEXT,
                               incipit           TEXT,
-                              additional_source TEXT
+                              additional_source TEXT,
+                              is_author_insecure INTEGER    -- 0 secure, 1 insecure
 );
 
 /* === page ================================================================ */
@@ -59,12 +60,7 @@ CREATE TABLE page (
                       lagen_text                 TEXT,
                       img_name                   TEXT,
                       img_dir                    TEXT,
-                      external_img_url           TEXT,
                       iiif_info_url              TEXT,
-                      local_img_is_corrupt       INTEGER DEFAULT 0,
-                      autocompared_iiif          INTEGER DEFAULT 0,
-                      match_percentage           INTEGER,
-                      manually_defined_info_json INTEGER DEFAULT 0,
                       is_missing_blatt           INTEGER DEFAULT 0
 );
 

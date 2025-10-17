@@ -24,6 +24,7 @@ export interface ColumnDef {
   displayFilter?: boolean;
   nullOrEmptyFilter?: boolean;
   customFilter?: boolean;
+  isInternal?: boolean;
 }
 
 export interface BooleanControl {

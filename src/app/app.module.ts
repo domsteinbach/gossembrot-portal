@@ -148,7 +148,6 @@ import {
 import {
   SearchResultsNamingGsmbComponent
 } from './view/shared/search-result-group/search-result-group-components/search-results-naming-gsmb.component';
-import { ManuscriptCompareComponent } from './view/pages/manuscript-compare/manuscript-compare.component';
 import { BlattSelectComponent } from './view/shared/blatt-select/blatt-select.component';
 import { NonHabeoComponent } from './view/pages/page-incoming-verweise/non-habeo/non-habeo.component';
 import {environment} from "../environments/environment";
@@ -177,7 +176,6 @@ export function tokenGetter() {
     GridTilesViewComponent,
     TextSelectComponent,
     BelegstellenNavComponent,
-    ManuscriptCompareComponent,
     InfoCarrierSelectComponent,
     InfocarTypeFilterComponent,
     IsErwaehnungFilterComponent,

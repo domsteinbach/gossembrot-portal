@@ -183,11 +183,11 @@ export class DisplayVerweis extends Verweis {
   }
 
   get srcTextAuthorCognomen(): string {
-    return this.srcTextObj?.author?.cognomen || '';
+    return this.srcTextObj?.authorsCognomen|| '';
   }
 
   get targetTextAuthorCognomen(): string {
-    return this.targetTextObj?.author?.cognomen || '';
+    return this.targetTextObj?.authorsCognomen || '';
   }
 
   get sortArgForSrcBelegstelle(): string {

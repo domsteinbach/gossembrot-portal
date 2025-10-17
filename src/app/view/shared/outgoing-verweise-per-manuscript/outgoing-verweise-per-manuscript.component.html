@@ -6,10 +6,10 @@
     <div *ngIf="isAuthenticated">
       <!-- checkbox to include Erwaehnungen -->
       <mat-checkbox
-        matTooltip="* Blendet Nennungen in der Liste ein oder aus. Die Nennungen werden rot gedruckt."
+        matTooltip="* Erwähnungen beziehen sich auf bloße Nennungen von Texten in rekonstruierbaren Textträgern, ohne spezifische Stellenangabe"
         [checked]="highlightErwaehnungen$ | async"
         (change)="onIncludeErwaehnungenChange($event.checked)"
-      >* Erwähnungen anzeigen
+      >Erwähnungen anzeigen
       </mat-checkbox>
     </div>
   </div>

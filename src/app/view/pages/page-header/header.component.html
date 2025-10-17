@@ -31,12 +31,11 @@
             <span>Kanonische Werke</span>
         </button>
       <button mat-button
-              *ngIf="authService.isAuthenticated()"
-              matTooltip="* Dokumentiert Gossembrots Verweise ausgehend von erhaltenen Handschriften aus Gossembrots Bibliothek."
+              matTooltip="Dokumentiert Gossembrots Verweise ausgehend von erhaltenen Handschriften aus Gossembrots Bibliothek."
               [routerLink]="[routeConstants.VERWEIS]"
               [queryParams]="{}"
               routerLinkActive="active-route">
-        <span>* Verweis-Synopse</span>
+        <span>Verweis-Synopse</span>
       </button>
 
         <button mat-button
@@ -46,13 +45,13 @@
                 routerLinkActive="active-route">
             <span>Visualisierungen</span>
         </button>
-        <button *ngIf="authService.isAuthenticated()"
+        <button
                 mat-button
-                matTooltip="* Anzeige und Suche in den Daten wie Autoren, Texte oder Verweise von Gossembrot in seinen Handschriften (nur für unsere Benutzer verfügbar)."
+                matTooltip="Anzeige und Suche in den Daten wie Autoren, Texte oder Verweise von Gossembrot in seinen Handschriften."
                 [routerLink]="[routeConstants.DATA_SEARCH]"
                 [queryParams]="{}"
                 routerLinkActive="active-route">
-            <span>* Expertensuche</span>
+            <span>Expertensuche</span>
         </button>
 
         <button mat-button class="button-with-icon"
@@ -76,7 +75,7 @@
     -->
     </div>
     <span class="spacer"></span>
-    <app-header-search *ngIf="authService.isAuthenticated()"/>
+    <app-header-search/>
     <button color="primary" mat-icon-button id="brightness-toggle" (click)="toggleBrightness()">
       <mat-icon class="interactive">{{currentBrightness === 'dark' ? 'brightness_6': 'brightness_3'}}</mat-icon>
     </button>

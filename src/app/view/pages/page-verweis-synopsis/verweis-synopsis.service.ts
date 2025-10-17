@@ -56,7 +56,6 @@ export class VerweisSynopsisService implements OnDestroy {
       if (!verweis || verweis.id === this._selectedVerweisId) {
         return;
       }
-      console.log('Set target page to', verweis);
       this._selectedVerweisId = verweis.id;
       this._srcPage.next(verweis.srcBelegstelleObj?.page);
       this._targetPage.next(verweis.targetPage);

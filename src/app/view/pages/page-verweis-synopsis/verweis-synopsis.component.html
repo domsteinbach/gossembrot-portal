@@ -4,7 +4,7 @@
     <app-info-carrier-select
       [carriers]="(srcCarriers$ | async) ?? []"
       [selectedCarrier]="selectedSrcCarrier$ | async"
-      [label]="'Manuskript mit ausgehenden Verweisen'"
+      [label]="'Handschrift mit ausgehenden Verweisen'"
       (carrierSelected)="onSrcManuscriptSelectionChange($event)"/>
     <app-outgoing-verweise-per-manuscript
       id="outgoing-verweise-container"
@@ -27,7 +27,7 @@
     <app-info-carrier-select
       [carriers]="(targetCarriers$ | async) ?? []"
       [selectedCarrier]="targetCarrier$ | async"
-      [label]="'Manuskript mit eingehenden Verweisen'"
+      [label]="'Textträger mit eingehenden Verweisen'"
       (carrierSelected)="onTargetManuscriptSelectionChange($event)"/>
     <app-incoming-verweise-list
       class="scroll-container"

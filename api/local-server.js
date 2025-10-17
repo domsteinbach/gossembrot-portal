@@ -153,7 +153,6 @@ app.post('/delete', (req, res) => {
 
         // If it's a DELETE operation for the 'region' table, you can send a confirmation message
         if (query.startsWith('DELETE FROM region')) {
-            console.log('Data deleted by server.js');
             res.json({ message: 'Data successfully deleted', affectedRows: results.affectedRows });
         } else {
             // For non-DELETE operations, just return the query authors

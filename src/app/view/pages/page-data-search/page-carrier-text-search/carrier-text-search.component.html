@@ -48,7 +48,7 @@
             <ng-container *ngIf="col.column === 'title'">
               {{ element[col.column] }}
               <mat-icon
-                class="in-text-icon-button"
+                class="in-text-icon-button smalller-icon"
                 (click)="openTextInNewTab(element)"
                 matTooltip="Text in einem neuen Tab öffnen"
               >
@@ -81,7 +81,7 @@
         showFirstLastButtons
         class="custom-paginator"
       ></mat-paginator>
-      <button mat-raised-button>Export</button>
+      <button mat-raised-button *ngIf="authService.isAuthenticated()">* Export</button>
     </div>
     <mat-drawer #advancedFilterDrawer mode="side" position="end" (openedChange)="onDrawerStateChange($event)">
       <button mat-raised-button class="close-button" color="primary" (click)="advancedFilterDrawer.close()">Schliessen</button>

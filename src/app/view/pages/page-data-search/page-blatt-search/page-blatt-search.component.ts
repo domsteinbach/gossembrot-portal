@@ -14,6 +14,7 @@ import { InformationCarrier } from '../../../../model/infoCarrier';
 import { ValueFilterService } from '../service/value-filter.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { InfoCarrierRepository } from '../../../../data/repository/info-carrier-repository';
+import {AuthService} from "../../../../auth/auth.service";
 
 @Component({
   selector: 'app-page-blatt-search',
@@ -55,10 +56,11 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
     },
     {
       column: 'pageType',
-      displayedName: 'Typ',
+      displayedName: '* Typ',
       primitiveType: 'string',
       displayed: true,
       displayFilter: true,
+      isInternal: true,
     },
   ] as const;
 
@@ -87,6 +89,7 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
   private _selectedCarrier$ = this._selectedCarrier.asObservable();
 
   constructor(
+      public authService: AuthService,
     private _ds: TableDisplayService,
     private _fs: ValueFilterService,
     private _ir: InfoCarrierRepository,

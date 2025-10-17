@@ -122,22 +122,22 @@ export class LinkService {
   }
 
   private _getCarrierRoute(carrier: InformationCarrier): string {
-    let route = `${window.location.origin}/${RouteConstants.GSMB_ROOT}`;
+    let route = `${window.location.origin}${RouteConstants.GSMB_ROOT}`;
     switch (carrier.physicality) {
       case 'Available':
-        route = route + `/${RouteConstants.MANUSCRIPTS}/${carrier.id}`;
+        route = route + `${RouteConstants.MANUSCRIPTS}/${carrier.id}`;
         break;
       case 'Lost':
         if (carrier.inGsmbsLib && carrier.carrierType === 'Manuscript') {
-          route = route + `/${RouteConstants.RECONSTRUCTION}/${RouteConstants.IN_GSM_VALUE}/${carrier.id}`;
+          route = route + `${RouteConstants.RECONSTRUCTION}/${RouteConstants.IN_GSM_VALUE}/${carrier.id}`;
         } else if (!carrier.inGsmbsLib && carrier.carrierType === 'Manuscript') {
-          route = route + `/${RouteConstants.RECONSTRUCTION}/${RouteConstants.OUT_GSM_VALUE}/${carrier.id}`;
+          route = route + `${RouteConstants.RECONSTRUCTION}/${RouteConstants.OUT_GSM_VALUE}/${carrier.id}`;
         } else {
-          route = route + `/${RouteConstants.RECONSTRUCTION}/${RouteConstants.PRINTS_VALUE}/${carrier.id}`;
+          route = route + `${RouteConstants.RECONSTRUCTION}/${RouteConstants.PRINTS_VALUE}/${carrier.id}`;
         }
         break;
       case 'Classic':
-        route = route + `/${RouteConstants.CLASSICS}/${carrier.id}`;
+        route = route + `${RouteConstants.CLASSICS}/${carrier.id}`;
         break;
     }
     return route;

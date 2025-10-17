@@ -5,7 +5,7 @@ export const environment = {
   useSqlJs: true,                          // turn on sql.js + SW
   gsmbRoot: '/gossembrot-portal_static/',
   apiUrl: '/gossembrot-portal_static/api',
-  dbUrl: '/gossembrot-portal_static/assets/db/app.sqlite?v=1',
+  dbUrl: '/gossembrot-portal_static/assets/db/app.sqlite?v=2',
   defaultDbName: 'gossembrot',
   localImageBaseUrl: 'http://130.92.252.118:8090/',
   osdPrefixUrl: '/gossembrot-portal_static/images/', // for OSD button images

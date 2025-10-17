@@ -14,6 +14,7 @@ import { ColumnSettingsComponent } from '../shared/column-settings/column-settin
 import { ValueFilterService } from '../service/value-filter.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { LinkService } from '../../page-manuscript/link.service';
+import {AuthService} from "../../../../auth/auth.service";
 
 @Component({
   selector: 'app-carrier-text-search',
@@ -31,7 +32,7 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
       displayFilter: true,
     },
     {
-      column: 'cognomen',
+      column: 'authorsCognomen',
       displayedName: 'Autor:in',
       primitiveType: 'string',
       displayed: true,
@@ -42,6 +43,14 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
       column: 'authorGndId',
       displayedName: 'GND-ID (Autor:in)',
       primitiveType: 'string',
+      displayed: true,
+      displayFilter: true,
+      nullOrEmptyFilter: true,
+    },
+    {
+      column: 'isAuthorInsecure',
+      displayedName: 'Autorschaft unsicher',
+      primitiveType: 'boolean',
       displayed: true,
       displayFilter: true,
       nullOrEmptyFilter: true,
@@ -87,7 +96,8 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
     );
 
   constructor(
-    private _ds: TableDisplayService,
+      public authService: AuthService,
+      private _ds: TableDisplayService,
     private _fs: ValueFilterService,
     private _dialog: MatDialog,
     private _ls: LinkService,
@@ -141,6 +151,9 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
 
         case 'gndId':
           return item.author?.gndId || '';
+
+        case 'isAuthorInsecure':
+          return item.isAuthorInsecure ? '1' : '0';
 
         default:
           return (item as any)[property].toLowerCase() || '';

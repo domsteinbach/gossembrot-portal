@@ -7,6 +7,7 @@ import { VerweisType } from '../../../../../model/verweis';
   selector: 'app-is-erwaehnung-filter',
   template: `
     <mat-checkbox
+        matTooltip="Erwähnungen beziehen sich auf bloße Nennungen von Texten in rekonstruierbaren Textträgern, ohne spezifische Stellenangabe"
         *ngFor="let type of isErwaehnungControls"
         [checked]="isChecked(type)"
         (change)="onCheckboxChange($event, type)"

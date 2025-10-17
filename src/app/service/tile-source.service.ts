@@ -5,7 +5,7 @@ import {
 import { Page } from '../model/page';
 import { DataService } from '../data/dataservice.service';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, catchError, lastValueFrom, map, Observable, of } from 'rxjs';
+import {  lastValueFrom, map, Observable, of } from 'rxjs';
 import { LocalTileSource } from '../view/pages/page-manuscript/manuscript-browser/osd-viewer/osd-viewer.component';
 import { EnvConstants } from '../constants';
 
@@ -71,8 +71,6 @@ export interface IiifTile {
 })
 export class TileSourceService {
 
-  debugMode = new BehaviorSubject<boolean>(false);
-
   constructor(
     private _dataService: DataService,
     private _store: Store
@@ -80,50 +78,28 @@ export class TileSourceService {
 
 
   getSingleTileSource(page: Page | undefined): Observable<GsmbTileSource | undefined> {
-    if (page?.iiifInfoUrl && (!page.autocomparedIiif || page.matchPercentage >= 25 || page.manuallyAddedIiif))  {
+    if (page?.iiifInfoUrl)  {
       return this._dataService.getIIIFinfo(page.iiifInfoUrl).pipe(
-        map((infoJson) => new GsmbTileSource('iiif', infoJson)),
-        catchError((error) => {
-          console.error(error); // Fallback to local tile source if IIIF info cannot be fetched
-          return of(this._getLocalTileSource(page.imgDir));
-        })
+        map((infoJson) => new GsmbTileSource('iiif', infoJson))
       );
     } else {
-      const ts = this._getLocalTileSource(page?.imgDir);
-      return of(ts).pipe(
-        catchError((error) => {
-          console.error(error); // Log the error and return 404 image
-          return of(this._getLocalTileSource());
-        })
-      );
+      return of(this._getLocalTileSource(page?.imgDir));
     }
   }
 
-  updateTileSources(pages: Page[]): void {
-    if (this.debugMode.getValue()) {
-      this._updateTileSourcesDebug(pages).catch((error) => {
-        console.error('Error updating tile sources in debug mode:', error);
-      });
-    } else {
-      this._updateTileSources(pages).catch((error) => {
-        console.error('Error updating tile sources:', error);
-      });
-    }
-  }
-
-  private async _updateTileSources(pages: Page[]): Promise<void> {
+  async updateTileSources(pages: Page[]): Promise<void> {
     if (pages.length === 0) {
       return;
     }
     const tileSources: GsmbTileSource[] = [];
     for (const page of pages) {
-      if (page.iiifInfoUrl && (!page.autocomparedIiif || page.matchPercentage >= 25 || page.manuallyAddedIiif)) {
+      if (page.iiifInfoUrl) {
         try {
           const infoJson$ = this._dataService.getIIIFinfo(page.iiifInfoUrl)
           const infoJson = await lastValueFrom(infoJson$);
           if (!infoJson) {
             console.error('Error fetching IIIF info: no infoJson');
-            this._getLocalTileSource(page.imgDir); // Fallback to local tile source if IIIF info cannot be fetched
+            this._getLocalTileSource(page?.imgDir); // Fallback to local tile source if IIIF info cannot be fetched
             continue;
           }
           tileSources.push(new GsmbTileSource('iiif', infoJson));
@@ -137,40 +113,7 @@ export class TileSourceService {
     this._store.dispatch(new UpdateDoubleTileSources(tileSources));
   }
 
-  private async _updateTileSourcesDebug(pages: Page[]): Promise<void> {
-    if (pages.length === 0) {
-      return;
-    }
-    const localTileSources: GsmbTileSource[] = [];
-    const tileSources: GsmbTileSource[] = [];
-    for (const page of pages) {
-      if (page.imgDir) {
-        localTileSources.push(this._getLocalTileSource(page.imgDir));
-      }
-
-      if (page.iiifInfoUrl) {
-        try {
-          const infoJson = await lastValueFrom(this._dataService.getIIIFinfo(page.iiifInfoUrl));
-          if (!infoJson) {
-            console.error('Error fetching IIIF info: no infoJson');
-            continue;
-          }
-          tileSources.push(new GsmbTileSource('iiif', infoJson));
-        } catch (error) {
-          console.error('Error fetching IIIF info:', error);
-        }
-      } else {
-        if (page.externalImgUrl) {
-          tileSources.push(this._getExternalImageTileSource(page.externalImgUrl));
-        }
-      }
-    }
-    this._store.dispatch(new UpdateDoubleTileSources(tileSources));
-    this._store.dispatch(new UpdateLocalDoubleTileSources(localTileSources));
-  }
-
   private _getLocalTileSource(url = EnvConstants.NOT_FOUND_IMG_PATH): GsmbTileSource {
-    console.log('Using local tile source with URL:', url);
     return new GsmbTileSource('local', {
       type: 'image',
       url,

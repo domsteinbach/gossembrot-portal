@@ -119,8 +119,8 @@ export class VerweisService {
           v.targetBelegstelleObj = targetBelegstellen.find(b => b.id === v.targetBelegstelle);
         });
 
-        const verweiseWithTarget = verweise.filter(v => v.targetText && v.insecurity <= 1);
-        const verweiseWithoutTarget = verweise.filter(v => !v.targetText && v.insecurity <= 1);
+        const verweiseWithTarget = verweise.filter(v => (!!v.targetText || !!v.targetBelegstelle) && v.insecurity <= 1);
+        const verweiseWithoutTarget = verweise.filter(v => (!v.targetText && !v.targetBelegstelle) && v.insecurity <= 1);
 
         texts.forEach(t => {
           t.incomingVerweise = verweiseWithTarget.filter(v => v.targetText === t.id);

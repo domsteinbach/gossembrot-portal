@@ -20,7 +20,6 @@ import { AuthorSearchComponent } from './view/pages/page-data-search/page-author
 import {
   DataSearchSearchComponent
 } from './view/pages/page-data-search/page-data-search-search/data-search-search.component';
-import { ManuscriptCompareComponent } from './view/pages/manuscript-compare/manuscript-compare.component';
 import { NonHabeoComponent } from './view/pages/page-incoming-verweise/non-habeo/non-habeo.component';
 
 
@@ -48,7 +47,6 @@ const routes: Routes = [
   {
     path: RouteConstants.VERWEIS,
     component: VerweisSynopsisComponent,
-    canActivate: [authGuard],
   },
   {
     path: RouteConstants.RECONSTRUCTION,
@@ -129,7 +127,6 @@ const routes: Routes = [
   {
     path: RouteConstants.DATA_SEARCH,
     component: PageDataSearchComponent,
-    canActivate: [authGuard],
 
     children: [
       {
@@ -161,12 +158,10 @@ const routes: Routes = [
       {
         path: RouteConstants.DATA_VERWEISE,
         component: PageDataSearchComponent,
-        canActivate: [authGuard],
       },
     ],
   },
   { path: 'login', component: LoginComponent },
-  { path: 'compare', component: ManuscriptCompareComponent}
 
   // { path: RouteConstants.VERWEISE, component: VerweisComponent },
   // { path: RouteConstants.THEMES, component: ThemeSwitchComponent },

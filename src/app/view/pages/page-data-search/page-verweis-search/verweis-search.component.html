@@ -124,7 +124,7 @@
                     showFirstLastButtons
                     class="custom-paginator"
             ></mat-paginator>
-            <button mat-raised-button (click)="exportToCsv()">Export</button>
+            <button mat-raised-button *ngIf="authService.isAuthenticated()" (click)="exportToCsv()">* Export</button>
         </div>
         <mat-drawer #advancedFilterDrawer mode="side" position="end" (openedChange)="onDrawerStateChange($event)">
           <button mat-raised-button class="close-button" color="primary" (click)="advancedFilterDrawer.close()">Schliessen</button>

@@ -22,8 +22,7 @@ export type PageType =
 export class Page extends GsmbResource {
   protected _carId: string;
   protected _folio: Folio;
-  protected _imgDir: string;
-  protected _externalImgUrl: string;
+  protected _imgDir = '';  // fallback for displaying missing images
   protected _iiifInfoUrl: string;
   protected _imgName: string;
   protected _label: string;
@@ -43,18 +42,12 @@ export class Page extends GsmbResource {
   protected _pageText: string;
   protected _sortInCar: number;
   protected _textId: string;
-  protected _localImgIsCorrupt: boolean;
-  protected _autocomparedIiif: boolean;
-  protected _matchPercentage: number;
-  protected _manuallyAddedIiif = false; // Indicates if the IIIF info was manually added
   protected _isMissingBlatt = false; // Indicates if the page is a missing Blatt
 
   constructor(pageData: PageData) {
     super(pageData.id);
     this._carId = pageData.car_id;
     this._folio = pageData.folio as Folio;
-    this._externalImgUrl = pageData.external_img_url;
-    this._imgDir = pageData.img_dir;
     this._iiifInfoUrl = pageData.iiif_info_url;
     this._imgName = pageData.img_name;
     this._label = pageData.label;
@@ -74,11 +67,8 @@ export class Page extends GsmbResource {
     this._pageText = pageData.page_text;
     this._sortInCar = pageData.sort_in_car;
     this._textId = pageData.text_id;
-    this._localImgIsCorrupt = pageData.local_img_is_corrupt === 1;
-    this._autocomparedIiif = pageData.autocompared_iiif === 1;
-    this._matchPercentage = pageData.match_percentage || 0;
-    this._manuallyAddedIiif = pageData.manually_defined_info_json === 1;
     this._isMissingBlatt = pageData.is_missing_blatt === 1;
+    this._imgDir = pageData.img_dir;
   }
 
   get carId(): string {
@@ -106,28 +96,8 @@ export class Page extends GsmbResource {
     return this._isMissingBlatt;
   }
 
-  get externalImgUrl(): string {
-    return this._externalImgUrl;
-  }
-
   get iiifInfoUrl(): string {
     return this._iiifInfoUrl;
-  }
-
-  get autocomparedIiif(): boolean {
-    return this._autocomparedIiif;
-  }
-
-  get localImgIsCorrupt(): boolean {
-    return this._localImgIsCorrupt;
-  }
-
-  get matchPercentage(): number {
-    return this._matchPercentage;
-  }
-
-  get manuallyAddedIiif(): boolean {
-    return this._manuallyAddedIiif;
   }
 
   get label(): string {
@@ -191,6 +161,7 @@ export class NullPage extends Page {
     const pageData = emptyPageData;
     pageData.id = UuId.generateUuid();
     pageData.img_dir = EnvConstants.NULL_IMG_PATH;
+
     super(pageData);
   }
 

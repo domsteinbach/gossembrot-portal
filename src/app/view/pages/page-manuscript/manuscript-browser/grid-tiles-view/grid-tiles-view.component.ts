@@ -14,21 +14,15 @@ export class GridTilesViewComponent implements OnChanges {
     if (!this.pages || !this.pages.length) {
       return;
     }
-
-    if (this.isThirdPartyIiif()) {
       this.getThumbnailUrls();
-    }
+
   }
 
   getThumbnailUrls() {
     this.thumbnailUrls = this.pages.map((p) => {
-      const parts = p.imgDir.split('/');
+      const parts = p.iiifInfoUrl.split('/');
       parts[parts.length - 3] = '100,';
       return parts.join('/');
     });
-  }
-
-  isThirdPartyIiif(): boolean {
-    return !this.pages[0].imgDir.startsWith('http://130.92.252.118:8090/');
   }
 }

@@ -1,12 +1,12 @@
 <span [ngClass]="embed ? 'link-icon-container-embedded' : 'link-icon-container'">
-    <span *ngIf="auth.isAuthenticated() && !hideDetail">
+    <span *ngIf="!hideDetail">
         <mat-icon class="in-text-icon-button"
                   matTooltip="Detailansicht (Quelle, Verweistext, Ziel)"
                   (click)="openVerweisInDialog()"
         >info
         </mat-icon>
     </span>
-    <span *ngIf="auth.isAuthenticated() && !hideIfSynopsys">
+    <span *ngIf="!hideIfSynopsys">
         <mat-icon class="in-text-icon-button"
                   matTooltip="Verweis in Verweissynopse öffnen"
                   (click)="openVerweisInSyopsis()"

@@ -30,7 +30,8 @@
         </div>
         <div class="wortlaut-card">
           <div class="hover-icon-container" *ngIf="displayCommentIcon">
-            <mat-icon [matTooltip]="commentText" class="hover-icon">speaker_notes</mat-icon>
+              mat-tooltip="* Nur für eingeloggte Benutzer sichtbar">
+            * <mat-icon [matTooltip]="commentText" class="hover-icon">speaker_notes</mat-icon>
           </div>
           <app-tei-render-component [teiXmlString]="wortlautTeiXml"></app-tei-render-component>
         </div>
