@@ -12,7 +12,7 @@ export class ScrollIntoViewDirective {
       const element = document.getElementById(targetId);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-      }
+      } else { console.warn(`Element with ID ${targetId} not found.`); }
     }, 150);
   }
 }

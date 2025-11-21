@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, map, Observable } from 'rxjs';
+import {combineLatest, map, Observable, pipe, tap} from 'rxjs';
 import { DisplayVerweis } from '../model/verweis';
 import { VerweisRepository } from '../data/repository/verweis-repository';
 import { Belegstelle } from '../model/belegstelle';
@@ -27,7 +27,7 @@ export class VerweisService {
       this._vr.outgoingVerweiseFromCarrier$(carrierId, includeErwaehnungen);
 
     const sourceBelegstellen$: Observable<Belegstelle[]> =
-      this._br.getSourceBelegstellenOfCarrier$(carrierId);
+      this._getbelegstellenWithOutgoingVerweise$(carrierId, includeErwaehnungen);
 
     const foreignTargetBelegstellen$: Observable<Belegstelle[]> =
       this._br.foreignTargetBelegstellenOfCarrier$(carrierId);
@@ -61,6 +61,27 @@ export class VerweisService {
     }
   }
 
+
+
+  private _getbelegstellenWithOutgoingVerweise$(carrierId: string, includeErwaehnungen = false) : Observable<Belegstelle[]> {
+    const outgoingVerweise$: Observable<DisplayVerweis[]> =
+        this._vr.outgoingVerweiseFromCarrier$(carrierId, includeErwaehnungen);
+
+    const sourceBelegstellen$: Observable<Belegstelle[]> =
+        this._br.getSourceBelegstellenOfCarrier$(carrierId);
+
+    return combineLatest([outgoingVerweise$, sourceBelegstellen$]).pipe(
+        map(([verweise, belegstellen]) => {
+            belegstellen.forEach((bst: Belegstelle) => {
+                bst.outgoingVerweise = verweise.filter((v) => v.srcBelegstelle === bst.id);
+            }
+            );
+            return belegstellen;
+        })
+    );
+}
+
+
   // combine and merge the belegstellen, the verweise and the pages
   private _mergeAllIntoTexts$(
     verweise$: Observable<DisplayVerweis[]>,
@@ -78,18 +99,10 @@ export class VerweisService {
     ]).pipe(
       map(([verweise, srcBelegstellen, targetBelegstellen, texts, targetTexts]) => {
 
-        srcBelegstellen.forEach((bst: Belegstelle) => {
-          const verweis = verweise.find((v) => v.srcBelegstelle === bst.id);
-          if (verweis) {
-            bst.outgoingVerweise.push(verweis);
-          }
-        });
-
         verweise.forEach(v => {
           v.srcBelegstelleObj = srcBelegstellen.find(
             (bst) => bst.id === v.srcBelegstelle
           );
-
           v.targetBelegstelleObj = targetBelegstellen.find(
             (bst) => bst.id === v.targetBelegstelle);
 

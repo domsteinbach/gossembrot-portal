@@ -21,7 +21,7 @@
             </h4>
         </div>
         <div *ngFor="let v of t.outgoingVerweise; trackBy: trackById">
-            <div *ngIf="v.insecurity <=1 && displayWortlaut(v);" [ngStyle]="{'color': v.type === 'Erwaehnung' && this.highlightErwaehnungen ? 'red' : 'inherit'}" id="{{OUTGOING_PREFIX}}{{v.id}}">
+            <div *ngIf="v.insecurity <=1 && displayWortlaut(v);" [ngStyle]="{'color': v.type === 'Erwaehnung' && this.highlightErwaehnungen ? 'red' : 'inherit'}" id="{{OUTGOING_PREFIX}}{{v.srcBelegstelle}}">
                 <div *ngIf="(v.srcBelegstelleObj?.abschnitt && displayAbschnitt(v)) || closingAbschnitt(v)" class="abschnitt-container">
                   <hr class="abschnitt-line">
                   <div class="abschnitt-text">{{closingAbschnitt(v) ? 'Ohne Zuordnung' : v.srcBelegstelleObj?.abschnitt }}</div>
@@ -30,7 +30,7 @@
                 </div>
                 <mat-divider *ngIf="!displayAbschnitt(v) && !closingAbschnitt(v)&& displayPage(v)" class="blattangabe-divider"></mat-divider>
                 <mat-divider *ngIf="!displayAbschnitt(v) && !displayPage(v) && !closingAbschnitt(v) && displayWortlaut(v)" class="verweis-divider"></mat-divider>
-                <div *ngIf="v.srcBelegstelleObj" (click)="onVerweisClicked(v)" class='verweis-card' [ngClass]="{'selected-verweis': selectedVerweis?.id === v.id}">
+                <div *ngIf="v.srcBelegstelleObj" (click)="onVerweisClicked(v)" class='verweis-card' [ngClass]="{'selected-verweis': selectedVerweis?.srcBelegstelle === v.srcBelegstelle || selectedVerweis?.id === v.id }">
                     <div class="belegstelle">
                       <span *ngIf="displayPage(v)">{{v.srcBlattangabe || ''}}</span>
                     </div>

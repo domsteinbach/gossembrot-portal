@@ -207,6 +207,7 @@ export class DisplayVerweis extends Verweis {
     if (this.targetCarObj?.physicality === 'Lost' && !this.targetBelegstelleObj?.belegstelleText) {
       return 'Karta ?';
     }
+    console.log(this.targetBelegstelleObj?.belegstelleText);
     return this.targetBelegstelleObj?.belegstelleText || '';
   }
 

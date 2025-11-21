@@ -31,8 +31,9 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   get blattangabe(): string {
     const belegstelle = this.agency === 'Src' ? this.verweis?.srcBelegstelleObj : this.verweis?.targetBelegstelleObj;
     const physicality = this.agency === 'Src' ? this.verweis?.srcCarObj?.physicality : this.verweis?.targetCarPhysicality;
-    const prefix = !belegstelle?.lost && physicality === 'Available' ?  'Bl. ' : '';
+    const prefix = !belegstelle?.lost && physicality === 'Available' && this.agency === 'Src' ?  'Bl. ' : '';
     return belegstelle ? `${prefix}${belegstelle.belegstelleText}` : '';
+    // Todo lost handling
   }
 
   get alternativePageBlattangabe(): string {
@@ -73,6 +74,10 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   }
 
   get isMissingPageOfExistingCarrier(): boolean {
+    console.log('isMissingPageOfExistingCarrier');
+    if (this.verweis?.targetBelegstelleObj?.lost === true) {
+      console.log('sdgsdfgsdfg')
+    }
     return this.agency === 'Target' && this.verweis?.targetCarPhysicality === 'Available' && this.verweis?.targetBelegstelleObj?.lost === true;
   }
 

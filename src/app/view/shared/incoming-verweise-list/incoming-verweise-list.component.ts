@@ -125,7 +125,7 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
       return false;
     }
     const previousVerweis = this.texts.flatMap(t => t.incomingVerweise)[currentIndex - 1];
-    return !!previousVerweis.targetBelegstelleObj?.abschnitt
+    return !!previousVerweis.targetBelegstelleObj?.abschnitt && previousVerweis.targetText === v.targetText;
   }
 
   displayAbschnitt(v: DisplayVerweis): boolean {
@@ -161,11 +161,13 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
 
   onVerweisClicked(v: DisplayVerweis): void {
     this._selectVerweis(v);
+    console.log('dispatching verweis', v);
     this._store.dispatch(new UpdateSelectedVerweis(v));
   }
 
   private _selectVerweis(v: DisplayVerweis): void {
     this.selectedVerweis = v;
+    console.log(this.selectedVerweis);
     this.verweisSelected.emit(v);
     this._updateUrl();
     this._cdr.detectChanges();

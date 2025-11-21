@@ -41,7 +41,7 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   private _destroy$ = new Subject<void>();
 
   get selectedScrollTarget(): string {
-    return this.selectedVerweis ? `${this.OUTGOING_PREFIX}${this.selectedVerweis.id}` : '';
+    return this.selectedVerweis ? `${this.OUTGOING_PREFIX}${this.selectedVerweis.srcBelegstelle}` : '';
   }
 
   readonly OUTGOING_PREFIX = 'outgoing-';
@@ -60,14 +60,7 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((v: DisplayVerweis) => {
       if (v) {
         this.selectedVerweis = v;
-        if (!this.isPartOfOutgoingVerweise(v)) {
-          this.verweisToInit = v.id;
-          return;
-        }
-        setTimeout(() => {
-          this.scrollDirective.scrollToElement(this.selectedScrollTarget);
-          this._cdr.detectChanges();
-        }, 0);
+        this._cdr.detectChanges();
       }
     });
   }
@@ -76,7 +69,6 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     if (!this.texts.length || !changes['texts']) {
       return;
     }
-
     this._alreadyPrintedPageMap = new Map<string, string>();
     if (this.verweisToInit) {
       const verweis = this.texts.flatMap(t => t.outgoingVerweise).find(v => v.id === this.verweisToInit);
@@ -87,6 +79,10 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
         }, 0);
       }
     }
+    setTimeout(() => {
+      this.scrollDirective.scrollToElement(this.selectedScrollTarget);
+      this._cdr.detectChanges();
+    }, 0);
   }
 
   closingAbschnitt(v: DisplayVerweis): boolean {
@@ -101,7 +97,7 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
       return false;
     }
     const previousVerweis = this.texts.flatMap(t => t.outgoingVerweise)[currentIndex - 1];
-    return !!previousVerweis.srcBelegstelleObj?.abschnitt && previousVerweis.targetText !== v.targetText;
+    return !!previousVerweis.srcBelegstelleObj?.abschnitt && previousVerweis.targetText === v.targetText;
   }
 
   displayAbschnitt(v: DisplayVerweis): boolean {
@@ -122,7 +118,7 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   displayPage(v: DisplayVerweis): boolean {
-    if (!v.srcBelegstelleObj || v.type === 'Erwaehnung') {
+    if (!v.srcBelegstelleObj) {
       return false;
     }
     const printedBy = this._alreadyPrintedPageMap.get(v.srcBelegstelleText);
@@ -149,7 +145,6 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     this.selectedVerweis = v;
     this.verweisSelected.emit(v);
     this._cdr.detectChanges();
-    this.scrollDirective.scrollToElement(this.selectedScrollTarget);
     this._store.dispatch(new UpdateSelectedVerweis(v));
   }
 

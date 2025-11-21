@@ -53,6 +53,7 @@ class TeiK extends TeiElement {
   }
 }
 
+
 // Function to dynamically define a custom element if it hasn't been defined yet
 function defineCustomElement(name: string) {
   if (!customElements.get(name)) {

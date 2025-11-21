@@ -91,23 +91,31 @@ export class TileSourceService {
     if (pages.length === 0) {
       return;
     }
+    console.log('Updating tile sources for pages:', pages);
     const tileSources: GsmbTileSource[] = [];
     for (const page of pages) {
-      if (page.iiifInfoUrl) {
-        try {
-          const infoJson$ = this._dataService.getIIIFinfo(page.iiifInfoUrl)
-          const infoJson = await lastValueFrom(infoJson$);
-          if (!infoJson) {
-            console.error('Error fetching IIIF info: no infoJson');
-            this._getLocalTileSource(page?.imgDir); // Fallback to local tile source if IIIF info cannot be fetched
-            continue;
-          }
-          tileSources.push(new GsmbTileSource('iiif', infoJson));
-        } catch (error) {
-          console.error('Error fetching IIIF info:', error);
-        }
+      if (page.isMissingBlatt) {
+        const localImgUrl = page.folio === 'r'
+          ? EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_R
+          : EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_V;
+        tileSources.push(this._getLocalTileSource(localImgUrl));
       } else {
-        tileSources.push(this._getLocalTileSource(page.imgDir));
+        if (page.iiifInfoUrl) {
+          try {
+            const infoJson$ = this._dataService.getIIIFinfo(page.iiifInfoUrl)
+            const infoJson = await lastValueFrom(infoJson$);
+            if (!infoJson) {
+              console.error('Error fetching IIIF info: no infoJson');
+              this._getLocalTileSource(page?.imgDir); // Fallback to local tile source if IIIF info cannot be fetched
+              continue;
+            }
+            tileSources.push(new GsmbTileSource('iiif', infoJson));
+          } catch (error) {
+            console.error('Error fetching IIIF info:', error);
+          }
+        } else {
+          tileSources.push(this._getLocalTileSource(page.imgDir));
+        }
       }
     }
     this._store.dispatch(new UpdateDoubleTileSources(tileSources));
