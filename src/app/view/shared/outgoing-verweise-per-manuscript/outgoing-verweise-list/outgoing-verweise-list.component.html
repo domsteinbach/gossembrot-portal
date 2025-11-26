@@ -39,7 +39,7 @@
                     </div>
                     <div class="target-text">
                       <app-verweis-link-icon-component
-                        *ngIf="v?.id === selectedVerweis?.id"
+                        *ngIf="v?.id === selectedVerweis?.id || selectedVerweis?.srcBelegstelle === v.srcBelegstelle"
                         [displayedAgent]="'outgoing'"
                         [verweis]="v"/>
                         <ng-container *ngIf="v.targetCarObj as car">
