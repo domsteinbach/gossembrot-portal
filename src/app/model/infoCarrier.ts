@@ -243,6 +243,9 @@ export class InformationCarrier extends GsmbResource {
   }
 
   get inGsmBLibText(): string {
+    if (this._physicality == 'Classic' || this.carrierType === 'NonHabeo') {
+      return '';
+    }
     return this._inGsmbsLib ? 'aus Gossembrots Bibliothek' : 'außerhalb Gossembrots Bibliothek';
   }
 

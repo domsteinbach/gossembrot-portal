@@ -36,6 +36,10 @@ export class LinkService {
     let routeToNav = '';
     const queryParams = `?${RouteConstants.QUERY_VERWEIS_PARAM}=${verweis.id}`;
 
+    if (verweis.targetCarObj?.carrierType === 'NonHabeo') {
+        return `${this.baseUrl}${RouteConstants.RECONSTRUCTION}/${RouteConstants.NON_HABEO_VALUE}/${verweis.targetCar}${queryParams}`;
+    }
+
     switch (verweis.targetCarPhysicality) {
       case 'Lost':
         if (

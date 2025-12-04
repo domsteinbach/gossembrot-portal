@@ -55,8 +55,8 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   ngOnInit() {
+    console.log('Outgoing Verweise List');
     this.verweisToInit = this._route.snapshot.queryParamMap.get('v');
-
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((v: DisplayVerweis) => {
       if (v) {
         this.selectedVerweis = v;
@@ -86,9 +86,6 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   closingAbschnitt(v: DisplayVerweis): boolean {
-    if (!this._authService.isAuthenticated()) { // Todo: remove once approved
-      return false;
-    }
     if (v.srcBelegstelleObj?.abschnitt) {
       return false
     }
@@ -101,9 +98,6 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   displayAbschnitt(v: DisplayVerweis): boolean {
-    if (!this._authService.isAuthenticated()) { // Todo: remove once approved
-      return false;
-    }
     if (!v.srcBelegstelleObj?.abschnitt) {
       return false;
     }

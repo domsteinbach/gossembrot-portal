@@ -17,7 +17,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouteConstants } from '../../../routeConstants';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-incoming-verweise-list',
@@ -63,7 +62,6 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   constructor(
-    private _authService: AuthService,
     private _cdr: ChangeDetectorRef,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -114,34 +112,35 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   closingAbschnitt(v: DisplayVerweis): boolean {
-    if (!this._authService.isAuthenticated()) { // Todo: remove once approved
-      return false;
-    }
     if (v.targetBelegstelleObj?.abschnitt) {
       return false
     }
-    const currentIndex = this.texts.flatMap(t => t.incomingVerweise).findIndex(ov => ov.id === v.id);
-    if (currentIndex < 1) {
-      return false;
-    }
-    const previousVerweis = this.texts.flatMap(t => t.incomingVerweise)[currentIndex - 1];
-    return !!previousVerweis.targetBelegstelleObj?.abschnitt && previousVerweis.targetText === v.targetText;
+    const previousVerweis = this._getPreviousVerweis(v);
+    return !!previousVerweis?.targetBelegstelleObj?.abschnitt && previousVerweis?.targetText === v.targetText;
   }
 
   displayAbschnitt(v: DisplayVerweis): boolean {
-    if (!this._authService.isAuthenticated()) { // Todo: remove once approved
-      return false;
-    }
     if (!v.targetBelegstelleObj?.abschnitt) {
       return false;
     }
     const key = `${v.targetText}${v.targetBelegstelleObj.abschnitt}`;
     const printedBy = this._alreadyPrintedAbschnittMap.get(key);
 
+    const previousVerweis = this._getPreviousVerweis(v);
+
+    // Again a super special case: if the previous verweis has a different abschnitt within the abschnitt, but the abschnitt has already been printed
+    if (printedBy && previousVerweis?.targetBelegstelleObj?.abschnitt && previousVerweis.targetBelegstelleObj.abschnitt !== v.targetBelegstelleObj.abschnitt && previousVerweis?.targetText === v.targetText) {
+      return true;
+    }
+
     if (printedBy) { // only print for the page for that one abschnitt
       return printedBy === v.id;
     }
-    this._alreadyPrintedAbschnittMap.set(key, v.id);
+
+
+    if (!printedBy) {
+      this._alreadyPrintedAbschnittMap.set(key, v.id);
+    }
     return true;
   }
 
@@ -185,6 +184,14 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
       queryParams,
     });
   }
+
+    private _getPreviousVerweis(v: DisplayVerweis): DisplayVerweis | undefined {
+      const currentIndex = this.texts.flatMap(t => t.incomingVerweise).findIndex(ov => ov.id === v.id);
+      if (currentIndex < 1) {
+        return undefined;
+      }
+      return this.texts.flatMap(t => t.incomingVerweise)[currentIndex - 1];
+    }
 
   ngOnDestroy() {
     this._destroy$.next();

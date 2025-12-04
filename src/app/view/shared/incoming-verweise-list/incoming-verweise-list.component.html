@@ -20,6 +20,7 @@
             <div *ngFor="let v of t.incomingVerweise; let i = index">
 
                 <div id="{{this.INCOMING_PREFIX}}{{v.id}}">
+
                     <div *ngIf="(v.targetBelegstelleObj?.abschnitt && displayAbschnitt(v)) || closingAbschnitt(v)" class="abschnitt-container">
                       <hr class="abschnitt-line">
                       <div class="abschnitt-text" *ngIf="displayAbschnitt(v)">{{ v.targetBelegstelleObj?.abschnitt }}</div>

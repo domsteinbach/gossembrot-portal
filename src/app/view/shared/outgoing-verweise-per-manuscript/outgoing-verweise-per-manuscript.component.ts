@@ -89,6 +89,14 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
       this._getTextsWithOutgoingVerweise$(this.selectedCarrier.id, true)
         .pipe(take(1))
         .subscribe(texts => {
+          console.log(texts);
+          texts.sort((a, b) => a.sortInCar - b.sortInCar);
+          texts.forEach(t => {
+            t.outgoingVerweise.sort((a, b) => {
+              const byBlatt = a.srcBlattSortInCar - b.srcBlattSortInCar;
+              return byBlatt !== 0 ? byBlatt : a.sortInSourceCarrier - b.sortInSourceCarrier;
+            });
+          });
           this.texts = texts;
           this.loading = false;
           if (this._shouldForceSelect && texts.length > 0) {
