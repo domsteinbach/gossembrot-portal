@@ -4,7 +4,7 @@ A project of the Swiss Nationalfonds (2021–2025); Lead: Prof. Dr. Michael Stol
 Project staff:
 - Dr. Ioanna Georgiou (University of Bern)
 - Elena Brandazza MA (University of Bern)
-Development and Design by Dominique Steinbach (University of Bern) https://github.com/domsteinbach.
+- Development and Design by Dominique Steinbach (University of Bern) https://github.com/domsteinbach.
 
 In order to be long term available and to minimise platform dependencies the project implements two different database technologies depending on the desired environment. It can be either hosted alongside a mysql database (with a node.js server as api) or as a static hosted website with SQLite compiled to WebAssembly (sqlite3 & sql.js).
 
