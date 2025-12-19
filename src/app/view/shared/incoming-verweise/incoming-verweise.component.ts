@@ -68,7 +68,6 @@ export class IncomingVerweiseComponent implements OnInit, OnChanges {
     this.forceSelectFirstVerweis = {};
     this.selectedCarrier = carrier;
     this._setCarrierParam(carrier.id);
-    // Todo: move thatt to child! And use a nice combinelatest there! Gosh!
     this._vs.getTextsWithIncomingVerweise(this.selectedCarrier?.id || '')
       .pipe(take(1))
       .subscribe((texts) => {
