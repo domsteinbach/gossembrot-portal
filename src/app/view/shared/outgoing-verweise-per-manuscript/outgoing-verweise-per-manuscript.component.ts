@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
-  BehaviorSubject,
+  BehaviorSubject, combineLatest,
   map,
   take,
 } from 'rxjs';
@@ -19,6 +19,7 @@ import { DisplayVerweis } from '../../../model/verweis';
 import { InformationCarrier } from '../../../model/infoCarrier';
 import { Store } from '@ngxs/store';
 import { UpdateSelectedVerweis } from '../../../state/belegstelle-state.service';
+import {CarrierTextRepository} from "../../../data/repository/carrier-text-repository";
 
 @Component({
   selector: 'app-outgoing-verweise-per-manuscript',
@@ -76,6 +77,7 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
     private _route: ActivatedRoute,
     private _router: Router,
     private _store: Store,
+    private _tr: CarrierTextRepository,
     private _verweisService: VerweisService
   ) {
   }
@@ -90,7 +92,6 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
         .pipe(take(1))
         .subscribe(texts => {
           console.log(texts);
-          texts.sort((a, b) => a.sortInCar - b.sortInCar);
           texts.forEach(t => {
             t.outgoingVerweise.sort((a, b) => {
               const byBlatt = a.srcBlattSortInCar - b.srcBlattSortInCar;
@@ -120,26 +121,25 @@ export class OutgoingVerweisePerManuscriptComponent implements OnChanges {
   }
 
   private _getTextsWithOutgoingVerweise$(
-    carrierId: string,
-    includeErwaehnungen: boolean
+      carrierId: string,
+      includeErwaehnungen: boolean
   ) {
-    return this._verweisService
-      .getTextsWithOutgoingVerweiseOfCarrier$(
-        carrierId,
-        true,
-          includeErwaehnungen
-      )
-      .pipe(
-        map((texts: CarrierText[]) => {
-          const filtered = texts.filter((t) => t.outgoingVerweise.length > 0);
+    return combineLatest([
+      this._tr.getCarrierTextsOfCarrier$(carrierId),
+      this._verweisService.getOutgoingVerweiseOfCarrier$(carrierId, includeErwaehnungen)
+    ]).pipe(
+        map(([texts, verweise]) => {
+          for (const t of texts) {
+            t.outgoingVerweise = verweise
+                .filter(v => v.srcText === t.id && v.insecurity <=1)
+                .sort((a, b) => a.sortInSourceCarrier - b.sortInSourceCarrier);
+          }
+
+          const filtered = texts.filter(t => t.outgoingVerweise.length > 0);
           filtered.sort((a, b) => a.sortInCar - b.sortInCar);
-          filtered.forEach((t) => {
-            t.outgoingVerweise.sort((a, b) => a.sortInSourceCarrier - b.sortInSourceCarrier);
-          });
           return filtered;
         })
-      )
-      ;
+    );
   }
 
   onIncludeErwaehnungenChange(include: boolean): void {

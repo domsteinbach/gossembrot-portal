@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {combineLatest, map, Observable, pipe, tap} from 'rxjs';
+import {combineLatest, map, Observable} from 'rxjs';
 import { DisplayVerweis } from '../model/verweis';
 import { VerweisRepository } from '../data/repository/verweis-repository';
 import { Belegstelle } from '../model/belegstelle';
@@ -17,11 +17,11 @@ export class VerweisService {
     private _tr: CarrierTextRepository,
   ) {}
 
-  public getTextsWithOutgoingVerweiseOfCarrier$(
+  public getOutgoingVerweiseOfCarrier$(
     carrierId: string,
     selfVerweise = true,
     includeErwaehnungen = false
-  ): Observable<CarrierText[]> {
+  ): Observable<DisplayVerweis[]> {
 
     const outgoingVerweise$: Observable<DisplayVerweis[]> =
       this._vr.outgoingVerweiseFromCarrier$(carrierId, includeErwaehnungen);
@@ -32,13 +32,11 @@ export class VerweisService {
     const foreignTargetBelegstellen$: Observable<Belegstelle[]> =
       this._br.foreignTargetBelegstellenOfCarrier$(carrierId);
 
-    const textsOfCarrier$ = this._tr.getCarrierTextsOfCarrier$(carrierId);
-
     const targetTexts$ = this._tr.getTargetTextsOfSrcCarrier$(carrierId);
 
     // if Erwaehnungen should not be included, then filter them out by filtering the stream of verweise by verweis.type !== 'Erwaehnung'
     if (!selfVerweise) {
-      return this._mergeAllIntoTexts$(
+      return this._mergeAllIntoVerweise$(
         outgoingVerweise$.pipe(
           map((verweise: DisplayVerweis[]) =>
             verweise.filter((v) => v.targetCar !== carrierId)
@@ -46,21 +44,18 @@ export class VerweisService {
         ),
         sourceBelegstellen$,
         foreignTargetBelegstellen$,
-        textsOfCarrier$,
         targetTexts$
       );
     } else {
       // return all the verweise including the Erwaehnungen
-      return this._mergeAllIntoTexts$(
+      return this._mergeAllIntoVerweise$(
         outgoingVerweise$,
         sourceBelegstellen$,
         foreignTargetBelegstellen$,
-        textsOfCarrier$,
         targetTexts$
       );
     }
   }
-
 
 
   private _getbelegstellenWithOutgoingVerweise$(carrierId: string, includeErwaehnungen = false) : Observable<Belegstelle[]> {
@@ -81,23 +76,19 @@ export class VerweisService {
     );
 }
 
-
-  // combine and merge the belegstellen, the verweise and the pages
-  private _mergeAllIntoTexts$(
+  private _mergeAllIntoVerweise$(
     verweise$: Observable<DisplayVerweis[]>,
     srcBelegstellen$: Observable<Belegstelle[]>,
     targetBelegstellen$: Observable<Belegstelle[]>,
-    textsOfCarrier$: Observable<CarrierText[]>,
     targetTexts$: Observable<CarrierText[]>
-): Observable<CarrierText[]> {
+): Observable<DisplayVerweis[]> {
     return combineLatest([
       verweise$,
       srcBelegstellen$,
       targetBelegstellen$,
-      textsOfCarrier$,
       targetTexts$
     ]).pipe(
-      map(([verweise, srcBelegstellen, targetBelegstellen, texts, targetTexts]) => {
+      map(([verweise, srcBelegstellen, targetBelegstellen, targetTexts]) => {
 
         verweise.forEach(v => {
           v.srcBelegstelleObj = srcBelegstellen.find(
@@ -110,10 +101,7 @@ export class VerweisService {
         })
 
 
-        for (const t of texts) {
-          t.outgoingVerweise = verweise.filter((v) => v.srcText === t.id).sort((a, b) => a.sortInSourceCarrier - b.sortInSourceCarrier);
-        }
-        return texts;
+        return verweise;
 
       })
     );

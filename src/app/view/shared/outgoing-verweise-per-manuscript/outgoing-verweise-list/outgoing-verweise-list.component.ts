@@ -14,8 +14,6 @@ import { ScrollIntoViewDirective } from '../../../../directives/scroll-into-view
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../../auth/auth.service';
-import {GsmbResource} from "../../../../data/repository/gsmb-resource";
 
 @Component({
   selector: 'app-outgoing-verweise-list',
@@ -47,7 +45,6 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   readonly OUTGOING_PREFIX = 'outgoing-';
 
   constructor(
-    private _authService: AuthService,
     private _cdr: ChangeDetectorRef,
     private _route: ActivatedRoute,
     private _store: Store,

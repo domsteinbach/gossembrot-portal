@@ -10,7 +10,7 @@ export class PageVisualisationsComponent {
   navLinks = [
     {
       label:
-        'Netzwerkdiagramme (zeigen die Verweise in Gossembrots Handschriften an)  – Seite im Aufbau',
+        'Netzwerkdiagramme (zeigen die Verweise in Gossembrots Handschriften an)',
       path: `./${RouteConstants.FORCE_DIRECTED}`,
     },
     /*{
