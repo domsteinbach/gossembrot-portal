@@ -41,7 +41,7 @@
                       <app-verweis-link-icon-component
                         *ngIf="v?.id === selectedVerweis?.id || selectedVerweis?.srcBelegstelle === v.srcBelegstelle"
                         [displayedAgent]="'outgoing'"
-                        [verweis]="v"/>
+                        [verweis]="selectedVerweis"/>
                         <ng-container *ngIf="v.targetCarObj as car">
                             <div *ngIf="car.physicality === 'Available'">
                                 <span *ngIf="v.isSelfTargeting">Interner Verweis: </span>
@@ -50,7 +50,12 @@
                                 </div>
                                 <div>
                                     <span>{{ car.fullTitle }}</span>
-                                    <span *ngIf="v.targetBelegstelleObj">, {{ v.targetBlattangabe }}</span>
+                                    <span *ngFor="let target of getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle)">
+                                        <span>, </span>
+                                        <span class="clickable" [class.highlight-verweis-blatt-on-hover]="getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1" ] [class.selected-verweis-blatt]="selectedVerweis?.id === target.id && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle) && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1" style="z-index: 500"
+                                              (mouseenter)="$event.stopPropagation()"
+                                              (click)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)">{{ target.targetBlattangabe }}</span>
+                                    </span>
                                 </div>
                             </div>
 

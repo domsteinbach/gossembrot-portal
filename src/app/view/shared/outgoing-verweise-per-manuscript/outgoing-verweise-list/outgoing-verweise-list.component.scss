@@ -114,6 +114,14 @@
   margin-top: 0.5em;
 }
 
+.selected-verweis-blatt {
+  font-weight: bold;
+}
+
+.highlight-verweis-blatt-on-hover:hover {
+  color: var(--primary);
+}
+
 .wortlaut {
   width: 43%;
   min-width: 43%;

@@ -53,6 +53,7 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
 
   ngOnInit() {
     this.verweisToInit = this._route.snapshot.queryParamMap.get('v');
+    console.log(this.texts);
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((v: DisplayVerweis) => {
       if (v) {
         this.selectedVerweis = v;
@@ -125,6 +126,10 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     const vIndex = currentText?.outgoingVerweise.findIndex(v => v.id === verweis.id);
     const verweisbefore = vIndex && vIndex > 0 ? currentText?.outgoingVerweise[vIndex - 1] : undefined;
     return verweisbefore ? verweisbefore.srcBelegstelleObj?.wortlautTeiXml !== verweis.srcBelegstelleObj?.wortlautTeiXml : true;
+  }
+
+  getOutgoingVerweiseOfSrcBelegstelle(srcBelegstelleId: string): DisplayVerweis[] {
+    return this.texts.flatMap(t => t.outgoingVerweise).filter(v => v.srcBelegstelle === srcBelegstelleId);
   }
 
   isPartOfOutgoingVerweise(v: DisplayVerweis): boolean {

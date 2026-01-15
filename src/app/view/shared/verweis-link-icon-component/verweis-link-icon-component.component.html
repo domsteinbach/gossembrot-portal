@@ -1,29 +1,29 @@
-<span [ngClass]="embed ? 'link-icon-container-embedded' : 'link-icon-container'">
+<span [ngClass]="embed ? 'link-icon-container-embedded' : 'link-icon-container'" *ngIf="verweis">
     <span *ngIf="!hideDetail">
         <mat-icon class="in-text-icon-button"
                   matTooltip="Detailansicht (Quelle, Verweistext, Ziel)"
-                  (click)="openVerweisInDialog()"
+                  (click)="$event.stopPropagation(); openVerweisInDialog()"
         >info
         </mat-icon>
     </span>
     <span *ngIf="!hideIfSynopsys">
         <mat-icon class="in-text-icon-button"
                   matTooltip="Verweis in Verweissynopse öffnen"
-                  (click)="openVerweisInSyopsis()"
+                  (click)="$event.stopPropagation(); openVerweisInSyopsis()"
         >compare
         </mat-icon>
     </span>
     <span *ngIf="displayedAgent === 'outgoing' && !hideIfSynopsys">
         <mat-icon class="in-text-icon-button"
                   matTooltip="Ziel in einem neuen Tab öffnen"
-                  (click)="openTargetOfVerweis()"
+                  (click)="$event.stopPropagation(); openTargetOfVerweis()"
         >open_in_new
         </mat-icon>
     </span>
     <span *ngIf="displayedAgent === 'incoming'&& !hideIfSynopsys">
           <mat-icon class="in-text-icon-button"
                     matTooltip="{{verweis.srcCarObj?.carrierTypeDe}} in einem neuen Tab öffnen"
-                    (click)="openSourceOfVerweis()"
+                    (click)="$event.stopPropagation(); openSourceOfVerweis()"
           >open_in_new
           </mat-icon>
       </span>
