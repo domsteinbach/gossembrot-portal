@@ -40,7 +40,7 @@ export class VisualisationDataService implements OnDestroy {
       map((carriers) => {
         return carriers.filter(
           (carrier) =>
-            carrier.has_incoming_verweis || carrier.has_outgoing_verweis
+            carrier.hasIncomingVerweis || carrier.hasOutgoingVerweis
         );
       })
     );
@@ -344,6 +344,8 @@ export class VisualisationDataService implements OnDestroy {
   selectCarrier(carrier: InformationCarrier) {
     const carriers = this._selectedCarriers.getValue();
     if (carriers.findIndex((c) => c.id === carrier.id) > -1) {
+      // the carrier is already in the selection, just update last selected
+      this._lastSelectedCarrier.next(carrier);
       return;
     }
     carriers.push(carrier);
@@ -366,7 +368,7 @@ export class VisualisationDataService implements OnDestroy {
 
   selectVerweis(verweis: any | null) {
     const selectedVerweise = this._selectedVerweise.getValue();
-    const idx = selectedVerweise.findIndex((v) => v.index === verweis.index);
+    const idx = selectedVerweise.findIndex((v) => v?.index === verweis?.index);
 
     if (idx > -1) {
       // remove from selection

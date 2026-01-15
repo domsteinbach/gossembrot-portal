@@ -1,11 +1,11 @@
 .vis-container {
+  margin-top: 12px;
   display: flex;
   flex-direction: row;
-  max-height: 85vh;
+  max-height: 88vh;
   width: 100vw;
   overflow: hidden;
   padding-top: var(--margin-small);
-
 }
 
 .svg-container {
@@ -13,7 +13,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85vh;
+  height: 88vh;
   width: 40%;
   overflow: hidden;
   margin-right: var(--margin-small);

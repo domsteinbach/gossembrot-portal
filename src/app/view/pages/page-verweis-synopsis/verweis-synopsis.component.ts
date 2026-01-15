@@ -23,7 +23,7 @@ export class VerweisSynopsisComponent implements OnInit, OnDestroy {
 
   srcCarriers$ = this._store.select(CarriersState.existingManuscripts).pipe(
     filter(carriers => carriers.length > 0),
-    map(carriers => carriers.filter(c => c.has_outgoing_verweis))
+    map(carriers => carriers.filter(c => c.hasOutgoingVerweis))
   );
   selectedSrcCarrier$ = this._vvs.selectedSrcCarrier$;
   srcPage$ = this._vvs.srcPage$;
@@ -32,7 +32,7 @@ export class VerweisSynopsisComponent implements OnInit, OnDestroy {
   targetCarriers$ = this._store.select(CarriersState)
     .pipe(
       filter(carriers => carriers.length > 0),
-      map(filter => filter.filter((carrier: InformationCarrier) => carrier.has_incoming_verweis)));
+      map(filter => filter.filter((carrier: InformationCarrier) => carrier.hasIncomingVerweis)));
   targetCarrier$ = this._vvs.targetCarrier$;
   targetTexts$ = this._vvs.targetTexts$;
 

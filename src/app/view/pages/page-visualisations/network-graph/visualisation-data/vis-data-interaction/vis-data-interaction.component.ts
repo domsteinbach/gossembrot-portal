@@ -40,7 +40,7 @@ export class VisDataInteractionComponent implements OnDestroy {
     this.carriersSub = this.carriers$.subscribe(
       (cars: InformationCarrier[]) => {
         this.allCarriers = cars.filter(
-          (c) => c.has_incoming_verweis || c.has_outgoing_verweis
+          (c) => c.hasIncomingVerweis || c.hasOutgoingVerweis
         );
       }
     );

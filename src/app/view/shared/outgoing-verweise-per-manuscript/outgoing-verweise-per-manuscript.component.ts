@@ -20,6 +20,7 @@ import { InformationCarrier } from '../../../model/infoCarrier';
 import { Store } from '@ngxs/store';
 import { UpdateSelectedVerweis } from '../../../state/belegstelle-state.service';
 import {CarrierTextRepository} from "../../../data/repository/carrier-text-repository";
+import {NullCarrier} from "../steckbrief/steckbrief.component";
 
 @Component({
   selector: 'app-outgoing-verweise-per-manuscript',

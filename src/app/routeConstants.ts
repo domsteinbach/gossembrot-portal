@@ -14,9 +14,7 @@ export class RouteConstants {
   static readonly ERLAEUTERUNGEN = 'erl';
   static readonly TRANSCRIPTION_OVERVIEW = 'tags';
   static readonly VISUALISATIONS = 'visualisations';
-  static readonly DIRECTED_CHORD = 'dir-chord';
   static readonly FORCE_DIRECTED = 'force-directed-graph';
-  static readonly HIERARCHICAL_EDGE_DIAGRAM = 'hierarchical-edge';
 
   static readonly DATA_SEARCH = 'data-search';
   static readonly DATA_PAGE = 'blatt'

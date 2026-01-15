@@ -32,7 +32,6 @@ export type Casus = 'Nominativ' | 'Dativ';
  */
 export class InformationCarrier extends GsmbResource {
   static readonly tableName = 'info_carrier';
-  readonly _dfId: string;
   protected _title: string;
   protected _description: string;
   protected _matDescription: string;
@@ -46,8 +45,8 @@ export class InformationCarrier extends GsmbResource {
   protected _shelfMark: string; // the shelfmark of the physical info carrier in a library
   protected _firstPageIdx: number; // the first relevant page for an info carrier
   private _fileName: string;
-  readonly has_incoming_verweis: boolean;
-  readonly has_outgoing_verweis: boolean;
+  readonly hasIncomingVerweis: boolean;
+  readonly hasOutgoingVerweis: boolean;
   private _namingsGossembrot: NamingGossembrot[] = [];
   einbandInfo: Einband[] | undefined;
   externalDigitalisat: ExternalEntity | undefined;
@@ -56,7 +55,6 @@ export class InformationCarrier extends GsmbResource {
 
   constructor(data: InformationCarrierData) {
     super(data.id);
-    this._dfId = data.df_id; // marks that the information carrier is on of the hssfaks digitalfaksimiles
     this._title = data.title;
     this._description = data.description;
     this._matDescription = data.mat_description;
@@ -73,12 +71,8 @@ export class InformationCarrier extends GsmbResource {
     this._shelfMark = data.sig;
     this._fileName = data.file_name;
     this._firstPageIdx = data.first_page_idx || 0;
-    this.has_incoming_verweis = data.has_incoming_verweis === 1;
-    this.has_outgoing_verweis = data.has_outgoing_verweis === 1;
-  }
-
-  get dfId(): string {
-    return this._dfId;
+    this.hasIncomingVerweis = data.has_incoming_verweis === 1;
+    this.hasOutgoingVerweis = data.has_outgoing_verweis === 1;
   }
 
   get library(): Library | undefined {
@@ -212,10 +206,6 @@ export class InformationCarrier extends GsmbResource {
 
   get shelfMark(): string {
     return this._shelfMark;
-  }
-
-  get fileName(): string {
-    return this._fileName;
   }
 
   get inGsmbsLib(): boolean {

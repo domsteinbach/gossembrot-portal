@@ -1,8 +1,8 @@
 <div class="outgoing-verweise-per-manuscript">
   <app-steckbrief *ngIf="displaySteckbrief" [selectedCarrier]="selectedCarrier"/>
   <div class="header-line">
-    <h3 class="subtitle" *ngIf="selectedCarrier && selectedCarrier?.has_outgoing_verweis">Verweise in dieser Handschrift</h3>
-    <h3 class="subtitle" *ngIf="selectedCarrier && !selectedCarrier.has_outgoing_verweis">In dieser Handschrift sind keine Verweise enthalten</h3>
+    <h3 class="subtitle" *ngIf="selectedCarrier && selectedCarrier?.hasOutgoingVerweis">Verweise in dieser Handschrift</h3>
+    <h3 class="subtitle" *ngIf="selectedCarrier && !selectedCarrier.hasOutgoingVerweis">In dieser Handschrift sind keine Verweise enthalten</h3>
     <div *ngIf="isAuthenticated">
       <!-- checkbox to include Erwaehnungen -->
       <mat-checkbox

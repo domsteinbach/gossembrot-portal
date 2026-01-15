@@ -225,9 +225,9 @@ export class ForceDirectedGraphComponent
           // get all links with sam target and source
           const links = this.links.filter((l: any) => {
             if (this.granularity === 'CarrierText') {
-              return l.source?.id === v.srcText && l.target?.id === v.targetText;
+              return l.source?.id === v?.srcText && l.target?.id === v?.targetText;
             } else {
-              return l.source?.id === v.srcCar && l.target?.id === v.targetCar;
+              return l.source?.id === v?.srcCar && l.target?.id === v?.targetCar;
             }
           });
           // push to linksOfVerweise if not already in there

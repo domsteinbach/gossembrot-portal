@@ -6,7 +6,6 @@ import { HomeComponent } from './view/pages/page-home/home.component';
 import { IncomingVerweiseMenuComponent } from './view/pages/page-incoming-verweise/incoming-verweise-menu.component';
 import { ErlaeuterungenComponent } from './view/pages/page-erlaeuterungen/erlaeuterungen.component';
 import { TranscriptionOverviewComponent } from './view/pages/page-transcription-overview/transcription-overview.component';
-import { PageVisualisationsComponent } from './view/pages/page-visualisations/page-visualisations.component';
 import { authGuard } from './auth/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { NetworkGraphComponent } from './view/pages/page-visualisations/network-graph/network-graph.component';
@@ -111,18 +110,7 @@ const routes: Routes = [
   },
   {
     path: `${RouteConstants.VISUALISATIONS}`,
-    component: PageVisualisationsComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: RouteConstants.FORCE_DIRECTED,
-        pathMatch: 'full',
-      },
-      {
-        path: RouteConstants.FORCE_DIRECTED,
-        component: NetworkGraphComponent,
-      },
-    ],
+    component: NetworkGraphComponent,
   },
   {
     path: RouteConstants.DATA_SEARCH,
