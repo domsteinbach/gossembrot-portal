@@ -4,7 +4,6 @@ import {InformationCarrier} from "../../../../../model/infoCarrier";
 import {take} from "rxjs";
 import {CarrierText} from "../../../../../model/carriertext";
 import {Store} from "@ngxs/store";
-import {VisualizationRepository} from "../../../../../data/repository/visualization-repository";
 import {VerweisService} from "../../../../../service/verweis.service";
 import {UpdateSelectedSrcInformationCarrier} from "../../../../../state/information-carrier-state.service";
 import {DisplayVerweis} from "../../../../../model/verweis";
@@ -34,7 +33,6 @@ export class VisualisationDataComponent {
   constructor(
               private _cdr: ChangeDetectorRef,
               private _store: Store,
-              private vis_repository: VisualizationRepository,
               private _visDataService: VisualisationDataService,
               private _vs: VerweisService,) {
     this._visDataService.lastSelectedCarrier$.subscribe((carrier) => {
@@ -46,9 +44,6 @@ export class VisualisationDataComponent {
     this.activeTabIndex = tabIdx;
     if (tabIdx < 2) {
       this._visDataService.setInteractionMode('info');
-    } else {
-      this._visDataService.setInteractionMode('info');
-      return;
     }
   }
 

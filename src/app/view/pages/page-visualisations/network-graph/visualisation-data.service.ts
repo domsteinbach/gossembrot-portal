@@ -94,7 +94,7 @@ export class VisualisationDataService implements OnDestroy {
   selectedVerweise$: Observable<any[]> = this._selectedVerweise.asObservable();
 
   private _interactionModeSubject = new BehaviorSubject<InteractionMode>(
-    'select'
+    'info'
   );
   interactionMode$: Observable<InteractionMode> =
     this._interactionModeSubject.asObservable();

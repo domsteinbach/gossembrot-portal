@@ -5,7 +5,7 @@
         </mat-expansion-panel-header>
         <app-vis-display-settings></app-vis-display-settings>
     </mat-expansion-panel>
-    <mat-expansion-panel class="settings-panel">
+    <mat-expansion-panel class="settings-panel" (opened)="onFilterPanelOpened()" (closed)="onFilterPanelClosed()">
         <mat-expansion-panel-header>
             <mat-panel-title class="title">
                 Detailfilter
@@ -37,41 +37,15 @@
                                 <mat-panel-title class="title carrier-item-header">
                                     <span>{{ carrier.fullTitle }} ({{carrier.getCarrierTypeDescDe()}})</span>
                                 </mat-panel-title>
-                                <!--<button
-                                        mat-icon-button
-                                        matTooltip="Detailfilter"
-                                        (click)="toggleNodeSettings($event, expansionPanel)">
-                                    <mat-icon>settings</mat-icon>
-                                </button> -->
                                 <button mat-icon-button matTooltip="Aus Liste entfernen"
                                         (click)="removeCarrierFromList(carrier)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </mat-expansion-panel-header>
-                            <!--<div>
-                                <h4>Detailfilter (Noch nicht umgesetzt, exemplarisch)</h4>
-                                <section class="example-section">
-                                    <mat-checkbox class="example-margin">Nur Verweise zu Textträgern in der Liste</mat-checkbox>
-                                    <mat-checkbox class="example-margin">Nur eingehende Verweise aus Textträgern aus der Liste</mat-checkbox>
-                                </section>
-                            </div>
-                            -->
                         </mat-expansion-panel>
                     </mat-accordion>
                 </mat-card-content>
             </mat-card>
-            <!--<div class="selection-row">
-                <h4 class="title">Einzelne Verweise hervorheben</h4>
-                <mat-card *ngFor="let v of selectedVerweise; let i = index">
-                    Verweise von {{ v.srcTitle }} nach {{v.targetTitle}}
-                    <button mat-icon-button matTooltip="Aus Liste entfernen"
-                            (click)="removeLinkFromList(v)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                    <mat-divider *ngIf="i > 1"></mat-divider>
-                </mat-card>
-            </div>
-            -->
         </div>
         <div class="vis-action-panel">
             <button mat-raised-button
@@ -80,10 +54,6 @@
             <button mat-raised-button
                     class="vis-action-button"
                     (click)="showAllNodes()">Alle Textträger einblenden</button>
-            <!--<button mat-raised-button
-                    class="vis-action-button"
-                    disabled="true">Selektion als Auswertung speichern</button>
-                    -->
         </div>
     </mat-expansion-panel>
     <mat-expansion-panel class="settings-panel">

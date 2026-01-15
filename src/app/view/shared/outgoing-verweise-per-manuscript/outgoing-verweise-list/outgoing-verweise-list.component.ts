@@ -53,7 +53,6 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
 
   ngOnInit() {
     this.verweisToInit = this._route.snapshot.queryParamMap.get('v');
-    console.log(this.texts);
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((v: DisplayVerweis) => {
       if (v) {
         this.selectedVerweis = v;

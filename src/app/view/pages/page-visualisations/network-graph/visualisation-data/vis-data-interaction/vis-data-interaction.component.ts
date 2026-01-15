@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { VisualisationDataService } from '../../visualisation-data.service';
 import { InformationCarrier } from '../../../../../../model/infoCarrier';
-import { MatExpansionPanel } from '@angular/material/expansion';
 import { Select } from '@ngxs/store';
 import { CarriersState } from '../../../../../../state/information-carrier-state.service';
 import { Observable, Subscription } from 'rxjs';
@@ -28,8 +27,6 @@ export class VisDataInteractionComponent implements OnDestroy {
   selectedCarrierInSelect: InformationCarrier | null = null;
 
   selectionApplied = false;
-
-  // links
 
   selectedVerweise: VisualisationVerweis[] = [];
 
@@ -83,9 +80,12 @@ export class VisDataInteractionComponent implements OnDestroy {
     this._visDataService.unselectCarrier(carrier);
   }
 
-  toggleNodeSettings(event: MouseEvent, panel: MatExpansionPanel): void {
-    event.stopPropagation(); // Prevent event from reaching the panel header
-    panel.toggle(); // Programmatically toggle the panel
+  onFilterPanelOpened() {
+    this._visDataService.setInteractionMode('select');
+  }
+
+  onFilterPanelClosed() {
+    this._visDataService.setInteractionMode('info');
   }
 
   onSelectedInSelect(carrier: InformationCarrier) {
