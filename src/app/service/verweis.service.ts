@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {combineLatest, map, Observable} from 'rxjs';
+import {combineLatest, filter, map, Observable} from 'rxjs';
 import { DisplayVerweis } from '../model/verweis';
 import { VerweisRepository } from '../data/repository/verweis-repository';
 import { Belegstelle } from '../model/belegstelle';
@@ -134,7 +134,7 @@ export class VerweisService {
           texts.push(nullText);
         }
 
-        return texts;
+        return texts.filter(t => t.incomingVerweise && t.incomingVerweise.length > 0);
       })
     );
   }

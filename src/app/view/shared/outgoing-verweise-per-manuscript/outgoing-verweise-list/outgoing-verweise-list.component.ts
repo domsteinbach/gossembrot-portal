@@ -3,7 +3,7 @@ import {
   Component, EventEmitter,
   Input,
   OnChanges, OnDestroy,
-  OnInit, Output, SimpleChanges, ViewChild,
+  OnInit, Output, ViewChild,
 } from '@angular/core';
 import { DisplayVerweis } from '../../../../model/verweis';
 import { Store } from '@ngxs/store';
@@ -55,14 +55,17 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     this.verweisToInit = this._route.snapshot.queryParamMap.get('v');
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((v: DisplayVerweis) => {
       if (v) {
-        this.selectedVerweis = v;
-        this._cdr.detectChanges();
+        if (v.id !== this.selectedVerweis?.id) {
+          this.selectedVerweis = v;
+          this.scrollTOVerweis();
+          this._cdr.detectChanges();
+        }
       }
     });
   }
 
-  ngOnChanges(changes:SimpleChanges) {
-    if (!this.texts.length || !changes['texts']) {
+  ngOnChanges() {
+    if (!this.texts.length) {
       return;
     }
     this._alreadyPrintedPageMap = new Map<string, string>();
@@ -70,15 +73,20 @@ export class OutgoingVerweiseListComponent implements OnInit, OnChanges, OnDestr
       const verweis = this.texts.flatMap(t => t.outgoingVerweise).find(v => v.id === this.verweisToInit);
       if (verweis) {
         this.verweisToInit = null;
-        setTimeout(() => {
-          this.onVerweisClicked(verweis);
-        }, 0);
+        this.onVerweisClicked(verweis);
       }
     }
+    this.scrollTOVerweis();
+  }
+
+  scrollTOVerweis() {
     setTimeout(() => {
-      this.scrollDirective.scrollToElement(this.selectedScrollTarget);
+      if (!this.selectedScrollTarget) {
+        return;
+      }
+      this.scrollDirective?.scrollToElement(this.selectedScrollTarget);
       this._cdr.detectChanges();
-    }, 0);
+    }, 100);
   }
 
   closingAbschnitt(v: DisplayVerweis): boolean {

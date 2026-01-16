@@ -73,7 +73,7 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     this._verweisToInit = this._route.snapshot.queryParamMap.get(RouteConstants.QUERY_VERWEIS_PARAM)
     this._store.dispatch(new UpdateSelectedVerweis(null));
     this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((v: DisplayVerweis) => {
-      if (!v) {
+      if (!v?.id) {
         return;
       }
       this._verweisToInit = v?.id;
@@ -85,7 +85,6 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
 
   ngOnChanges(changes: SimpleChanges) {
     this._alreadyPrintedKartaMap = new Map<string, string>();
-
     if (changes['forceSelectFirstVerweis'] && this.forceSelectFirstVerweis) {
       this._shouldForceSelect = true;
     }
@@ -160,19 +159,17 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
 
   onVerweisClicked(v: DisplayVerweis): void {
     this._selectVerweis(v);
-    console.log('dispatching verweis', v);
     this._store.dispatch(new UpdateSelectedVerweis(v));
   }
 
   private _selectVerweis(v: DisplayVerweis): void {
     this.selectedVerweis = v;
-    console.log(this.selectedVerweis);
     this.verweisSelected.emit(v);
     this._updateUrl();
     this._cdr.detectChanges();
     setTimeout(() => {
       this.scrollDirective.scrollToElement(this.selectedScrollTarget);
-    }, 0);
+    }, 100);
   }
 
   private _updateUrl() {

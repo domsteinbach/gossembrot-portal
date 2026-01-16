@@ -74,10 +74,6 @@ export class VerweisViewBlattInfoComponent implements OnInit, OnDestroy {
   }
 
   get isMissingPageOfExistingCarrier(): boolean {
-    console.log('isMissingPageOfExistingCarrier');
-    if (this.verweis?.targetBelegstelleObj?.lost === true) {
-      console.log('sdgsdfgsdfg')
-    }
     return this.agency === 'Target' && this.verweis?.targetCarPhysicality === 'Available' && this.verweis?.targetBelegstelleObj?.lost === true;
   }
 

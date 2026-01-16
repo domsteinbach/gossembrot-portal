@@ -4,7 +4,7 @@ import {
   CarriersState
 } from '../../../state/information-carrier-state.service';
 import { InformationCarrier } from '../../../model/infoCarrier';
-import { map, Subject, combineLatest, filter } from 'rxjs';
+import {map, Subject, combineLatest, filter, take} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VerweisSynopsisService } from './verweis-synopsis.service';
 import {first } from 'rxjs/operators';
