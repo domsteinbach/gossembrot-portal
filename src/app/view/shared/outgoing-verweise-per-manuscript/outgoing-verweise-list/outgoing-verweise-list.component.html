@@ -32,7 +32,7 @@
                 <mat-divider *ngIf="!displayAbschnitt(v) && !displayPage(v) && !closingAbschnitt(v) && displayWortlaut(v)" class="verweis-divider"></mat-divider>
                 <div *ngIf="v.srcBelegstelleObj" (click)="onVerweisClicked(v)" class='verweis-card' [ngClass]="{'selected-verweis': selectedVerweis?.srcBelegstelle === v.srcBelegstelle || selectedVerweis?.id === v.id }">
                     <div class="belegstelle">
-                      <span *ngIf="displayPage(v)">{{v.srcBlattangabe || ''}}</span>
+                      <span *ngIf="displayPage(v)">Bl. {{v.srcBlattangabe || ''}}</span>
                     </div>
                     <div class="wortlaut">
                         <app-tei-render-component [teiXmlString]="v.wortlautTeiXml"></app-tei-render-component>
