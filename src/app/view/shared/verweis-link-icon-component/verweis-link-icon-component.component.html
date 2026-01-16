@@ -1,4 +1,7 @@
-<span [ngClass]="embed ? 'link-icon-container-embedded' : 'link-icon-container'" *ngIf="verweis">
+<span   [ngClass]="[
+    embed ? 'link-icon-container-embedded' : 'link-icon-container',
+    iconsFlicker ? 'icons-flicker' : ''
+  ]" *ngIf="verweis">
     <span *ngIf="!hideDetail">
         <mat-icon class="in-text-icon-button"
                   matTooltip="Detailansicht (Quelle, Verweistext, Ziel)"
