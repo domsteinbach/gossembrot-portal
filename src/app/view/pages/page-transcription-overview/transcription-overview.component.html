@@ -14,8 +14,7 @@
             <div class="tag-desc">
                 <div>
                     <h3>
-                        <span *ngIf="tag.startTag !== '...'"><{{tag.startTag}}></span>
-                        <span *ngIf="tag.startTag === '...'">[{{tag.startTag}}]</span>
+                        <span><{{tag.startTag}}></span>
                         <span *ngIf="!tag.implemented"> (noch nicht umgesetzt)</span>
                     </h3>
                 </div>

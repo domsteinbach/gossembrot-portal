@@ -32,7 +32,7 @@ export class TagResultComponent {
   highlightTags(wortlaut: string, tagPattern: string): TagTextPart[] {
     const parts: TagTextPart[] = [];
 
-    const startTag = `<${tagPattern}`;
+    const startTag = `<${tagPattern}>`;
     const endTag = `</${tagPattern}>`;
 
     const wortlautArr = wortlaut.split(startTag);

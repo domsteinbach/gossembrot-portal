@@ -33,44 +33,52 @@ tei-gap[reason="editoral"]::before {
 }
 
 tei-gap[reason="illegible"]::before {
-  content:"[...]";
+  content:"[";
+}
+
+tei-gap[reason="illegible"]::after {
+  content:"]";
 }
 
 tei-underline {
   text-decoration: underline;
 }
 
-tei-add::before {
+tei-add:not([hand="not gossembrot"])::before {
   content: ">";
 }
 
-tei-add::after {
+tei-add:not([hand="not gossembrot"])::after {
   content: "<";
+}
+
+tei-add[hand="not gossembrot"] {
+  color: gray;
 }
 
 tei-finis::before {
   content: "ꝝ";
-  font-style: italic; /* Make the bracket italic */
-  vertical-align: middle; /* Center the dot vertically */
+  font-style: italic;
+  vertical-align: middle;
 }
 
 tei-finis-full::before {
   content: "·)";
-  font-style: italic; /* Make the bracket italic */
-  vertical-align: middle; /* Center the dot vertically */
+  font-style: italic;
+  vertical-align: middle;
 }
 
 tei-add[place="below"][customtag="uz"] {
-  display: inline-block;  /* Ensures the element flows inline but can be repositioned */
-  position: relative;    /* Relative positioning to nudge it down without affecting others */
-  top: 0.3em;               /* push it down */
+  display: inline-block;
+  position: relative;
+  top: 0.3em;
   margin-left: 0.3em;
 }
 
 tei-add[place="above"][customtag="oz"] {
-  display: inline-block;  /* Ensures the element flows inline but can be repositioned */
-  position: relative;    /* Relative positioning to nudge it down without affecting others */
-  bottom: 0.3em;               /* push it up */
+  display: inline-block;
+  position: relative;
+  bottom: 0.3em;
   margin-left: 0.3em;
 }
 
@@ -97,7 +105,6 @@ tei-supplied {
 
 tei-unl {
   font-style: normal;
-  //background-color: yellow;
 }
 
 tei-leader::after {
@@ -120,7 +127,7 @@ tei-symbol[type="letter"]::before {
 
 /* Specific style for tei-symbol elements of type="letter" */
 tei-symbol[type="letter"]::after {
-  content: ']'; /* Specific character for type="letter" */
+  content: ']';
 }
 
 /* Default style for tei-symbol elements not of type="letter" */
