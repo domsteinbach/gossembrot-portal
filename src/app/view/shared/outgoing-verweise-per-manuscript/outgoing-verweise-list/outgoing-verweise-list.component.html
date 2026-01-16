@@ -50,11 +50,16 @@
                                 </div>
                                 <div>
                                     <span>{{ car.fullTitle }}</span>
-                                    <span *ngFor="let target of getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle)">
+                                    <span *ngFor="let target of getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle); let i = index">
                                         <span>, </span>
-                                        <span class="clickable" [class.highlight-verweis-blatt-on-hover]="getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1" ] [class.selected-verweis-blatt]="selectedVerweis?.id === target.id && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle) && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1" style="z-index: 500"
-                                              (mouseenter)="$event.stopPropagation()"
-                                              (click)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)">{{ target.targetBlattangabe }}</span>
+                                        <span
+                                                class="clickable"
+                                                [class.highlight-verweis-blatt-on-hover]="getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1" ]
+                                                [class.selected-verweis-blatt]="selectedVerweis?.id === target.id && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle) && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1"
+                                                (mouseenter)="$event.stopPropagation()"
+                                                (click)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)">
+                                            {{ target.targetBlattangabe }}
+                                        </span>
                                     </span>
                                 </div>
                             </div>
