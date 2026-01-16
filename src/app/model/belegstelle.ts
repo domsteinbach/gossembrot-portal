@@ -1,5 +1,5 @@
 import { BelegstelleData } from '../data/repository-model';
-import { Page, MissingPageOfExistingCarrier } from './page';
+import { Page } from './page';
 import { GsmbResource } from '../data/repository/gsmb-resource';
 import { DisplayVerweis } from './verweis';
 
@@ -14,7 +14,6 @@ export class Belegstelle extends GsmbResource {
   private _pageId: string;
   private _alternativePageId?: string; // If the page is lost: The page which is closest to the actual page and which should be opened instead
   private _belegstelleText: string;
-  private _positionOnPage: string;
   private _insecurity: number; // 0 = secure, 1 = insecure, 2 = more insecure, ...
   private _lost: boolean; // whether the page is lost or there is no carrier available (reconstructed, classics, etc.)
   private _isFragment: boolean;
@@ -35,7 +34,6 @@ export class Belegstelle extends GsmbResource {
     this._abschnitt = data.abschnitt;
     this._pageId = data.page_id;
     this._belegstelleText = data.belegstelle_text;
-    this._positionOnPage = data.position_on_page;
     this._isSource = data.is_source === 1;
     this._isTarget = data.is_target === 1;
     this._isFragment = data.is_fragment === 1;
