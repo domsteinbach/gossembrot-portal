@@ -1,4 +1,4 @@
-name: Build & Publish to GitHub Pages (public site repo)
+name: Build & Publish to GitHub Pages
 
 on:
   push:
@@ -6,16 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build_site:
     runs-on: ubuntu-latest
     permissions:
       contents: read
 
     env:
       NODE_VERSION: 20
-      TARGET_OWNER: domsteinbach
-      TARGET_REPO: gossembrot-portal-site
-      TARGET_BRANCH: main
 
       PUBLISH_DIR: dist/gossembrot-portal_static
 
@@ -46,12 +43,24 @@ jobs:
             cp "${{ env.PUBLISH_DIR }}/index.html" "${{ env.PUBLISH_DIR }}/404.html"
           fi
 
-      - name: Publish to public site repo (gh-pages)
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v3
         with:
-          external_repository: ${{ env.TARGET_OWNER }}/${{ env.TARGET_REPO }}
-          publish_dir: ${{ env.PUBLISH_DIR }}
-          publish_branch: ${{ env.TARGET_BRANCH }}
-          personal_token: ${{ secrets.PUBLISH_TOKEN }}
-          user_name: github-actions
-          user_email: actions@github.com
+          path: ${{ env.PUBLISH_DIR }}
+
+  deploy:
+    needs: build_site
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
