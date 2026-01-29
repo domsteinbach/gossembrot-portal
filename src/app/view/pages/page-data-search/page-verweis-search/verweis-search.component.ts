@@ -79,7 +79,7 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
       column: 'srcTextTitle',
       displayedName: 'Text',
       primitiveType: 'string',
-      displayed: false,
+      displayed: true,
       displayFilter: true,
       nullOrEmptyFilter: true,
     },
@@ -394,7 +394,7 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
         'Link zur Belegstelle':
           this._verweisLinkService.getSrcCarrierRoute(verweis) || '',
         Autor: verweis.srcTextObj?.authorsCognomen || '',
-        'Autor unsicher': verweis.srcTextObj?.isAuthorInsecure ? 'true' : 'false',
+        'Autorschaft unsicher': verweis.srcTextObj?.isAuthorInsecure ? 'true' : 'false',
         Text: verweis.srcTextObj?.title || '',
         'Link zum Text': this._verweisLinkService.getSrcTextRoute(verweis) || '',
         Wortlaut: this.getWortlautFromTei(verweis.wortlautTeiXml) || '',
@@ -405,7 +405,7 @@ export class VerweisSearchComponent implements OnInit, AfterViewInit {
           this._verweisLinkService.getReconstructedVerweisTargetRoute(verweis) || '',
         Zieltext: verweis.targetTextObj?.title || '',
         'Autor (Zieltext)': verweis.targetTextObj?.authorsCognomen|| '',
-        'Autor (Zieltext) unsicher': verweis.targetTextObj?.isAuthorInsecure ? 'true' : 'false',
+        'Autorschaft (Zieltext) unsicher': verweis.targetTextObj?.isAuthorInsecure ? 'true' : 'false',
       };
     });
 

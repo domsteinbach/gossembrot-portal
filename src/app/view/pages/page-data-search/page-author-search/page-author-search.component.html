@@ -44,12 +44,6 @@
             <ng-container *ngIf="col.column && col.column === 'gndId'">
               <a [href]="element.linkToGnd" target="_blank">{{ element[col.column] }}</a>
             </ng-container>
-            <ng-container *ngIf="col.column && col.column === 'gndIdAlternate'">
-              <a [href]="element.linkToGndAlternate" target="_blank">{{ element[col.column] }}</a>
-            </ng-container>
-            <ng-container *ngIf="col.column && col.column === 'gndData.dateOfBirth'">
-              {{ element?.gndData?.dateOfBirth }}
-            </ng-container>
           </td>
         </ng-container>
 

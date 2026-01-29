@@ -41,22 +41,6 @@ export class AuthorSearchComponent implements OnInit, AfterViewInit, OnDestroy {
       nullOrEmptyFilter: true,
 
     },
-    {
-      column: 'gndIdAlternate',
-      displayedName: 'Alternative GND-ID',
-      primitiveType: 'string',
-      displayed: true,
-      displayFilter: true,
-      nullOrEmptyFilter: true,
-    },
-    {
-      column: 'gndData.dateOfBirth',
-      displayedName: 'Geburtsdatum',
-      primitiveType: 'string',
-      displayed: true,
-      displayFilter: true,
-      nullOrEmptyFilter: true,
-    }
   ] as const;
 
   @ViewChild('advancedFilterDrawer') advancedFilterDrawer: MatDrawer | undefined;

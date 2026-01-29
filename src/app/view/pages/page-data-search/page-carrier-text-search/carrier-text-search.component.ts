@@ -48,14 +48,6 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
       nullOrEmptyFilter: true,
     },
     {
-      column: 'isAuthorInsecure',
-      displayedName: 'Autorschaft unsicher',
-      primitiveType: 'boolean',
-      displayed: true,
-      displayFilter: true,
-      nullOrEmptyFilter: true,
-    },
-    {
       column: 'carrierFulltitle',
       displayedName: 'Textträger',
       primitiveType: 'string',
