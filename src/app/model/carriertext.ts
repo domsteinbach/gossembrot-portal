@@ -22,6 +22,7 @@ import { DisplayVerweis } from './verweis';
   private _outgoingVerweise: DisplayVerweis[] = [];
   private _incomingVerweise: DisplayVerweis[] = [];
   private _is_author_insecure: boolean;
+  private _first_page_id = '';
 
   constructor(data: CarrierTextData, carrier?: InformationCarrier) {
     super(data.id);
@@ -35,6 +36,7 @@ import { DisplayVerweis } from './verweis';
     this._additionalSource = data.additional_source || '';
     this._carrier = carrier;
     this._is_author_insecure = data.is_author_insecure === 1;
+    this._first_page_id = data.first_page_id;
   }
 
   get authorId(): string {
@@ -142,5 +144,9 @@ import { DisplayVerweis } from './verweis';
 
   get carrierFulltitle(): string {
     return this._carrier?.fullTitle || '';
+  }
+
+  get firstPageId(): string {
+    return this._first_page_id;
   }
 }

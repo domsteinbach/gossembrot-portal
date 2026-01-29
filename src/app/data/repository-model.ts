@@ -39,6 +39,7 @@ export interface CarrierTextData {
   incipit: string;
   additional_source: string; // e.g. '[aus Clm 26346]'
   is_author_insecure: number; // 0 = 'no', 1 = 'yes'
+  first_page_id: string;
 }
 
 export interface PageData {

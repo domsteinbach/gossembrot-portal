@@ -66,7 +66,7 @@ export class CarrierTextService {
   jumpToText(text: CarrierText) {
     this._selectedText = text;
     this._store.dispatch(new UpdateSelectedCarrierText(text));
-    const firstPageIdx = this.getFirstPageIdxOfText(text.id);
+    const firstPageIdx = this.getFirstPageIdxOfText(text);
     this.goToPage(firstPageIdx);
   }
 
@@ -149,29 +149,32 @@ export class CarrierTextService {
       });
   }
 
-  private getFirstPageIdxOfText(textId: string): number {
-    // get the currently selected page from the store
-    const selectedPage = this._store.selectSnapshot(SelectedPageState);
-    let firstPage = selectedPage?.idx; // default
-    // get the pages of the text and sort ascending
-    // get the carrier pages from the store
+  private getFirstPageIdxOfText(text: CarrierText): number {
     const carrierPages: Page[] = this._store.selectSnapshot(SelectedCarrierPagesState);
-
-    // to get the first page
     if (!carrierPages || carrierPages.length === 0) {
       // we get the pages from the server
       console.warn('no carrier pages found in store');
     }
 
+    let firstPage = carrierPages.find((p) => p.id === text.firstPageId);
+    if (firstPage) {
+      return firstPage.idx;
+    }
+
     const pages = carrierPages
-      .filter((p) => p.textId === textId)
+      .filter((p) => p.textId === text.id)
       .sort((a, b) => a.idx - b.idx);
     if (pages?.length) {
-      firstPage = pages[0].idx;
+      firstPage = pages[0];
     } else {
-      console.warn(`no page found for text ${textId}`);
+      console.warn(`no page found for text ${text.id}`);
     }
-    return firstPage;
+
+    if (!firstPage) {
+      const selectedPage = this._store.selectSnapshot(SelectedPageState);
+      firstPage = selectedPage; // default
+    }
+    return firstPage?.idx || 0;
   }
 
   setTextForPage(page: Page) {

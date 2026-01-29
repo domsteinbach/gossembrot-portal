@@ -32,7 +32,8 @@ CREATE TABLE carrier_text (
                               text_range        TEXT,
                               incipit           TEXT,
                               additional_source TEXT,
-                              is_author_insecure INTEGER    -- 0 secure, 1 insecure
+                              is_author_insecure INTEGER,    -- 0 secure, 1 insecure
+                              first_page_id     TEXT
 );
 
 /* === page ================================================================ */

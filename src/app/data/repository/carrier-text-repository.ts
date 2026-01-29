@@ -159,6 +159,7 @@ export class CarrierTextRepository {
       incipit: '',
       additional_source: '',
       is_author_insecure: 0,
+      first_page_id: '',
     };
 
     return new CarrierText(nullTextData);
