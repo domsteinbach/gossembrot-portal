@@ -15,7 +15,7 @@ export class ErlaeuterungenComponent {
   readonly ngbExample = '<w><handshift new="#notgb" customTag="ngb"/><add hand="not gossembrot" customTag="ngb"><w>in grauer Farbe</w></add></w>';
   readonly delExmaple = '<del>durchgestrichen</del>';
   readonly undelExample = '<del undo="true">unterpunktet</del>';
-  readonly teiFragExampleHrsg = '<supplied>Kursiv</supplied>';
+  readonly teiFragExampleHrsg = '<supplied>kursiv</supplied>';
   readonly teiFragExample = '<frag>:</frag>';
   readonly teiFragExampleb = '<frag>::</frag>';
   readonly teiFragExamplec = '<frag>:::</frag>';
