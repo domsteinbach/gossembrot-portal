@@ -51,6 +51,7 @@
                                 <div>
                                     <span>{{ car.fullTitle }}</span>
                                     <span *ngFor="let target of getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle); let i = index">
+                                        <span>, </span>
                                         <span
                                                 (click)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)"
                                                 (mouseenter)="$event.stopPropagation()"
@@ -60,7 +61,7 @@
                                                 tabindex="0"
                                                 (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)"
                                                 aria-label="Zum Zielblatt wechseln"
-                                        >, {{ target.targetBlattangabe }}</span>
+                                        >{{ target.targetBlattangabe }}</span>
                                     </span>
                                 </div>
                             </div>
