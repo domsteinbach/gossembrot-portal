@@ -3,7 +3,7 @@ export const environment = {
   production: true,
   name: 'ghpages',
   useSqlJs: true,
-  gsmbRoot: './',
+  gsmbRoot: '',
   apiUrl: './api',
   dbUrl: './assets/db/app.sqlite?v=2.0',
   defaultDbName: 'gossembrot',
