@@ -48,7 +48,7 @@ For proper development with live reload use the mysql database and the node.js s
 ### 3.) Data imports & updates for static hosting (sqlite database)
 
 - Change or replace the csv files in `./data-import`
-- Increase the version number in the "dbUrl" property in src/environments/environment.*.ts, e.g.: "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.1' to "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.2'
+- **Increase the version number** in the "dbUrl" property in src/environments/environment.*.ts, e.g.: "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.1' to "dbUrl":'/gossembrot-portal_static/assets/db/app.sqlite?v=2.2'
   Otherwise the browser might use a cached version of the sqlite database
 - Run `npm run db:build ` to rebuild the database and import (see above) for local development or rebuild the whole project for static hosting e.g. with `npm run build:static:apache` (see above)
 - commit and push the changes to the main branch (auto deployed to github pages)

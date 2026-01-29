@@ -5,7 +5,7 @@ export const environment = {
   useSqlJs: true,
   gsmbRoot: '/gossembrot-portal/',
   apiUrl: './api',
-  dbUrl: './assets/db/app.sqlite?v=2.0',
+  dbUrl: './assets/db/app.sqlite?v=2.1',
   defaultDbName: 'gossembrot',
 
   assetsRoot: 'assets',
