@@ -5,8 +5,8 @@ export const environment = {
   useSqlJs: true,
   gsmbRoot: '/',                          // root when served locally
   apiUrl: '/api',
-  dbUrl: '/assets/db/app.sqlite?v=LOCAL', // can keep the same DB file
   defaultDbName: 'gossembrot',
+  dbVersion: '2.1',
   localImageBaseUrl: 'http://localhost:4201/',
   osdPrefixUrl: 'images/',
   assetsRoot: 'assets',
