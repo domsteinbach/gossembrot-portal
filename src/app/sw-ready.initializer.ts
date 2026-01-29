@@ -47,7 +47,7 @@ export function waitForSwReadyFactory() {
     return async () => {
         if (!environment.useSqlJs || !('serviceWorker' in navigator)) return;
 
-        const scope = environment.gsmbRoot || '/';
+        const scope = environment.gsmbRoot || './';
         await navigator.serviceWorker.register(`${scope}sw.js`, { scope }).catch(() => {});
         await navigator.serviceWorker.ready.catch(() => {});
 
