@@ -48,7 +48,8 @@ export function waitForSwReadyFactory() {
         if (!environment.useSqlJs || !('serviceWorker' in navigator)) return;
 
         const scope = './';
-        await navigator.serviceWorker.register(`${scope}sw.js`, { scope }).catch(() => {});
+        const swVer = (environment as any).dbVersion ?? Date.now();
+        await navigator.serviceWorker.register(`${scope}sw.js?v=${swVer}`, { scope }).catch(() => {});
         await navigator.serviceWorker.ready.catch(() => {});
 
         // Ensure this page is controlled; if not, do a one-time reload
@@ -68,7 +69,6 @@ export function waitForSwReadyFactory() {
         navigator.serviceWorker.controller?.postMessage({ type: 'PING_DB' });
         const msg = await waitForMessage(['DB_READY', 'DB_ERROR'], 20000);
         if (msg.type === 'DB_ERROR') {
-            // Option: show a nice error page; for now throw so splash stays
             throw new Error('DB failed to load in SW: ' + (msg['error'] || 'unknown'));
         }
     };
