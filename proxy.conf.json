@@ -1,7 +1,0 @@
-{
-  "/hssfaks": {
-    "target": "http://130.92.252.118:8090",
-    "secure": false,
-    "changeOrigin": true
-  }
-}
