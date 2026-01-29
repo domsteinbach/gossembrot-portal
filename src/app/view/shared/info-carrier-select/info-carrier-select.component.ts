@@ -7,21 +7,24 @@ import {
   OnChanges,
   Output,
   ViewChild,
-} from '@angular/core';
-import {map, Observable, startWith, tap} from 'rxjs';
-import { FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
-import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
-import { InformationCarrier } from '../../../model/infoCarrier';
+} from "@angular/core";
+import { map, Observable, startWith, tap } from "rxjs";
+import { FormControl } from "@angular/forms";
+import { MatInput } from "@angular/material/input";
+import {
+  MatAutocomplete,
+  MatAutocompleteTrigger,
+} from "@angular/material/autocomplete";
+import { InformationCarrier } from "../../../model/infoCarrier";
 
 @Component({
-  selector: 'app-info-carrier-select',
-  templateUrl: './info-carrier-select.component.html',
-  styleUrls: ['./info-carrier-select.component.scss'],
+  selector: "app-info-carrier-select",
+  templateUrl: "./info-carrier-select.component.html",
+  styleUrls: ["./info-carrier-select.component.scss"],
 })
 export class InfoCarrierSelectComponent implements OnChanges {
   @Input() carriers: InformationCarrier[] = [];
-  @Input() label = '';
+  @Input() label = "";
   @Input() selectedCarrier?: InformationCarrier | null;
 
   @Output() carrierSelected!: EventEmitter<InformationCarrier>;
@@ -35,23 +38,25 @@ export class InfoCarrierSelectComponent implements OnChanges {
   firstFilteredCarrier: InformationCarrier | undefined = undefined; // store the first filtered carrier for onEnterPressed can access it
 
   // access the inputs for updating programmatically
-  @ViewChild('carrierInput', { static: false }) carrierInput!: MatInput;
-  @ViewChild('carrierInput') carrierInputRef!: ElementRef;
-  @ViewChild('carrierAutoComplete', {static: false}) carrierAutoComplete!:MatAutocomplete;
+  @ViewChild("carrierInput", { static: false }) carrierInput!: MatInput;
+  @ViewChild("carrierInput") carrierInputRef!: ElementRef;
+  @ViewChild("carrierAutoComplete", { static: false })
+  carrierAutoComplete!: MatAutocomplete;
   // access the textSelect for updating the selected value
-  @ViewChild(MatAutocompleteTrigger) autocompleteTrigger!: MatAutocompleteTrigger;
+  @ViewChild(MatAutocompleteTrigger)
+  autocompleteTrigger!: MatAutocompleteTrigger;
 
   constructor(private _cdr: ChangeDetectorRef) {
     this.autoFilteredCarriers$ = this.carrierFormControl.valueChanges.pipe(
-      startWith(''),
+      startWith(""),
       map((value) => this.filterCarrierOptions(value)),
-        tap(filteredCarriers => {
-          if (filteredCarriers && filteredCarriers.length > 0) {
-            this.firstFilteredCarrier = filteredCarriers[0];
-          } else {
-            this.firstFilteredCarrier = undefined;
-          }
-        })
+      tap((filteredCarriers) => {
+        if (filteredCarriers && filteredCarriers.length > 0) {
+          this.firstFilteredCarrier = filteredCarriers[0];
+        } else {
+          this.firstFilteredCarrier = undefined;
+        }
+      }),
     );
 
     this.carrierSelected = new EventEmitter<InformationCarrier>();
@@ -70,11 +75,11 @@ export class InfoCarrierSelectComponent implements OnChanges {
             return 1;
           }
           return 0;
-        }
+        },
       );
     }
     if (!this.selectedCarrier) {
-      this.carrierFormControl.setValue('');
+      this.carrierFormControl.setValue("");
       return;
     } else {
       this.carrierFormControl.setValue(this.selectedCarrier.fullTitle);
@@ -93,7 +98,7 @@ export class InfoCarrierSelectComponent implements OnChanges {
 
     // First, filter the carriers
     const filteredCarriers = this.carriers.filter((c) =>
-      c.fullTitle.toLowerCase().includes(filterValue)
+      c.fullTitle.toLowerCase().includes(filterValue),
     );
 
     // sort the filtered carriers:
@@ -117,17 +122,19 @@ export class InfoCarrierSelectComponent implements OnChanges {
   onCarrierAutocompleteOpened() {
     this.lastSelectedCarrier = this.selectedCarrier?.fullTitle;
     // reset the selected value if the autocomplete gets opened to show all options
-    this.carrierFormControl.setValue('');
+    this.carrierFormControl.setValue("");
     this.scrollToSelectedOption();
   }
 
   scrollToSelectedOption() {
     this._cdr.detectChanges();
-    const selectedOption = this.carrierAutoComplete.options.find(o => o.selected);
+    const selectedOption = this.carrierAutoComplete.options.find(
+      (o) => o.selected,
+    );
 
     if (selectedOption) {
       selectedOption._getHostElement()?.scrollIntoView({
-        block: 'center',
+        block: "center",
       });
     }
   }
@@ -146,15 +153,18 @@ export class InfoCarrierSelectComponent implements OnChanges {
     event.preventDefault();
 
     // Check if the autocomplete panel is open and if no option is focused
-    if (this.carrierAutoComplete.isOpen && !this.carrierAutoComplete.options.some(option => option.active) && this.firstFilteredCarrier) {
-            this.onCarrierSelectChange(this.firstFilteredCarrier);
-            // Close the autocomplete panel
-            this.autocompleteTrigger.closePanel();
-            // Unfocus the input element
-            this.carrierInputRef.nativeElement.blur();
+    if (
+      this.carrierAutoComplete.isOpen &&
+      !this.carrierAutoComplete.options.some((option) => option.active) &&
+      this.firstFilteredCarrier
+    ) {
+      this.onCarrierSelectChange(this.firstFilteredCarrier);
+      // Close the autocomplete panel
+      this.autocompleteTrigger.closePanel();
+      // Unfocus the input element
+      this.carrierInputRef.nativeElement.blur();
     }
   }
-
 
   onCarrierSelectChange(carrier: InformationCarrier) {
     this.selectedCarrier = carrier;

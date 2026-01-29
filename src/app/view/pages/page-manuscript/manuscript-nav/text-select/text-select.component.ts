@@ -5,13 +5,11 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-} from '@angular/core';
-import { CarrierTextsState } from '../../../../../state/carriertext-state';
-import {
-  CarrierTextService,
-} from '../../../../../service/carrier-text.service';
-import { CarrierText } from '../../../../../model/carriertext';
-import { MatSelect } from '@angular/material/select';
+} from "@angular/core";
+import { CarrierTextsState } from "../../../../../state/carriertext-state";
+import { CarrierTextService } from "../../../../../service/carrier-text.service";
+import { CarrierText } from "../../../../../model/carriertext";
+import { MatSelect } from "@angular/material/select";
 import {
   combineLatest,
   map,
@@ -19,20 +17,20 @@ import {
   startWith,
   Subscription,
   tap,
-} from 'rxjs';
-import { Store } from '@ngxs/store';
-import { SelectedCarrierTextState } from '../../../../../state/app-state';
-import { FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
+} from "rxjs";
+import { Store } from "@ngxs/store";
+import { SelectedCarrierTextState } from "../../../../../state/app-state";
+import { FormControl } from "@angular/forms";
+import { MatInput } from "@angular/material/input";
 import {
   MatAutocomplete,
   MatAutocompleteTrigger,
-} from '@angular/material/autocomplete';
+} from "@angular/material/autocomplete";
 
 @Component({
-  selector: 'app-text-select',
-  templateUrl: './text-select.component.html',
-  styleUrls: ['./text-select.component.scss'],
+  selector: "app-text-select",
+  templateUrl: "./text-select.component.html",
+  styleUrls: ["./text-select.component.scss"],
 })
 export class TextSelectComponent implements OnInit, OnDestroy {
   carrierTexts$!: Observable<CarrierText[]>;
@@ -51,22 +49,22 @@ export class TextSelectComponent implements OnInit, OnDestroy {
   firstFilteredText: CarrierText | undefined = undefined; // for make the first filtered carrier accessible to enter strokes
 
   // access the inputs for updating programmatically
-  @ViewChild('textInput', { static: false }) textInput!: MatInput;
-  @ViewChild('textInput', { static: false }) textInputRef!: ElementRef;
-  @ViewChild('textAutoComplete', { static: false }) auto!: MatAutocomplete;
+  @ViewChild("textInput", { static: false }) textInput!: MatInput;
+  @ViewChild("textInput", { static: false }) textInputRef!: ElementRef;
+  @ViewChild("textAutoComplete", { static: false }) auto!: MatAutocomplete;
 
   // access the textSelect for updating the selected value
-  @ViewChild('manTextSelect', { static: false }) manTextSelect!: MatSelect; // Todo: remove?
+  @ViewChild("manTextSelect", { static: false }) manTextSelect!: MatSelect; // Todo: remove?
   @ViewChild(MatAutocompleteTrigger)
   autocompleteTrigger!: MatAutocompleteTrigger;
 
   constructor(
     private _store: Store,
     private _cdr: ChangeDetectorRef,
-    private _carrierTextService: CarrierTextService
+    private _carrierTextService: CarrierTextService,
   ) {
     this.filteredTexts$ = this.textsFormControl.valueChanges.pipe(
-      startWith(''),
+      startWith(""),
       map((value) => this.filterTextOptions(value)),
       tap((texts) => {
         if (texts.length > 0) {
@@ -74,10 +72,12 @@ export class TextSelectComponent implements OnInit, OnDestroy {
         } else {
           this.firstFilteredText = undefined;
         }
-      })
+      }),
     );
 
-    this.carrierTexts$ = this._store.select(CarrierTextsState.getSelectedCarriersTexts);
+    this.carrierTexts$ = this._store.select(
+      CarrierTextsState.getSelectedCarriersTexts,
+    );
     this.selectedText$ = this._store.select(SelectedCarrierTextState);
   }
 
@@ -88,28 +88,28 @@ export class TextSelectComponent implements OnInit, OnDestroy {
     ]).subscribe(([carriertexts, selectedText]) => {
       this.carrierTexts = carriertexts;
       if (!selectedText || !carriertexts.some((c) => c.id == selectedText.id)) {
-        this.textsFormControl.setValue('');
-        this.lastSelectedText = '';
+        this.textsFormControl.setValue("");
+        this.lastSelectedText = "";
         this.selectedText = undefined;
       } else {
         this.selectedText = selectedText;
-        this.textsFormControl.setValue(selectedText.fullTitle || '');
+        this.textsFormControl.setValue(selectedText.fullTitle || "");
       }
-        this._cdr.detectChanges();
+      this._cdr.detectChanges();
     });
   }
 
   filterTextOptions(value: string): CarrierText[] {
     const filterValue = value.toLowerCase();
     return this.carrierTexts.filter((t) =>
-      t.fullTitle.toLowerCase().includes(filterValue)
+      t.fullTitle.toLowerCase().includes(filterValue),
     );
   }
 
   onTextAutocompleteOpened() {
-    this.lastSelectedText = this.selectedText?.fullTitle || '';
+    this.lastSelectedText = this.selectedText?.fullTitle || "";
     // reset the selected value if the autocomplete gets opened to show all options
-    this.textsFormControl.setValue('');
+    this.textsFormControl.setValue("");
     this.scrollToSelectedOption();
   }
 
@@ -119,7 +119,7 @@ export class TextSelectComponent implements OnInit, OnDestroy {
 
     if (selectedOption) {
       selectedOption._getHostElement()?.scrollIntoView({
-        block: 'center',
+        block: "center",
       });
     }
   }

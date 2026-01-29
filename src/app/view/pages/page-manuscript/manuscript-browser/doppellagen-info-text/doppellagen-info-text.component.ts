@@ -1,14 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { Page } from '../../../../../model/page';
-import { Select } from '@ngxs/store';
-import { DisplayedPagesState } from '../../../../../state/app-state';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy } from "@angular/core";
+import { Observable, Subject } from "rxjs";
+import { Page } from "../../../../../model/page";
+import { Select } from "@ngxs/store";
+import { DisplayedPagesState } from "../../../../../state/app-state";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
-  selector: 'app-doppellagen-info-text',
-  templateUrl: './doppellagen-info-text.component.html',
-  styleUrls: ['./doppellagen-info-text.component.scss'],
+  selector: "app-doppellagen-info-text",
+  templateUrl: "./doppellagen-info-text.component.html",
+  styleUrls: ["./doppellagen-info-text.component.scss"],
 })
 export class DoppellagenInfoTextComponent implements OnDestroy {
   private _destroy = new Subject<void>();
@@ -17,7 +17,7 @@ export class DoppellagenInfoTextComponent implements OnDestroy {
 
   displayedPages: Page[] = [];
 
-  lagenText = '';
+  lagenText = "";
 
   constructor() {
     this._displayedPages$
@@ -30,7 +30,7 @@ export class DoppellagenInfoTextComponent implements OnDestroy {
 
   setLagentext(pages: Page[]) {
     if (!pages.length) {
-      this.lagenText = '';
+      this.lagenText = "";
       return;
     }
 

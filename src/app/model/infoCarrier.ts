@@ -1,9 +1,9 @@
-import { InformationCarrierData } from '../data/repository-model';
-import { NamingGossembrot } from './naming-gsmb';
-import { GsmbResource } from '../data/repository/gsmb-resource';
-import { Library } from './library';
-import { ExternalEntity } from './external_entity';
-import { Einband } from './einband';
+import { InformationCarrierData } from "../data/repository-model";
+import { NamingGossembrot } from "./naming-gsmb";
+import { GsmbResource } from "../data/repository/gsmb-resource";
+import { Library } from "./library";
+import { ExternalEntity } from "./external_entity";
+import { Einband } from "./einband";
 
 export enum InfoCarrierTypes {
   Manuscript = 0,
@@ -14,7 +14,7 @@ export enum InfoCarrierTypes {
 
 export type InfoCarrierType = keyof typeof InfoCarrierTypes;
 
-export type InfoCarrierTypeDe = 'Handschrift' | 'Druck' | 'Werk' | 'Textträger';
+export type InfoCarrierTypeDe = "Handschrift" | "Druck" | "Werk" | "Textträger";
 
 // the physicality of an info carrier
 export enum Physicalities {
@@ -23,15 +23,15 @@ export enum Physicalities {
   Classic = 2,
 }
 
-export type Physicality = 'Available' | 'Lost' | 'Classic';
+export type Physicality = "Available" | "Lost" | "Classic";
 
-export type Casus = 'Nominativ' | 'Dativ';
+export type Casus = "Nominativ" | "Dativ";
 /**
  * the main class for information carriers; extended by all other info carrier classes
  *
  */
 export class InformationCarrier extends GsmbResource {
-  static readonly tableName = 'info_carrier';
+  static readonly tableName = "info_carrier";
   protected _title: string;
   protected _description: string;
   protected _matDescription: string;
@@ -41,7 +41,7 @@ export class InformationCarrier extends GsmbResource {
   protected _inGsmbsLib: boolean;
   protected _rekByJoa: string;
   protected _libId: string;
-  private _library?: Library
+  private _library?: Library;
   protected _shelfMark: string; // the shelfmark of the physical info carrier in a library
   protected _firstPageIdx: number; // the first relevant page for an info carrier
   private _fileName: string;
@@ -101,13 +101,13 @@ export class InformationCarrier extends GsmbResource {
 
   get fullTitle(): string {
     const matDescription = this._matDescription
-      ? ', ' + this._matDescription
-      : '';
+      ? ", " + this._matDescription
+      : "";
     return this._title + matDescription;
   }
 
   get shortName() {
-    return this.library?.shortName
+    return this.library?.shortName;
   }
 
   get carrierType(): InfoCarrierType {
@@ -117,71 +117,76 @@ export class InformationCarrier extends GsmbResource {
   // german version of carrierType
   get carrierTypeDe(): InfoCarrierTypeDe {
     switch (this._carrierType) {
-      case 'Manuscript':
-        return 'Handschrift';
-      case 'Print':
-        return 'Druck';
-      case 'Classic':
-        return 'Werk';
-      case 'NonHabeo':
-        return 'Textträger';
+      case "Manuscript":
+        return "Handschrift";
+      case "Print":
+        return "Druck";
+      case "Classic":
+        return "Werk";
+      case "NonHabeo":
+        return "Textträger";
     }
   }
 
   // rekonstruierter Druck, rekonstruierte Handschrift, kanonisches Werk
-  getCarrierTypeDescDe(casus: Casus = 'Nominativ'): string {
-    return `${this.reconstrPrefix()}${this.reconstrPrefix() ? this._reconstrCasusSuffix(casus) + ' ':''}${this.carrierTypeDe}`;
+  getCarrierTypeDescDe(casus: Casus = "Nominativ"): string {
+    return `${this.reconstrPrefix()}${this.reconstrPrefix() ? this._reconstrCasusSuffix(casus) + " " : ""}${this.carrierTypeDe}`;
   }
 
-  getCarrierTypeDescDeLowerCased(casus: Casus = 'Nominativ'): string {
-    if (this._physicality === 'Available') {
-      return this.getCarrierTypeDescDe(casus)
+  getCarrierTypeDescDeLowerCased(casus: Casus = "Nominativ"): string {
+    if (this._physicality === "Available") {
+      return this.getCarrierTypeDescDe(casus);
     }
-    return this.getCarrierTypeDescDe(casus).charAt(0).toLowerCase()+this.getCarrierTypeDescDe(casus).slice(1);
+    return (
+      this.getCarrierTypeDescDe(casus).charAt(0).toLowerCase() +
+      this.getCarrierTypeDescDe(casus).slice(1)
+    );
   }
 
   private reconstrPrefix(): string {
-    if (this._physicality === 'Available') {
-      return '';
+    if (this._physicality === "Available") {
+      return "";
     }
     switch (this.carrierTypeDe) {
-      case 'Handschrift':
-        return 'Rekonstruiert';
-      case 'Druck':
-        return 'Rekonstruiert';
-      case 'Werk':
-        return 'Kanonisch';
-      case 'Textträger':
-        return 'Rekonstruiert';
+      case "Handschrift":
+        return "Rekonstruiert";
+      case "Druck":
+        return "Rekonstruiert";
+      case "Werk":
+        return "Kanonisch";
+      case "Textträger":
+        return "Rekonstruiert";
     }
   }
 
   private _reconstrCasusSuffix(casus: Casus): string {
     switch (this.carrierTypeDe) {
-      case 'Handschrift':
-        return casus === 'Nominativ' ? 'e' : 'er';
-      case 'Druck':
-        return casus === 'Nominativ' ? 'er' : 'em'
-      case 'Werk':
-        return casus === 'Nominativ' ? 'es' : 'em';
-      case 'Textträger':
-        return casus === 'Nominativ' ? 'er' : 'em';
+      case "Handschrift":
+        return casus === "Nominativ" ? "e" : "er";
+      case "Druck":
+        return casus === "Nominativ" ? "er" : "em";
+      case "Werk":
+        return casus === "Nominativ" ? "es" : "em";
+      case "Textträger":
+        return casus === "Nominativ" ? "er" : "em";
     }
   }
 
   // return the text "Verweise auf diese[*] [*]
   verweiseAufDiesenStr(): string {
-    const t = this.carrierType !== 'NonHabeo' ? 'Verweise auf diese' : 'Verweis auf diesen';
+    const t =
+      this.carrierType !== "NonHabeo"
+        ? "Verweise auf diese"
+        : "Verweis auf diesen";
     switch (this.carrierTypeDe) {
-      case 'Handschrift':
+      case "Handschrift":
         return `${t} Handschrift`;
-      case 'Druck':
+      case "Druck":
         return `${t}n Druck`;
-      case 'Werk':
+      case "Werk":
         return `${t}s kanonische Werk`;
-      case 'Textträger':
+      case "Textträger":
         return `${t} Textträger`;
-
     }
   }
 
@@ -195,12 +200,12 @@ export class InformationCarrier extends GsmbResource {
 
   get physicalityDe(): string {
     switch (this._physicality) {
-      case 'Available':
-        return 'erhalten';
-      case 'Lost':
-        return 'rekonstruiert';
-      case 'Classic':
-        return 'kanonisch';
+      case "Available":
+        return "erhalten";
+      case "Lost":
+        return "rekonstruiert";
+      case "Classic":
+        return "kanonisch";
     }
   }
 
@@ -229,14 +234,18 @@ export class InformationCarrier extends GsmbResource {
   }
 
   get mainNamingGossembrot(): string | undefined {
-    return this._namingsGossembrot.length ? this._namingsGossembrot[0].benennung : undefined;
+    return this._namingsGossembrot.length
+      ? this._namingsGossembrot[0].benennung
+      : undefined;
   }
 
   get inGsmBLibText(): string {
-    if (this._physicality == 'Classic' || this.carrierType === 'NonHabeo') {
-      return '';
+    if (this._physicality == "Classic" || this.carrierType === "NonHabeo") {
+      return "";
     }
-    return this._inGsmbsLib ? 'aus Gossembrots Bibliothek' : 'außerhalb Gossembrots Bibliothek';
+    return this._inGsmbsLib
+      ? "aus Gossembrots Bibliothek"
+      : "außerhalb Gossembrots Bibliothek";
   }
 
   // Helper methods
@@ -246,9 +255,9 @@ export class InformationCarrier extends GsmbResource {
   get sort_arg(): string {
     return this._title.replace(/\d+(\.\d+)?/g, (match) => {
       return match
-        .split('.')
-        .map((part) => part.padStart(8, '0'))
-        .join('.');
+        .split(".")
+        .map((part) => part.padStart(8, "0"))
+        .join(".");
     });
   }
 }

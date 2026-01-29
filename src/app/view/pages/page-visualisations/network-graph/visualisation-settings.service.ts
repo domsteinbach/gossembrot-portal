@@ -1,22 +1,22 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { VisGlobalFilter } from './visualisation-data/vis-data-interaction/vis-global-filters/vis-global-filters.component';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
+import { VisGlobalFilter } from "./visualisation-data/vis-data-interaction/vis-global-filters/vis-global-filters.component";
 
 export type Granularity =
-  | 'InformationCarrier'
-  | 'CarrierAndText'
-  | 'CarrierText'
-  | 'Belegstelle';
+  | "InformationCarrier"
+  | "CarrierAndText"
+  | "CarrierText"
+  | "Belegstelle";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class VisualisationSettingsService {
-  defaultGranularity: Granularity = 'InformationCarrier';
+  defaultGranularity: Granularity = "InformationCarrier";
   defaultGlobalFilter: VisGlobalFilter = {
     inGsmbBib: [true, false],
-    infoCarrierTypes: ['Manuscript', 'Print', 'Classic'],
-    physicalities: ['Available', 'Lost', 'Classic'],
+    infoCarrierTypes: ["Manuscript", "Print", "Classic"],
+    physicalities: ["Available", "Lost", "Classic"],
     includeConnected: true,
   };
 

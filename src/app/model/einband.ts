@@ -1,5 +1,5 @@
-import { ExternalEntity } from './external_entity';
-import { GsmbResource } from '../data/repository/gsmb-resource';
+import { ExternalEntity } from "./external_entity";
+import { GsmbResource } from "../data/repository/gsmb-resource";
 
 export interface EinbandData {
   id: string;
@@ -11,8 +11,8 @@ export interface EinbandData {
   werkzeug_desc: string;
 }
 
-export class Einband extends GsmbResource{
-  static readonly tableName = 'einband';
+export class Einband extends GsmbResource {
+  static readonly tableName = "einband";
   carId: string;
   shelfmark: string;
   werkstatt: string;
@@ -21,9 +21,8 @@ export class Einband extends GsmbResource{
   werkzeugDesc: string;
   private _externalEntity!: ExternalEntity | undefined | null;
 
-
   constructor(data: EinbandData) {
-    super(data.id)
+    super(data.id);
     this.carId = data.car_id;
     this.shelfmark = data.shelfmark;
     this.werkstatt = data.werkstatt;

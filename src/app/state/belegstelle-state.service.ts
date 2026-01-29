@@ -1,15 +1,15 @@
-import { Action, State, StateContext } from '@ngxs/store';
-import { Injectable } from '@angular/core';
-import { Belegstelle } from '../model/belegstelle';
-import { DisplayVerweis } from '../model/verweis';
+import { Action, State, StateContext } from "@ngxs/store";
+import { Injectable } from "@angular/core";
+import { Belegstelle } from "../model/belegstelle";
+import { DisplayVerweis } from "../model/verweis";
 
 export class UpdateSelectedSrcBelegstelle {
-  static readonly type = '[App] Update selected source belegstelle';
+  static readonly type = "[App] Update selected source belegstelle";
   constructor(public selectedSrcBelegstelle: Belegstelle | undefined) {}
 }
 
 @State<Belegstelle | undefined>({
-  name: 'selectedSrcBelegstelle',
+  name: "selectedSrcBelegstelle",
   defaults: undefined,
 })
 @Injectable()
@@ -17,20 +17,20 @@ export class SelectedSrcBelegstelleState {
   @Action(UpdateSelectedSrcBelegstelle)
   updateSelectedSrcBelegstelle(
     { getState, setState }: StateContext<Belegstelle | undefined>,
-    { selectedSrcBelegstelle }: UpdateSelectedSrcBelegstelle
+    { selectedSrcBelegstelle }: UpdateSelectedSrcBelegstelle,
   ) {
     setState(selectedSrcBelegstelle);
   }
 }
 
 export class UpdateSelectedTargetBelegstelle {
-  static readonly type = '[App] Update selected target Belegstelle';
+  static readonly type = "[App] Update selected target Belegstelle";
   constructor(public selectedTargetBelegstelle: Belegstelle) {}
 }
 
 // State for the selected target belegstelle
 @State<Belegstelle | null>({
-  name: 'selectedTargetBelegstelle',
+  name: "selectedTargetBelegstelle",
   defaults: null,
 })
 @Injectable()
@@ -38,19 +38,19 @@ export class SelectedTargetBelegstelleState {
   @Action(UpdateSelectedTargetBelegstelle)
   updateSelectedSrcBelegstelle(
     { getState, setState }: StateContext<Belegstelle | null>,
-    { selectedTargetBelegstelle }: UpdateSelectedTargetBelegstelle
+    { selectedTargetBelegstelle }: UpdateSelectedTargetBelegstelle,
   ) {
     setState(selectedTargetBelegstelle);
   }
 }
 
 export class UpdateSelectedVerweis {
-  static readonly type = '[App] Update the selected verweis';
+  static readonly type = "[App] Update the selected verweis";
   constructor(public selectedVerweis: DisplayVerweis | null) {}
 }
 
 @State<DisplayVerweis | null>({
-  name: 'selectedVerweis',
+  name: "selectedVerweis",
   defaults: null,
 })
 @Injectable()
@@ -58,7 +58,7 @@ export class SelectedVerweisState {
   @Action(UpdateSelectedVerweis)
   updateSelectedVerweis(
     { getState, setState }: StateContext<DisplayVerweis | null>,
-    { selectedVerweis }: UpdateSelectedVerweis
+    { selectedVerweis }: UpdateSelectedVerweis,
   ) {
     setState(selectedVerweis);
   }

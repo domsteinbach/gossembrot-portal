@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { VerweisAdvancedFilterService } from '../verweis-advanced-filter.service';
-import { BooleanControl } from '../../data-search-types';
+import { Component } from "@angular/core";
+import { VerweisAdvancedFilterService } from "../verweis-advanced-filter.service";
+import { BooleanControl } from "../../data-search-types";
 
 @Component({
-  selector: 'app-target-blatt-is-fragment-filter',
+  selector: "app-target-blatt-is-fragment-filter",
   template: `
     <mat-checkbox
       *ngFor="let t of isFragments"
@@ -16,11 +16,11 @@ import { BooleanControl } from '../../data-search-types';
 })
 export class TargetBlattIsFragmentFilterComponent {
   isFragments: BooleanControl[] = [
-    { checkboxValue: true, value: true, label: 'Komplette Zielblatt-Angaben' },
+    { checkboxValue: true, value: true, label: "Komplette Zielblatt-Angaben" },
     {
       checkboxValue: true,
       value: false,
-      label: 'Fregmentarische Zielblatt-Angaben',
+      label: "Fregmentarische Zielblatt-Angaben",
     },
   ];
 
@@ -42,7 +42,7 @@ export class TargetBlattIsFragmentFilterComponent {
       this.selectedFilters.push(filter.value);
     } else {
       this.selectedFilters = this.selectedFilters.filter(
-        (t) => t !== filter.value
+        (t) => t !== filter.value,
       );
     }
     this.filterService.setTargetBlattIsFragmentFilter(this.selectedFilters);

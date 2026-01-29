@@ -1,17 +1,17 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionPanelTitle } from '@angular/material/expansion';
+import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
+import { MatCheckbox, MatCheckboxModule } from "@angular/material/checkbox";
+import { MatExpansionPanelTitle } from "@angular/material/expansion";
 import {
   InfoCarrierType,
   Physicality,
-} from '../../../../../../../model/infoCarrier';
-import { FormsModule } from '@angular/forms';
-import { VisualisationSettingsService } from '../../../visualisation-settings.service';
-import { Subscription } from 'rxjs';
-import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
-import { MatDivider } from '@angular/material/divider';
-import { MatLabel } from '@angular/material/form-field';
-import { MatTooltip } from '@angular/material/tooltip';
+} from "../../../../../../../model/infoCarrier";
+import { FormsModule } from "@angular/forms";
+import { VisualisationSettingsService } from "../../../visualisation-settings.service";
+import { Subscription } from "rxjs";
+import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
+import { MatDivider } from "@angular/material/divider";
+import { MatLabel } from "@angular/material/form-field";
+import { MatTooltip } from "@angular/material/tooltip";
 
 export interface VisGlobalFilter {
   inGsmbBib: boolean[];
@@ -21,7 +21,7 @@ export interface VisGlobalFilter {
 }
 
 @Component({
-  selector: 'app-vis-global-filters',
+  selector: "app-vis-global-filters",
   standalone: true,
   imports: [
     MatCheckbox,
@@ -33,8 +33,8 @@ export interface VisGlobalFilter {
     MatLabel,
     MatTooltip,
   ],
-  templateUrl: './vis-global-filters.component.html',
-  styleUrl: './vis-global-filters.component.scss',
+  templateUrl: "./vis-global-filters.component.html",
+  styleUrl: "./vis-global-filters.component.scss",
 })
 export class VisGlobalFiltersComponent implements OnDestroy {
   private _settingsSub: Subscription;
@@ -42,12 +42,12 @@ export class VisGlobalFiltersComponent implements OnDestroy {
 
   constructor(
     private _crd: ChangeDetectorRef,
-    private _visSettingsService: VisualisationSettingsService
+    private _visSettingsService: VisualisationSettingsService,
   ) {
     this._settingsSub = this._visSettingsService.globalFilter$.subscribe(
       (f) => {
         this.filter = f;
-      }
+      },
     );
   }
 

@@ -1,24 +1,35 @@
-import { Injectable } from '@angular/core';
-import { combineLatest, filter, map, Observable, of, shareReplay, switchMap, take, tap } from 'rxjs';
-import { DataService } from '../dataservice.service';
-import { Belegstelle } from '../../model/belegstelle';
-import { VerweisRepository } from './verweis-repository';
-import { Page } from '../../model/page';
-import { PageRepository } from './page-repository';
-import { Store } from '@ngxs/store';
-import { SelectedCarrierPagesState } from '../../state/app-state';
+import { Injectable } from "@angular/core";
+import {
+  combineLatest,
+  filter,
+  map,
+  Observable,
+  of,
+  shareReplay,
+  switchMap,
+  take,
+  tap,
+} from "rxjs";
+import { DataService } from "../dataservice.service";
+import { Belegstelle } from "../../model/belegstelle";
+import { VerweisRepository } from "./verweis-repository";
+import { Page } from "../../model/page";
+import { PageRepository } from "./page-repository";
+import { Store } from "@ngxs/store";
+import { SelectedCarrierPagesState } from "../../state/app-state";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class BelegstelleRepository {
   constructor(
     private _dataService: DataService,
     private _pr: PageRepository,
     private _store: Store,
-    private _vr: VerweisRepository) {}
+    private _vr: VerweisRepository,
+  ) {}
 
-  private _cachedBelegstellen : Belegstelle[] = [];
+  private _cachedBelegstellen: Belegstelle[] = [];
   private cachedBelegstellen$: Observable<Belegstelle[]> | undefined;
 
   private _belegStellen$ = this._dataService.getDataAs$(Belegstelle);
@@ -31,49 +42,48 @@ export class BelegstelleRepository {
     const pages$ = this._store.select(SelectedCarrierPagesState); // Todo in visualisations: SELECT carrier in store and set stuff!
 
     return pages$.pipe(
-      map((pages) => pages.length > 0 ? pages[0].carId : null), // Extract carrierId
+      map((pages) => (pages.length > 0 ? pages[0].carId : null)), // Extract carrierId
       filter((carrierId): carrierId is string => !!carrierId), // Ensure it's not null
       switchMap((carrierId) =>
         combineLatest([
           this._belegstellenOfCarrier$(carrierId).pipe(
-            map((belegstellen) =>
-              belegstellen.filter((b) => b.isSource)
-            )
+            map((belegstellen) => belegstellen.filter((b) => b.isSource)),
           ),
-          pages$ // Keep listening to pages$
-        ])
+          pages$, // Keep listening to pages$
+        ]),
       ),
-      map(([belegstellen, pages]) => this._mergePagesIntoBelegstellen(belegstellen, pages))
+      map(([belegstellen, pages]) =>
+        this._mergePagesIntoBelegstellen(belegstellen, pages),
+      ),
     );
   }
 
   getSourceBelegstellenOfCarrier$(
-    carrierId: string
+    carrierId: string,
   ): Observable<Belegstelle[]> {
     return this._belegstellenOfCarrierWithPages$(carrierId).pipe(
-      map((belegstellen) => belegstellen.filter((b) => b.isSource))
+      map((belegstellen) => belegstellen.filter((b) => b.isSource)),
     );
   }
 
   getTargetBelegstellenOfCarrier$(
-    carrierId: string
+    carrierId: string,
   ): Observable<Belegstelle[]> {
     return this._belegstellenOfCarrierWithPages$(carrierId).pipe(
-      map((belegstellen) => belegstellen.filter((b) => b.isTarget))
+      map((belegstellen) => belegstellen.filter((b) => b.isTarget)),
     );
   }
 
   getBelegStellenPointingToCarrier(
-    carrierId: string
+    carrierId: string,
   ): Observable<Belegstelle[]> {
-
     const sources = this._belegstellenPointingToCarrier(carrierId);
     const pages$ = this._pr.pagesPointingToCarrier$(carrierId);
 
     return combineLatest([sources, pages$]).pipe(
       map(([belegstellen, pages]) => {
         return this._mergePagesIntoBelegstellen(belegstellen, pages);
-      })
+      }),
     );
   }
 
@@ -82,9 +92,8 @@ export class BelegstelleRepository {
    * @param carrierId
    */
   foreignTargetBelegstellenOfCarrier$(
-    carrierId: string
+    carrierId: string,
   ): Observable<Belegstelle[]> {
-
     const targetBelegstellen$: Observable<Belegstelle[]> =
       this._getForeignTargetBelegstellenOfCarrier$(carrierId);
 
@@ -94,7 +103,7 @@ export class BelegstelleRepository {
     return combineLatest([targetBelegstellen$, pages$]).pipe(
       map(([belegstellen, pages]) => {
         return this._mergePagesIntoBelegstellen(belegstellen, pages);
-      })
+      }),
     );
   }
 
@@ -104,15 +113,13 @@ export class BelegstelleRepository {
 
   getBelegstellenWithTag(
     originalTag: string,
-    limit?: number | null
+    limit?: number | null,
   ): Observable<Belegstelle[]> {
-
-    const limitClause = limit ? `LIMIT ${limit}` : '';
+    const limitClause = limit ? `LIMIT ${limit}` : "";
     const q = `SELECT * FROM belegstelle WHERE wortlaut LIKE '%<${originalTag}>%' or wortlaut LIKE '%<${originalTag}/>%' or wortlaut LIKE '%[${originalTag}]%' ORDER BY CHAR_LENGTH(wortlaut) ASC ${limitClause}`;
 
     return this._dataService.getDataAs$(Belegstelle, q);
   }
-
 
   private _mergePagesIntoBelegstellen(
     belegstellen: Belegstelle[],
@@ -120,7 +127,7 @@ export class BelegstelleRepository {
   ): Belegstelle[] {
     const pagesMap = new Map(pages.map((p) => [p.id, p]));
     belegstellen.forEach((b) => {
-      const pageId = b.pageId ? b.pageId : b.alternativePageId || '';
+      const pageId = b.pageId ? b.pageId : b.alternativePageId || "";
       if (pagesMap.has(pageId)) {
         if (b.alternativePageId) {
           b.alternativePage = pagesMap.get(pageId) as Page;
@@ -137,17 +144,16 @@ export class BelegstelleRepository {
    * @param car_id
    */
   private _belegstellenPointingToCarrier(
-    car_id: string
+    car_id: string,
   ): Observable<Belegstelle[]> {
-
     if (this._cachedBelegstellen.length) {
       return this._vr.getVerweisePointingToCarrier$(car_id).pipe(
         map((verweise) => {
           const belegstellen = this._cachedBelegstellen.filter((b) =>
-            verweise.some((v) => v.srcBelegstelle === b.id)
+            verweise.some((v) => v.srcBelegstelle === b.id),
           );
           return belegstellen;
-        })
+        }),
       );
     }
 
@@ -164,28 +170,32 @@ export class BelegstelleRepository {
     if (!this.cachedBelegstellen$) {
       this.cachedBelegstellen$ = this._belegStellen$.pipe(
         tap((belegstellen) => (this._cachedBelegstellen = belegstellen)),
-        shareReplay(1)
+        shareReplay(1),
       );
     }
     return this.cachedBelegstellen$;
   }
 
-  private _belegstellenOfCarrierWithPages$(carId: string): Observable<Belegstelle[]> {
+  private _belegstellenOfCarrierWithPages$(
+    carId: string,
+  ): Observable<Belegstelle[]> {
     return combineLatest([
       this._belegstellenOfCarrier$(carId),
-      this._pr.pagesOfCarrierHavingBelegstellen$(carId)
+      this._pr.pagesOfCarrierHavingBelegstellen$(carId),
     ]).pipe(
-      map(([belegstellen, pages]) => this._mergePagesIntoBelegstellen(belegstellen, pages))
+      map(([belegstellen, pages]) =>
+        this._mergePagesIntoBelegstellen(belegstellen, pages),
+      ),
     );
   }
 
   private _belegstellenOfCarrier$(carId: string): Observable<Belegstelle[]> {
-
     if (this._cachedBelegstellen.length) {
       return of(this._cachedBelegstellen.filter((b) => b.carId === carId));
-    } else { // populate and fallback to the database
-        this._getAndPopulateCachedBelegstellen().pipe(take(1)).subscribe();
-        return this._getBelegstellenOfCarrier(carId);
+    } else {
+      // populate and fallback to the database
+      this._getAndPopulateCachedBelegstellen().pipe(take(1)).subscribe();
+      return this._getBelegstellenOfCarrier(carId);
     }
   }
 
@@ -194,7 +204,7 @@ export class BelegstelleRepository {
    * @param carrierId
    */
   private _getForeignTargetBelegstellenOfCarrier$(
-    srcCarrierId: string
+    srcCarrierId: string,
   ): Observable<Belegstelle[]> {
     const q = `SELECT DISTINCT belegstelle.* FROM verweis
                     LEFT JOIN belegstelle ON belegstelle.id = verweis.target_belegstelle

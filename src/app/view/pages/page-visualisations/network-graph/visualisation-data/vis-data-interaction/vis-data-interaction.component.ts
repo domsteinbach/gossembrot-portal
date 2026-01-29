@@ -1,16 +1,16 @@
-import { Component, OnDestroy } from '@angular/core';
-import { VisualisationDataService } from '../../visualisation-data.service';
-import { InformationCarrier } from '../../../../../../model/infoCarrier';
-import { Select } from '@ngxs/store';
-import { CarriersState } from '../../../../../../state/information-carrier-state.service';
-import { Observable, Subscription } from 'rxjs';
-import { VisualisationVerweis } from '../../../../../../model/visualisations';
-import { VisualisationSettingsService } from '../../visualisation-settings.service';
+import { Component, OnDestroy } from "@angular/core";
+import { VisualisationDataService } from "../../visualisation-data.service";
+import { InformationCarrier } from "../../../../../../model/infoCarrier";
+import { Select } from "@ngxs/store";
+import { CarriersState } from "../../../../../../state/information-carrier-state.service";
+import { Observable, Subscription } from "rxjs";
+import { VisualisationVerweis } from "../../../../../../model/visualisations";
+import { VisualisationSettingsService } from "../../visualisation-settings.service";
 
 @Component({
-  selector: 'app-vis-data-interaction',
-  templateUrl: './vis-data-interaction.component.html',
-  styleUrl: './vis-data-interaction.component.scss',
+  selector: "app-vis-data-interaction",
+  templateUrl: "./vis-data-interaction.component.html",
+  styleUrl: "./vis-data-interaction.component.scss",
 })
 export class VisDataInteractionComponent implements OnDestroy {
   carriersSub: Subscription;
@@ -32,14 +32,14 @@ export class VisDataInteractionComponent implements OnDestroy {
 
   constructor(
     private _visDataService: VisualisationDataService,
-    private _visSettings: VisualisationSettingsService
+    private _visSettings: VisualisationSettingsService,
   ) {
     this.carriersSub = this.carriers$.subscribe(
       (cars: InformationCarrier[]) => {
         this.allCarriers = cars.filter(
-          (c) => c.hasIncomingVerweis || c.hasOutgoingVerweis
+          (c) => c.hasIncomingVerweis || c.hasOutgoingVerweis,
         );
-      }
+      },
     );
 
     this.lastSelectedCarrierSub =
@@ -50,13 +50,13 @@ export class VisDataInteractionComponent implements OnDestroy {
     this.selectedCarriersSub = this._visDataService.selectedCarriers$.subscribe(
       (carriers: InformationCarrier[]) => {
         this.selectedCarriers = carriers;
-      }
+      },
     );
 
     this.selectedLinksSub = this._visDataService.selectedVerweise$.subscribe(
       (verweise) => {
         this.selectedVerweise = verweise;
-      }
+      },
     );
   }
 
@@ -81,11 +81,11 @@ export class VisDataInteractionComponent implements OnDestroy {
   }
 
   onFilterPanelOpened() {
-    this._visDataService.setInteractionMode('select');
+    this._visDataService.setInteractionMode("select");
   }
 
   onFilterPanelClosed() {
-    this._visDataService.setInteractionMode('info');
+    this._visDataService.setInteractionMode("info");
   }
 
   onSelectedInSelect(carrier: InformationCarrier) {

@@ -1,71 +1,80 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CarrierTextRepository } from '../../../../data/repository/carrier-text-repository';
-import { ColumnDef } from '../data-search-types';
-import { map, Observable, Subject, take } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { CarrierText } from '../../../../model/carriertext';
-import { combineLatest } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { TableDisplayService } from '../service/table-display.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ColumnSettingsComponent } from '../shared/column-settings/column-settings.component';
-import { ValueFilterService } from '../service/value-filter.service';
-import { MatDrawer } from '@angular/material/sidenav';
-import { LinkService } from '../../page-manuscript/link.service';
-import {AuthService} from "../../../../auth/auth.service";
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { CarrierTextRepository } from "../../../../data/repository/carrier-text-repository";
+import { ColumnDef } from "../data-search-types";
+import { map, Observable, Subject, take } from "rxjs";
+import { MatTableDataSource } from "@angular/material/table";
+import { CarrierText } from "../../../../model/carriertext";
+import { combineLatest } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { TableDisplayService } from "../service/table-display.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ColumnSettingsComponent } from "../shared/column-settings/column-settings.component";
+import { ValueFilterService } from "../service/value-filter.service";
+import { MatDrawer } from "@angular/material/sidenav";
+import { LinkService } from "../../page-manuscript/link.service";
+import { AuthService } from "../../../../auth/auth.service";
 
 @Component({
-  selector: 'app-carrier-text-search',
-  templateUrl: './carrier-text-search.component.html',
-  styleUrls: [ '../page-data-search.component.scss'],
+  selector: "app-carrier-text-search",
+  templateUrl: "./carrier-text-search.component.html",
+  styleUrls: ["../page-data-search.component.scss"],
 })
-export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CarrierTextSearchComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   private _destroy$ = new Subject<void>();
   private readonly _initialColumns: ColumnDef[] = [
     {
-      column: 'title',
-      displayedName: 'Text/Abschnitt',
-      primitiveType: 'string',
+      column: "title",
+      displayedName: "Text/Abschnitt",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
     },
     {
-      column: 'authorsCognomen',
-      displayedName: 'Autor:in',
-      primitiveType: 'string',
+      column: "authorsCognomen",
+      displayedName: "Autor:in",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
       nullOrEmptyFilter: true,
     },
     {
-      column: 'authorGndId',
-      displayedName: 'GND-ID (Autor:in)',
-      primitiveType: 'string',
+      column: "authorGndId",
+      displayedName: "GND-ID (Autor:in)",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
       nullOrEmptyFilter: true,
     },
     {
-      column: 'carrierFulltitle',
-      displayedName: 'Textträger',
-      primitiveType: 'string',
+      column: "carrierFulltitle",
+      displayedName: "Textträger",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
     },
     {
-      column: 'textRange',
-      displayedName: 'Blattangabe',
-      primitiveType: 'string',
+      column: "textRange",
+      displayedName: "Blattangabe",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
       nullOrEmptyFilter: true,
     },
-
   ] as const;
 
-  @ViewChild('advancedFilterDrawer') advancedFilterDrawer: MatDrawer | undefined;
+  @ViewChild("advancedFilterDrawer") advancedFilterDrawer:
+    | MatDrawer
+    | undefined;
 
   isDrawerClosed = true;
 
@@ -82,25 +91,29 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
 
   selectedRow: CarrierText | null = null;
 
-  private _carrierTexts$ =
-    combineLatest([this._getCarrierTexts$(), this._fs.nullFilters$('text')]).pipe(
-      map(([texts, filters]) => this._fs.applyNullFilters<CarrierText>(texts, 'text'))
-    );
+  private _carrierTexts$ = combineLatest([
+    this._getCarrierTexts$(),
+    this._fs.nullFilters$("text"),
+  ]).pipe(
+    map(([texts, filters]) =>
+      this._fs.applyNullFilters<CarrierText>(texts, "text"),
+    ),
+  );
 
   constructor(
-      public authService: AuthService,
-      private _ds: TableDisplayService,
+    public authService: AuthService,
+    private _ds: TableDisplayService,
     private _fs: ValueFilterService,
     private _dialog: MatDialog,
     private _ls: LinkService,
-    private _tr: CarrierTextRepository,) {
+    private _tr: CarrierTextRepository,
+  ) {
+    this._ds.initTable("text", this._initialColumns);
+    this.columns$ = this._ds.getColumnsToDisplay$("text");
 
-      this._ds.initTable('text',this._initialColumns);
-      this.columns$ = this._ds.getColumnsToDisplay$('text');
-
-      this.displayedColumns$ = this.columns$.pipe(
-        map((columns) => columns.filter((c) => c.displayed).map((c) => c.column))
-      );
+    this.displayedColumns$ = this.columns$.pipe(
+      map((columns) => columns.filter((c) => c.displayed).map((c) => c.column)),
+    );
   }
 
   ngOnInit(): void {
@@ -110,12 +123,12 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
         this.dataSource.data = texts;
         this.loading = false;
       });
-
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.filterPredicate = this._fs.getMultiFilterPredicate<CarrierText>();
+    this.dataSource.filterPredicate =
+      this._fs.getMultiFilterPredicate<CarrierText>();
     this.paginator._intl = this._ds.updatePaginatorTexts(this.paginator._intl);
     this.paginator._intl.changes.next();
     this._setCustomSort();
@@ -127,33 +140,35 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
       take(1),
       map((texts: CarrierText[]) =>
         texts
-          .filter(text => text.title)
+          .filter((text) => text.title)
           .sort((a, b) =>
-            (a.title?.toLowerCase() || '').localeCompare(b.title?.toLowerCase() || '')
-          )
-      )
+            (a.title?.toLowerCase() || "").localeCompare(
+              b.title?.toLowerCase() || "",
+            ),
+          ),
+      ),
     );
   }
 
   private _setCustomSort() {
     this.dataSource.sortingDataAccessor = (item: CarrierText, property) => {
       switch (property) {
-        case 'textRange':
+        case "textRange":
           return item.sortInCar;
 
-        case 'gndId':
-          return item.author?.gndId || '';
+        case "gndId":
+          return item.author?.gndId || "";
 
-        case 'isAuthorInsecure':
-          return item.isAuthorInsecure ? '1' : '0';
+        case "isAuthorInsecure":
+          return item.isAuthorInsecure ? "1" : "0";
 
         default:
-          return (item as any)[property].toLowerCase() || '';
+          return (item as any)[property].toLowerCase() || "";
       }
     };
 
     if (this.dataSource.sort) {
-      this.dataSource.sort.direction = 'asc';
+      this.dataSource.sort.direction = "asc";
     }
   }
 
@@ -180,7 +195,7 @@ export class CarrierTextSearchComponent implements OnInit, AfterViewInit, OnDest
 
   openColumnSettingsDialog() {
     this._dialog.open(ColumnSettingsComponent, {
-      data: { tableName: 'text' }, // Pass the table name to the dialog
+      data: { tableName: "text" }, // Pass the table name to the dialog
     });
   }
 

@@ -1,41 +1,42 @@
-import { Injectable } from '@angular/core';
-import {
-  Store,
-} from '@ngxs/store';
+import { Injectable } from "@angular/core";
+import { Store } from "@ngxs/store";
 import {
   SelectedCarrierPagesState,
   SelectedPageState,
-  UpdateSelectedCarrierText, UpdateSelectedPage,
-} from '../state/app-state';
-import { Observable, take } from 'rxjs';
-import { CarrierText } from '../model/carriertext';
-import {CarrierTextsState} from '../state/carriertext-state';
-import { Page } from '../model/page';
+  UpdateSelectedCarrierText,
+  UpdateSelectedPage,
+} from "../state/app-state";
+import { Observable, take } from "rxjs";
+import { CarrierText } from "../model/carriertext";
+import { CarrierTextsState } from "../state/carriertext-state";
+import { Page } from "../model/page";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CarrierTextService {
-
   private _existingTexts: CarrierText[] = [];
   private _selectedText!: CarrierText | undefined;
 
-  private _lastTextId = '';
-  private _firstTextId = '';
+  private _lastTextId = "";
+  private _firstTextId = "";
 
-  private _selectedPage$: Observable<Page> = this._store.select(SelectedPageState);
+  private _selectedPage$: Observable<Page> =
+    this._store.select(SelectedPageState);
   private _selectedPage!: Page;
 
-  private _selectedCarriersTexts$ = this._store.select(CarrierTextsState.getSelectedCarriersTexts);
+  private _selectedCarriersTexts$ = this._store.select(
+    CarrierTextsState.getSelectedCarriersTexts,
+  );
 
-  constructor(
-    private _store: Store,
-  ) {
-
-    this._selectedCarriersTexts$.pipe().subscribe(texts => {
-      this._existingTexts = texts.filter((t) => !t.isLost).sort((a, b) => a.sortInCar - b.sortInCar);
-      this._firstTextId = this._existingTexts?.[0]?.id || '';
-      this._lastTextId = this._existingTexts?.[this._existingTexts.length-1]?.id || '';
+  constructor(private _store: Store) {
+    this._selectedCarriersTexts$.pipe().subscribe((texts) => {
+      this._existingTexts = texts
+        .filter((t) => !t.isLost)
+        .sort((a, b) => a.sortInCar - b.sortInCar);
+      this._firstTextId = this._existingTexts?.[0]?.id || "";
+      this._lastTextId =
+        this._existingTexts?.[this._existingTexts.length - 1]?.id || "";
     });
 
     // subscribe to the selected page in the store and update the selected text
@@ -57,10 +58,7 @@ export class CarrierTextService {
   }
 
   isInLastText(): boolean {
-    return (
-      !!this._selectedText &&
-      this._selectedText.id === this._lastTextId
-    );
+    return !!this._selectedText && this._selectedText.id === this._lastTextId;
   }
 
   jumpToText(text: CarrierText) {
@@ -107,13 +105,13 @@ export class CarrierTextService {
       .select(SelectedCarrierPagesState)
       .pipe(take(1))
       .subscribe((pages: Page[]) => {
-        let textIdToJump = '';
+        let textIdToJump = "";
         let textToJump: CarrierText | undefined;
 
         const currentPageIdx = pages.findIndex((p) => p.id === pageId);
         if (currentPageIdx > -1) {
           textIdToJump = pages.filter(
-            (p) => p.idx > pages[currentPageIdx].idx && p.textId
+            (p) => p.idx > pages[currentPageIdx].idx && p.textId,
           )[0].textId;
         }
         if (textIdToJump) {
@@ -150,10 +148,12 @@ export class CarrierTextService {
   }
 
   private getFirstPageIdxOfText(text: CarrierText): number {
-    const carrierPages: Page[] = this._store.selectSnapshot(SelectedCarrierPagesState);
+    const carrierPages: Page[] = this._store.selectSnapshot(
+      SelectedCarrierPagesState,
+    );
     if (!carrierPages || carrierPages.length === 0) {
       // we get the pages from the server
-      console.warn('no carrier pages found in store');
+      console.warn("no carrier pages found in store");
     }
 
     let firstPage = carrierPages.find((p) => p.id === text.firstPageId);
@@ -206,6 +206,3 @@ export class CarrierTextService {
     this._store.dispatch(new UpdateSelectedPage(p));
   }
 }
-
-
-

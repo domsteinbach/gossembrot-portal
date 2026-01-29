@@ -1,17 +1,18 @@
-import { combineLatest, distinctUntilChanged, Subject } from 'rxjs';
-import { BlindDoublePageFolio, Page } from '../model/page';
+import { combineLatest, distinctUntilChanged, Subject } from "rxjs";
+import { BlindDoublePageFolio, Page } from "../model/page";
 import {
   SelectedCarrierPagesState,
   SelectedPageState,
-  UpdateDisplayedPages, UpdateSelectedPage,
-} from '../state/app-state';
-import { Store } from '@ngxs/store';
-import { Injectable, OnDestroy } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
-import { TileSourceService } from './tile-source.service';
+  UpdateDisplayedPages,
+  UpdateSelectedPage,
+} from "../state/app-state";
+import { Store } from "@ngxs/store";
+import { Injectable, OnDestroy } from "@angular/core";
+import { takeUntil } from "rxjs/operators";
+import { TileSourceService } from "./tile-source.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ManuscriptNavService implements OnDestroy {
   private _pagesOfCarrier: Page[] = [];
@@ -26,11 +27,13 @@ export class ManuscriptNavService implements OnDestroy {
 
   constructor(
     private _store: Store,
-    private _tileSourceService: TileSourceService
+    private _tileSourceService: TileSourceService,
   ) {
     combineLatest([
       this._store.select(SelectedPageState).pipe(distinctUntilChanged()),
-      this._store.select(SelectedCarrierPagesState).pipe(distinctUntilChanged()),
+      this._store
+        .select(SelectedCarrierPagesState)
+        .pipe(distinctUntilChanged()),
     ])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([page, pages]) => {
@@ -39,7 +42,10 @@ export class ManuscriptNavService implements OnDestroy {
           return;
         }
 
-        if (page.id === this._selectedPage?.id && pages[0].id === this._pagesOfCarrier[0].id) {
+        if (
+          page.id === this._selectedPage?.id &&
+          pages[0].id === this._pagesOfCarrier[0].id
+        ) {
           // if they are already set
           return;
         }
@@ -47,7 +53,6 @@ export class ManuscriptNavService implements OnDestroy {
         this._selectedPage = page;
         this._pagesOfCarrier = pages;
         this.setDisplayedPages(page);
-
       });
   }
 
@@ -63,12 +68,14 @@ export class ManuscriptNavService implements OnDestroy {
       return displayedPages;
     }
     let mod = 1;
-    if (selectedPage.folio === 'r') {
+    if (selectedPage.folio === "r") {
       mod = mod * -1; // verso must be displayed left of recto
     }
 
     const p = this._pagesOfCarrier.find((p) => p.idx == selectedPage.idx + mod);
-    const secondaryPage = p ? p : new BlindDoublePageFolio(selectedPage.oppositeFolio);
+    const secondaryPage = p
+      ? p
+      : new BlindDoublePageFolio(selectedPage.oppositeFolio);
     displayedPages.push(secondaryPage);
     // return the sorted array
     displayedPages = displayedPages.sort((a: Page, b: Page) => a.idx - b.idx);
@@ -88,9 +95,11 @@ export class ManuscriptNavService implements OnDestroy {
       return;
     }
     let mod = this._doublePageView ? 2 : 1;
-    const nextP = this._pagesOfCarrier.find((p) => p.idx === this._selectedPage.idx + 1);
+    const nextP = this._pagesOfCarrier.find(
+      (p) => p.idx === this._selectedPage.idx + 1,
+    );
     if (
-      (this._selectedPage.isDisplayedAsSingleImage && nextP?.folio === 'v') ||
+      (this._selectedPage.isDisplayedAsSingleImage && nextP?.folio === "v") ||
       nextP?.isDisplayedAsSingleImage
     ) {
       mod = 1;
@@ -104,7 +113,9 @@ export class ManuscriptNavService implements OnDestroy {
     }
     let mod = this._selectedPage.idx === 1 ? 1 : this._doublePageView ? 2 : 1;
 
-    const prevP = this._pagesOfCarrier.find((p) => p.idx === this._selectedPage.idx - 1);
+    const prevP = this._pagesOfCarrier.find(
+      (p) => p.idx === this._selectedPage.idx - 1,
+    );
     if (
       this._selectedPage.isDisplayedAsSingleImage ||
       prevP?.isDisplayedAsSingleImage
@@ -115,7 +126,10 @@ export class ManuscriptNavService implements OnDestroy {
   }
 
   isOnLastPage() {
-    return !this._selectedPage || this._pagesOfCarrier.length - 1 === this._selectedPage.idx;
+    return (
+      !this._selectedPage ||
+      this._pagesOfCarrier.length - 1 === this._selectedPage.idx
+    );
   }
 
   isOnFirstPage() {

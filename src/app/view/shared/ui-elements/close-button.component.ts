@@ -1,14 +1,18 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
-  selector: 'app-ui-close-button',
+  selector: "app-ui-close-button",
   template: `
-    <button mat-stroked-button color="primary" class="close-button" (click)="closeClicked.emit()">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="close-button"
+      (click)="closeClicked.emit()"
+    >
       <mat-icon>close</mat-icon>
     </button>
   `,
   styles: `
-
     .close-button {
       display: inline-flex;
       align-items: center;
@@ -25,7 +29,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
       font-size: 1rem;
       margin: 0;
     }
-  `
+  `,
 })
 export class UiCloseButtonComponent {
   @Output() closeClicked = new EventEmitter<void>();

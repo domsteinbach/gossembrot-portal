@@ -1,15 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-} from '@angular/core';
-import { InformationCarrier } from '../../../../model/infoCarrier';
-import { Einband } from '../../../../model/einband';
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { InformationCarrier } from "../../../../model/infoCarrier";
+import { Einband } from "../../../../model/einband";
 
 @Component({
-  selector: 'app-manuscript-info',
-  templateUrl: './manuscript-info.component.html',
-  styleUrls: ['./manuscript-info.component.scss'],
+  selector: "app-manuscript-info",
+  templateUrl: "./manuscript-info.component.html",
+  styleUrls: ["./manuscript-info.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManuscriptInfoComponent {
@@ -21,11 +17,15 @@ export class ManuscriptInfoComponent {
   }
 
   get einbandId(): string | undefined {
-    return this.infoCarrier.einbandInfo?.length ? this.infoCarrier.einbandInfo[0].externalEntity?.thirdPartyId : undefined;
+    return this.infoCarrier.einbandInfo?.length
+      ? this.infoCarrier.einbandInfo[0].externalEntity?.thirdPartyId
+      : undefined;
   }
 
   get einbandLink(): string | undefined {
-    return this.infoCarrier.einbandInfo?.length  ? this.infoCarrier.einbandInfo[0].externalEntity?.thirdPartyLink  : undefined;
+    return this.infoCarrier.einbandInfo?.length
+      ? this.infoCarrier.einbandInfo[0].externalEntity?.thirdPartyLink
+      : undefined;
   }
 
   get linkToExternalDigitalisat() {
@@ -45,26 +45,26 @@ export class ManuscriptInfoComponent {
 
     if (this.linkToExternalDigitalisat) {
       linkParts.push(
-        `<a href="${this.linkToExternalDigitalisat}" target="_blank" rel="noopener">Digitalisat</a> der Bibliothek`
+        `<a href="${this.linkToExternalDigitalisat}" target="_blank" rel="noopener">Digitalisat</a> der Bibliothek`,
       );
     }
 
     if (this.hsPortal) {
       linkParts.push(
-        `<a href="${this.hsPortal}" target="_blank" rel="noopener">Handschriftenportal</a>`
+        `<a href="${this.hsPortal}" target="_blank" rel="noopener">Handschriftenportal</a>`,
       );
     }
 
     if (this.hsCensus) {
       linkParts.push(
-        `<a href="${this.hsCensus}" target="_blank" rel="noopener">Handschriftencensus</a>`
+        `<a href="${this.hsCensus}" target="_blank" rel="noopener">Handschriftencensus</a>`,
       );
     }
 
     if (!linkParts.length) {
-      return '';
+      return "";
     }
 
-    return `Link zum ${linkParts.join(' und zum ')}.`;
+    return `Link zum ${linkParts.join(" und zum ")}.`;
   }
 }

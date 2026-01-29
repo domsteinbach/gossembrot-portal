@@ -1,8 +1,8 @@
-import { TagData } from '../data/repository-model';
-import { Belegstelle } from './belegstelle';
+import { TagData } from "../data/repository-model";
+import { Belegstelle } from "./belegstelle";
 
 export class Tag {
-  static readonly tableName = 'tag';
+  static readonly tableName = "tag";
   private _id: string;
   private _startTag: string;
   private _endTag: string;

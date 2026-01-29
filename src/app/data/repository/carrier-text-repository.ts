@@ -1,16 +1,23 @@
-import { BehaviorSubject, combineLatest, map, Observable, of, take, tap } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { CarrierTextData } from '../repository-model';
-import { DataService } from '../dataservice.service';
-import { CarrierText } from '../../model/carriertext';
-import { AuthorRepository } from './author-repository';
-import { InfoCarrierRepository } from './info-carrier-repository';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  Observable,
+  of,
+  take,
+  tap,
+} from "rxjs";
+import { Injectable } from "@angular/core";
+import { CarrierTextData } from "../repository-model";
+import { DataService } from "../dataservice.service";
+import { CarrierText } from "../../model/carriertext";
+import { AuthorRepository } from "./author-repository";
+import { InfoCarrierRepository } from "./info-carrier-repository";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CarrierTextRepository {
-
   private _cachedTexts: CarrierText[] = [];
   private _cachedTextsSub = new BehaviorSubject<CarrierText[]>([]);
   private _cachedTexts$ = this._cachedTextsSub.asObservable();
@@ -18,17 +25,16 @@ export class CarrierTextRepository {
   constructor(
     private _dataService: DataService,
     private _ar: AuthorRepository,
-    private _ir: InfoCarrierRepository
+    private _ir: InfoCarrierRepository,
   ) {}
 
-
   private _populateCachedTexts() {
-    this._getCarrierTexts$().pipe(take(1)).subscribe(
-      (texts: CarrierText[]) => {
+    this._getCarrierTexts$()
+      .pipe(take(1))
+      .subscribe((texts: CarrierText[]) => {
         this._cachedTexts = texts;
         this._cachedTextsSub.next(texts);
-      }
-    );
+      });
   }
 
   /***
@@ -40,12 +46,14 @@ export class CarrierTextRepository {
     }
     if (this._cachedTexts.length) {
       return this._cachedTexts$.pipe(
-        map((texts) => texts.filter((t) => t.carId === carId))
+        map((texts) => texts.filter((t) => t.carId === carId)),
       );
     } else {
       this._populateCachedTexts();
     }
-    return this._mapCarrierTextsWithAuthorsAndCarriers$(this._getCarrierTextsOfCarrier$([carId]));
+    return this._mapCarrierTextsWithAuthorsAndCarriers$(
+      this._getCarrierTextsOfCarrier$([carId]),
+    );
   }
 
   /***
@@ -53,7 +61,6 @@ export class CarrierTextRepository {
    * i.e. all texts onto which all verweise of a given information carrier are pointing to. Merge the texts with their authors.
    */
   getTargetTextsOfSrcCarrier$(carId: string): Observable<CarrierText[]> {
-
     const q = `SELECT DISTINCT
                     target_text.*
                     FROM verweis
@@ -62,7 +69,9 @@ export class CarrierTextRepository {
                     LEFT JOIN carrier_text AS target_text ON target_text.id = verweis.target_text
                     WHERE verweis.src_car = "${carId}" AND verweis.target_car IS NOT NULL AND target_text.id IS NOT NULL`;
 
-    return this._mapCarrierTextsWithAuthorsAndCarriers$(this._dataService.getDataAs$(CarrierText, q))
+    return this._mapCarrierTextsWithAuthorsAndCarriers$(
+      this._dataService.getDataAs$(CarrierText, q),
+    );
   }
 
   getCarrierTextsOfAuthors$(authorIds: string[]): Observable<CarrierText[]> {
@@ -71,10 +80,13 @@ export class CarrierTextRepository {
     }
     if (this._cachedTexts.length) {
       return this._cachedTexts$.pipe(
-        map((texts) => texts.filter((t) => authorIds.includes(t.authorId))));
+        map((texts) => texts.filter((t) => authorIds.includes(t.authorId))),
+      );
     } else {
       this._populateCachedTexts();
-      return this._mapCarrierTextsWithAuthorsAndCarriers$(this._getCarrierTextsOfAuthors$(authorIds));
+      return this._mapCarrierTextsWithAuthorsAndCarriers$(
+        this._getCarrierTextsOfAuthors$(authorIds),
+      );
     }
   }
 
@@ -83,11 +95,12 @@ export class CarrierTextRepository {
       return this._cachedTexts$;
     }
 
-    return this._getCarrierTexts$()
-      .pipe(tap((texts) => {
+    return this._getCarrierTexts$().pipe(
+      tap((texts) => {
         this._cachedTexts = texts;
         this._cachedTextsSub.next(texts);
-    }));
+      }),
+    );
   }
 
   getCarrierTextsByIds$(ids: string[]): Observable<CarrierText[]> {
@@ -96,50 +109,65 @@ export class CarrierTextRepository {
     }
     if (this._cachedTexts.length) {
       return this._cachedTexts$.pipe(
-        map((texts) => texts.filter((t) => ids.includes(t.id))));
+        map((texts) => texts.filter((t) => ids.includes(t.id))),
+      );
     } else {
-      return this._mapCarrierTextsWithAuthorsAndCarriers$(this._getCarrierTextsByTextIds$(ids));
+      return this._mapCarrierTextsWithAuthorsAndCarriers$(
+        this._getCarrierTextsByTextIds$(ids),
+      );
     }
   }
 
   private _getCarrierTexts$(): Observable<CarrierText[]> {
-    return this._mapCarrierTextsWithAuthorsAndCarriers$(this._dataService.getDataAs$(CarrierText));
-  }
-
-  private _mapCarrierTextsWithAuthorsAndCarriers$(
-    texts$: Observable<CarrierText[]>
-  ): Observable<CarrierText[]> {
-    return combineLatest([texts$, this._ar.authors$(), this._ir.informationCarriers$()]).pipe(
-      map(([texts, authors, carriers]) =>
-        texts.map(text => {
-          text.author = authors.find(a => a.id === text.authorId);
-          text.carrier = carriers.find(c => c.id === text.carId);
-          return text;
-        })
-      )
+    return this._mapCarrierTextsWithAuthorsAndCarriers$(
+      this._dataService.getDataAs$(CarrierText),
     );
   }
 
-  private _getCarrierTextsOfCarrier$(carriers: string[] = []): Observable<CarrierText[]> {
+  private _mapCarrierTextsWithAuthorsAndCarriers$(
+    texts$: Observable<CarrierText[]>,
+  ): Observable<CarrierText[]> {
+    return combineLatest([
+      texts$,
+      this._ar.authors$(),
+      this._ir.informationCarriers$(),
+    ]).pipe(
+      map(([texts, authors, carriers]) =>
+        texts.map((text) => {
+          text.author = authors.find((a) => a.id === text.authorId);
+          text.carrier = carriers.find((c) => c.id === text.carId);
+          return text;
+        }),
+      ),
+    );
+  }
+
+  private _getCarrierTextsOfCarrier$(
+    carriers: string[] = [],
+  ): Observable<CarrierText[]> {
     const whereClause = carriers.length
-      ? `WHERE car_id IN (${carriers.map((id) => `"${id}"`).join(',')})`
-      : '';
+      ? `WHERE car_id IN (${carriers.map((id) => `"${id}"`).join(",")})`
+      : "";
     const q = `SELECT * FROM carrier_text ${whereClause} ORDER BY car_id, sort_in_car;`;
 
     return this._dataService.getDataAs$(CarrierText, q);
   }
 
-  private _getCarrierTextsByTextIds$(textIds: string[]): Observable<CarrierText[]> {
+  private _getCarrierTextsByTextIds$(
+    textIds: string[],
+  ): Observable<CarrierText[]> {
     if (!textIds.length) {
       return of([]);
     }
 
-    const q = `SELECT * FROM carrier_text WHERE id IN (${textIds.map(id => `"${id}"`).join(',')}) ORDER BY title`;
+    const q = `SELECT * FROM carrier_text WHERE id IN (${textIds.map((id) => `"${id}"`).join(",")}) ORDER BY title`;
     return this._dataService.getDataAs$(CarrierText, q);
   }
 
-  private _getCarrierTextsOfAuthors$(authorIds: string[]): Observable<CarrierText[]> {
-    const q = `SELECT * FROM carrier_text WHERE author_id IN (${authorIds.map(id => `"${id}"`).join(',')}) 
+  private _getCarrierTextsOfAuthors$(
+    authorIds: string[],
+  ): Observable<CarrierText[]> {
+    const q = `SELECT * FROM carrier_text WHERE author_id IN (${authorIds.map((id) => `"${id}"`).join(",")}) 
                            ORDER BY title`;
 
     return this._dataService.getDataAs$(CarrierText, q);
@@ -147,19 +175,19 @@ export class CarrierTextRepository {
 
   createNullText(carrierId: string, sortInCar: number): CarrierText {
     const nullTextData: CarrierTextData = {
-      author_id: '',
-      cognomen: '',
+      author_id: "",
+      cognomen: "",
       car_id: carrierId,
       is_lost: 0,
-      id: 'null',
+      id: "null",
       sort_in_car: sortInCar,
-      title: '?',
-      longTitle: '',
-      text_range: '',
-      incipit: '',
-      additional_source: '',
+      title: "?",
+      longTitle: "",
+      text_range: "",
+      incipit: "",
+      additional_source: "",
       is_author_insecure: 0,
-      first_page_id: '',
+      first_page_id: "",
     };
 
     return new CarrierText(nullTextData);

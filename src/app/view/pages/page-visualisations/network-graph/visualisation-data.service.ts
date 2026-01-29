@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { InformationCarrier } from '../../../../model/infoCarrier';
+import { Injectable, OnDestroy } from "@angular/core";
+import { InformationCarrier } from "../../../../model/infoCarrier";
 import {
   BehaviorSubject,
   combineLatest,
@@ -8,23 +8,23 @@ import {
   Subject,
   Subscription,
   take,
-} from 'rxjs';
-import { VisualizationRepository } from '../../../../data/repository/visualization-repository';
-import { Select } from '@ngxs/store';
-import { CarriersState } from '../../../../state/information-carrier-state.service';
+} from "rxjs";
+import { VisualizationRepository } from "../../../../data/repository/visualization-repository";
+import { Select } from "@ngxs/store";
+import { CarriersState } from "../../../../state/information-carrier-state.service";
 import {
   VisualisationNodeLink,
   VisualisationVerweis,
-} from '../../../../model/visualisations';
-import { VisualisationSettingsService } from './visualisation-settings.service';
-import { CarrierText } from '../../../../model/carriertext';
-import { VisGlobalFilter } from './visualisation-data/vis-data-interaction/vis-global-filters/vis-global-filters.component';
-import { takeUntil } from 'rxjs/operators';
+} from "../../../../model/visualisations";
+import { VisualisationSettingsService } from "./visualisation-settings.service";
+import { CarrierText } from "../../../../model/carriertext";
+import { VisGlobalFilter } from "./visualisation-data/vis-data-interaction/vis-global-filters/vis-global-filters.component";
+import { takeUntil } from "rxjs/operators";
 
-export type InteractionMode = 'info' | 'select' | 'report';
+export type InteractionMode = "info" | "select" | "report";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class VisualisationDataService implements OnDestroy {
   private _destroy$ = new Subject<void>();
@@ -39,10 +39,9 @@ export class VisualisationDataService implements OnDestroy {
     this.allCarriers$.pipe(
       map((carriers) => {
         return carriers.filter(
-          (carrier) =>
-            carrier.hasIncomingVerweis || carrier.hasOutgoingVerweis
+          (carrier) => carrier.hasIncomingVerweis || carrier.hasOutgoingVerweis,
         );
-      })
+      }),
     );
 
   private _carriersSub: Subscription;
@@ -70,7 +69,7 @@ export class VisualisationDataService implements OnDestroy {
   // it must be included. These partially involved carriers together with the applied carriers are the involved
   // carriers.
   private _involvedCarriersSubject = new BehaviorSubject<InformationCarrier[]>(
-    []
+    [],
   );
   involvedCarriers$: Observable<InformationCarrier[]> =
     this._involvedCarriersSubject.asObservable();
@@ -79,13 +78,13 @@ export class VisualisationDataService implements OnDestroy {
 
   // either all or the selectedCarriers when applied via applyCarrierSelection()
   private _appliedCarrierSelection = new BehaviorSubject(
-    <InformationCarrier[]>[]
+    <InformationCarrier[]>[],
   );
   appliedCarrierSelection$: Observable<InformationCarrier[]> =
     this._appliedCarrierSelection.asObservable();
 
   private _lastSelectedCarrier = new BehaviorSubject(
-    <InformationCarrier | null>null
+    <InformationCarrier | null>null,
   );
   lastSelectedCarrier$: Observable<InformationCarrier | null> =
     this._lastSelectedCarrier.asObservable();
@@ -94,7 +93,7 @@ export class VisualisationDataService implements OnDestroy {
   selectedVerweise$: Observable<any[]> = this._selectedVerweise.asObservable();
 
   private _interactionModeSubject = new BehaviorSubject<InteractionMode>(
-    'info'
+    "info",
   );
   interactionMode$: Observable<InteractionMode> =
     this._interactionModeSubject.asObservable();
@@ -106,7 +105,7 @@ export class VisualisationDataService implements OnDestroy {
 
   constructor(
     private _visRepo: VisualizationRepository,
-    private _visSettings: VisualisationSettingsService
+    private _visSettings: VisualisationSettingsService,
   ) {
     this._carriersSub = this.carriersWithVerweis$
       .pipe(takeUntil(this._destroy$))
@@ -124,22 +123,22 @@ export class VisualisationDataService implements OnDestroy {
     this._combinedSubscription = combineLatest(
       this.getInvolvedCarriers$(),
       this._visSettings.granularity$,
-      this.appliedCarrierSelection$
+      this.appliedCarrierSelection$,
     )
       .pipe(takeUntil(this._destroy$))
       .subscribe(([involvedCarriers, granuarity, appliedCarriers]) => {
         switch (granuarity) {
-          case 'InformationCarrier':
+          case "InformationCarrier":
             this._visualisedNodesSubject.next(involvedCarriers);
             this._setLinkDataForCarrierGranularity();
             break;
-          case 'CarrierAndText':
+          case "CarrierAndText":
             this._setDataForTextAndCarrierGranularity(involvedCarriers);
             break;
-          case 'CarrierText':
+          case "CarrierText":
             this._setDataForTextGranularity(involvedCarriers);
             break;
-          case 'Belegstelle':
+          case "Belegstelle":
             return;
         }
       });
@@ -151,10 +150,11 @@ export class VisualisationDataService implements OnDestroy {
       .pipe(take(1))
       .subscribe((verweise: VisualisationVerweis[]) => {
         // filter the verweise acc. to the applied selection of carriers
-        const verweisLinks = this._softFilterLinksByAppliedNodes(
-          verweise,
-          this._appliedCarrierSelection.getValue()
-        ) || [];
+        const verweisLinks =
+          this._softFilterLinksByAppliedNodes(
+            verweise,
+            this._appliedCarrierSelection.getValue(),
+          ) || [];
         this._visualisedLinksSubject.next(verweisLinks);
       });
   }
@@ -163,7 +163,7 @@ export class VisualisationDataService implements OnDestroy {
     return combineLatest(
       this.carriersWithVerweis$,
       this.appliedCarrierSelection$,
-      this._visRepo.getCarrierToCarrierVerweise()
+      this._visRepo.getCarrierToCarrierVerweise(),
     ).pipe(
       takeUntil(this._destroy$),
       map(([carriers, carriersToApply, carrierToCarrierVerweise]) => {
@@ -179,11 +179,11 @@ export class VisualisationDataService implements OnDestroy {
         const involvedLinks: VisualisationVerweis[] =
           this._softFilterLinksByAppliedNodes(
             carrierToCarrierVerweise,
-            carriersToApply
+            carriersToApply,
           );
 
         return this.getInvolvedCarriers(carriersToApply, involvedLinks);
-      })
+      }),
     );
   }
 
@@ -204,12 +204,12 @@ export class VisualisationDataService implements OnDestroy {
   }
 
   private _setDataForTextAndCarrierGranularity(
-    involvedCarriers: InformationCarrier[]
+    involvedCarriers: InformationCarrier[],
   ) {
     this._textDataSub = combineLatest(
       this._visRepo.getTextsHavingAVerweis$(), // simply all texts having a verweis
       this._visRepo.getTextToCarrierLinks(), // simply all text connection to carriers
-      this._visRepo.getTextToTextVerweise() // simply all verweise between texts
+      this._visRepo.getTextToTextVerweise(), // simply all verweise between texts
     )
       .pipe(takeUntil(this._destroy$))
       .subscribe(
@@ -226,7 +226,7 @@ export class VisualisationDataService implements OnDestroy {
 
           const textsOfInvolvedCarriersWithAnyVerweise: CarrierText[] =
             textsWithVerweis.filter((t: CarrierText) =>
-              involvedCarriers.some((c) => c.id === t.carId)
+              involvedCarriers.some((c) => c.id === t.carId),
             );
 
           // filter the verweise by involved nodes, both must exist - target and source
@@ -234,7 +234,7 @@ export class VisualisationDataService implements OnDestroy {
             this._hardFilterLinksByNodes(
               allTextToTextVerweise,
               textsOfInvolvedCarriersWithAnyVerweise,
-              this._appliedCarrierSelection.getValue()
+              this._appliedCarrierSelection.getValue(),
             );
 
           // merge nodes
@@ -271,14 +271,14 @@ export class VisualisationDataService implements OnDestroy {
           links = links.concat(verweisLinks).concat(textToCarrierLinks);
 
           this._visualisedLinksSubject.next(links);
-        }
+        },
       );
   }
 
   private _setDataForTextGranularity(involvedCarriers: InformationCarrier[]) {
     this._textDataSub = combineLatest(
       this._visRepo.getTextsHavingAVerweis$(), // simply all texts having a verweis
-      this._visRepo.getTextToTextVerweise() // simply all verweise between texts
+      this._visRepo.getTextToTextVerweise(), // simply all verweise between texts
     )
       .pipe(takeUntil(this._destroy$))
       .subscribe(([textsWithVerweis, allTextToTextVerweise]) => {
@@ -299,13 +299,13 @@ export class VisualisationDataService implements OnDestroy {
           this._hardFilterLinksByNodes(
             allTextToTextVerweise,
             textsOfInvolvedCarriersWithAnyVerweise,
-            this._appliedCarrierSelection.getValue()
+            this._appliedCarrierSelection.getValue(),
           );
 
         // remove textnodes without verweis
         nodes = textsOfInvolvedCarriersWithAnyVerweise.filter((n) => {
           return verweisLinks.some(
-            (l) => l.target === n.id || l.source === n.id
+            (l) => l.target === n.id || l.source === n.id,
           );
         });
 
@@ -321,7 +321,7 @@ export class VisualisationDataService implements OnDestroy {
     const carriers = this._allCarriers.filter((carrier) => {
       // Check if the carrier should be included based on the filters
       const matchesLibrary = f.inGsmbBib.some(
-        (value) => carrier.inGsmbsLib === value
+        (value) => carrier.inGsmbsLib === value,
       );
       const matchesType = f.infoCarrierTypes.includes(carrier.carrierType);
       const matchesPhysicality = f.physicalities.includes(carrier.physicality);
@@ -404,9 +404,9 @@ export class VisualisationDataService implements OnDestroy {
   private _softFilterLinksByAppliedNodes(links: any[], nodes: any[]): any[] {
     return links.filter((link) => {
       const source =
-        typeof link.source === 'string' ? link.source : link.source?.id;
+        typeof link.source === "string" ? link.source : link.source?.id;
       const target =
-        typeof link.target === 'string' ? link.target : link.target?.id;
+        typeof link.target === "string" ? link.target : link.target?.id;
       const sourceExists = nodes.some((node) => node?.id === source);
       const targetExists = nodes.some((node) => node?.id === target);
       return sourceExists || targetExists;
@@ -416,20 +416,20 @@ export class VisualisationDataService implements OnDestroy {
   private _hardFilterLinksByNodes(
     links: any[],
     nodes: any[],
-    allowedParents: any[]
+    allowedParents: any[],
   ): any[] {
     return links.filter((link) => {
       const source =
-        typeof link.source === 'string' ? link.source : link.source.id;
+        typeof link.source === "string" ? link.source : link.source.id;
       const target =
-        typeof link.target === 'string' ? link.target : link.target.id;
+        typeof link.target === "string" ? link.target : link.target.id;
       const sourceExists = nodes.some((node) => node.id === source);
       const targetExists = nodes.some((node) => node.id === target);
       const sourceHasAllowedParent = allowedParents.some(
-        (parent) => parent.id === link.srcParent
+        (parent) => parent.id === link.srcParent,
       );
       const targetHasAllowedParent = allowedParents.some(
-        (parent) => parent.id === link.targetParent
+        (parent) => parent.id === link.targetParent,
       );
       return (
         sourceExists &&
@@ -441,13 +441,13 @@ export class VisualisationDataService implements OnDestroy {
 
   private _filterLinksByAppliedNodesParent(
     links: any[],
-    nodesParent: string[]
+    nodesParent: string[],
   ): any[] {
     return links.filter((link) => {
       const source =
-        typeof link.source === 'string' ? link.source : link.source.id;
+        typeof link.source === "string" ? link.source : link.source.id;
       const target =
-        typeof link.target === 'string' ? link.target : link.target.id;
+        typeof link.target === "string" ? link.target : link.target.id;
       const sourceExists = nodesParent.some((node) => node === source);
       const targetExists = nodesParent.some((node) => node === target);
       return sourceExists || targetExists;
@@ -459,7 +459,9 @@ export class VisualisationDataService implements OnDestroy {
     const connectedCarriersIds = verweisLinks
       .map((verweis: any) => verweis.source?.id || verweis?.source)
       .concat(
-        verweisLinks.map((verweis: any) => verweis?.target?.id || verweis?.target)
+        verweisLinks.map(
+          (verweis: any) => verweis?.target?.id || verweis?.target,
+        ),
       );
     return Array.from(new Set(connectedCarriersIds));
   }

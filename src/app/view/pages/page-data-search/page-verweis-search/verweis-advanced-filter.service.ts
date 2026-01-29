@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { DisplayVerweis, VerweisType } from '../../../../model/verweis';
-import { map } from 'rxjs/operators';
-import { InfoCarrierType, Physicality } from '../../../../model/infoCarrier';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
+import { DisplayVerweis, VerweisType } from "../../../../model/verweis";
+import { map } from "rxjs/operators";
+import { InfoCarrierType, Physicality } from "../../../../model/infoCarrier";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class VerweisAdvancedFilterService {
   private _targetPhysicalityFilter = new BehaviorSubject<Physicality[]>([]);
   private _targetInfoCarrierTypeFilter = new BehaviorSubject<InfoCarrierType[]>(
-    []
+    [],
   );
   private _targetBlattIsFragmentFilter = new BehaviorSubject<boolean[]>([]);
   private _isErwaehnungFilter = new BehaviorSubject<VerweisType[]>([]);
@@ -57,27 +57,27 @@ export class VerweisAdvancedFilterService {
   }
 
   applyFilters(
-    verweise$: Observable<DisplayVerweis[]>
+    verweise$: Observable<DisplayVerweis[]>,
   ): Observable<DisplayVerweis[]> {
     return verweise$.pipe(
       map((verweise: DisplayVerweis[]) =>
         verweise
           .filter((verweis: DisplayVerweis) =>
-            this._filterByPhysicality(verweis)
+            this._filterByPhysicality(verweis),
           )
           .filter((verweis: DisplayVerweis) =>
-            this._filterByInfoCarrierType(verweis)
+            this._filterByInfoCarrierType(verweis),
           )
           .filter((verweis: DisplayVerweis) =>
-            this._filterByTargetBlattIsFragment(verweis)
+            this._filterByTargetBlattIsFragment(verweis),
           )
           .filter((verweis: DisplayVerweis) =>
-            this._filterByIsErwaehnung(verweis)
+            this._filterByIsErwaehnung(verweis),
           )
           .filter((verweis: DisplayVerweis) =>
-            this._filterByTargetBlattIsLost(verweis)
-          )
-      )
+            this._filterByTargetBlattIsLost(verweis),
+          ),
+      ),
     );
   }
 
@@ -94,7 +94,7 @@ export class VerweisAdvancedFilterService {
     return (
       activeFilters.length === 0 ||
       activeFilters.includes(
-        verweis.targetCarObj?.carrierType as InfoCarrierType
+        verweis.targetCarObj?.carrierType as InfoCarrierType,
       )
     );
   }
@@ -103,14 +103,14 @@ export class VerweisAdvancedFilterService {
     // Todo: fix this
     const activeFilters = this._targetBlattIsFragmentFilter.getValue();
     return activeFilters.some(
-      (filter: boolean) => verweis.targetBlattIsFragment !== filter
+      (filter: boolean) => verweis.targetBlattIsFragment !== filter,
     );
   }
 
   private _filterByTargetBlattIsLost(verweis: DisplayVerweis): boolean {
     const activeFilters = this._targetBlattIsLostFilter.getValue();
     return activeFilters.some(
-      (filter: boolean) => verweis.targetBelegstelleObj?.lost !== filter
+      (filter: boolean) => verweis.targetBelegstelleObj?.lost !== filter,
     );
   }
 

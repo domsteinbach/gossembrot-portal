@@ -1,10 +1,10 @@
-import { BelegstelleData } from '../data/repository-model';
-import { Page } from './page';
-import { GsmbResource } from '../data/repository/gsmb-resource';
-import { DisplayVerweis } from './verweis';
+import { BelegstelleData } from "../data/repository-model";
+import { Page } from "./page";
+import { GsmbResource } from "../data/repository/gsmb-resource";
+import { DisplayVerweis } from "./verweis";
 
 export class Belegstelle extends GsmbResource {
-  static readonly tableName = 'belegstelle';
+  static readonly tableName = "belegstelle";
   private _carId: string;
   private _sortInCar: number;
   private _textId: string;
@@ -24,7 +24,6 @@ export class Belegstelle extends GsmbResource {
   private _alternativePage?: Page; // If the page is lost: The page which is closest to the actual page and which should be opened instead
   private _missingComment: string;
   outgoingVerweise: DisplayVerweis[] = [];
-
 
   constructor(data: BelegstelleData) {
     super(data.id);

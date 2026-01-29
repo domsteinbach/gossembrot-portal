@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ManuscriptBrowserComponent } from './manuscript-browser.component';
+import { ManuscriptBrowserComponent } from "./manuscript-browser.component";
 
-describe('ManuscriptBrowserComponent', () => {
+describe("ManuscriptBrowserComponent", () => {
   let component: ManuscriptBrowserComponent;
   let fixture: ComponentFixture<ManuscriptBrowserComponent>;
 
@@ -16,7 +16,7 @@ describe('ManuscriptBrowserComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

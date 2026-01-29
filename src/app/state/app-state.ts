@@ -1,36 +1,34 @@
-import { CarrierText } from '../model/carriertext';
-import { Page } from '../model/page';
-import { Action, State, StateContext } from '@ngxs/store';
-import { Injectable } from '@angular/core';
-import {
-  GsmbTileSource,
-} from '../service/tile-source.service';
-import { PageRepository } from '../data/repository/page-repository';
-import { take } from 'rxjs';
+import { CarrierText } from "../model/carriertext";
+import { Page } from "../model/page";
+import { Action, State, StateContext } from "@ngxs/store";
+import { Injectable } from "@angular/core";
+import { GsmbTileSource } from "../service/tile-source.service";
+import { PageRepository } from "../data/repository/page-repository";
+import { take } from "rxjs";
 
 export class UpdateSelectedCarrierText {
-  static readonly type = '[App] Update CarrierText';
+  static readonly type = "[App] Update CarrierText";
   constructor(public carrierText: CarrierText | undefined) {}
 }
 
 export class UpdateSelectedPage {
-  static readonly type = '[App] Update SelectedPage';
+  static readonly type = "[App] Update SelectedPage";
   constructor(public page: Page | undefined) {}
 }
 
 export class UpdateDisplayedPages {
-  static readonly type = '[App] Update DisplayedPages';
+  static readonly type = "[App] Update DisplayedPages";
   constructor(public displayedPages: Page[]) {}
 }
 
 export class UpdateDoubleTileSources {
-  static readonly type = '[App] Update TileSources';
+  static readonly type = "[App] Update TileSources";
   constructor(public tileSources: GsmbTileSource[]) {}
 }
 
 // Text state
 @State<CarrierText | undefined>({
-  name: 'carrierText',
+  name: "carrierText",
   defaults: undefined,
 })
 @Injectable()
@@ -38,7 +36,7 @@ export class SelectedCarrierTextState {
   @Action(UpdateSelectedCarrierText)
   updateText(
     { getState, setState }: StateContext<CarrierText | undefined>,
-    { carrierText }: UpdateSelectedCarrierText
+    { carrierText }: UpdateSelectedCarrierText,
   ) {
     setState(carrierText);
   }
@@ -46,7 +44,7 @@ export class SelectedCarrierTextState {
 
 // single page state
 @State<Page | undefined>({
-  name: 'selectedPage',
+  name: "selectedPage",
   defaults: undefined,
 })
 @Injectable()
@@ -54,26 +52,26 @@ export class SelectedPageState {
   @Action(UpdateSelectedPage)
   updateSelectedPage(
     { getState, setState }: StateContext<Page | undefined>,
-    { page }: UpdateSelectedPage
+    { page }: UpdateSelectedPage,
   ) {
     setState(page);
   }
 }
 
 export class UpdateSelectedSrcCarrierPages {
-  static readonly type = '[App] Update Pages';
+  static readonly type = "[App] Update Pages";
   constructor(public carrierPages: Page[]) {}
 }
 
 // Action to fetch carrier texts if not available in state
 export class FetchCarrierPages {
-  static readonly type = '[App] Fetch Carrier Pages';
+  static readonly type = "[App] Fetch Carrier Pages";
   constructor(public carrierId: string) {}
 }
 
 // pages state: All the pages available for one selected carrier
 @State<Page[]>({
-  name: 'carrierPages',
+  name: "carrierPages",
   defaults: [],
 })
 @Injectable()
@@ -83,7 +81,7 @@ export class SelectedCarrierPagesState {
   @Action(UpdateSelectedSrcCarrierPages)
   updatePages(
     { getState, setState }: StateContext<Page[]>,
-    { carrierPages }: UpdateSelectedSrcCarrierPages
+    { carrierPages }: UpdateSelectedSrcCarrierPages,
   ) {
     setState(carrierPages);
   }
@@ -91,7 +89,7 @@ export class SelectedCarrierPagesState {
   @Action(FetchCarrierPages)
   fetchCarrierPages(
     { getState, setState, dispatch }: StateContext<Page[]>,
-    { carrierId }: FetchCarrierPages
+    { carrierId }: FetchCarrierPages,
   ) {
     const state = getState();
     if (state.length > 0 && carrierId == state[0].carId) {
@@ -114,7 +112,7 @@ export class SelectedCarrierPagesState {
 
 // displayed pages state
 @State<Page[]>({
-  name: 'displayedPages',
+  name: "displayedPages",
   defaults: [],
 })
 @Injectable()
@@ -122,7 +120,7 @@ export class DisplayedPagesState {
   @Action(UpdateDisplayedPages)
   updateDisplayedPages(
     { getState, setState }: StateContext<Page[]>,
-    { displayedPages }: UpdateDisplayedPages
+    { displayedPages }: UpdateDisplayedPages,
   ) {
     setState(displayedPages);
   }
@@ -130,13 +128,12 @@ export class DisplayedPagesState {
 
 // The selected tile source for the osd viewer
 @State<GsmbTileSource | null>({
-  name: 'tileSource',
+  name: "tileSource",
   defaults: null,
 })
-
 // The selected tile sources for the osd viewer
 @State<GsmbTileSource[]>({
-  name: 'tileSources',
+  name: "tileSources",
   defaults: [],
 })
 @Injectable()
@@ -144,30 +141,28 @@ export class DoubleTileSourcesState {
   @Action(UpdateDoubleTileSources)
   updateDoubleTileSources(
     { getState, setState }: StateContext<GsmbTileSource[]>,
-    { tileSources }: UpdateDoubleTileSources
+    { tileSources }: UpdateDoubleTileSources,
   ) {
     setState(tileSources);
   }
 }
 
-
-
 // For debugging purposes, we keep a separate state for the local tile sources
 export class UpdateLocalDoubleTileSources {
-  static readonly type = '[App] Update local TileSources';
+  static readonly type = "[App] Update local TileSources";
   constructor(public localTileSources: GsmbTileSource[]) {}
 }
 
 @State<GsmbTileSource[]>({
-  name: 'localTileSources',
+  name: "localTileSources",
   defaults: [],
 })
 @Injectable()
 export class LocalDoubleTileSourcesState {
-  @Action(UpdateLocalDoubleTileSources)  // ✅ corrected
+  @Action(UpdateLocalDoubleTileSources) // ✅ corrected
   updateLocalDoubleTileSources(
     { getState, setState }: StateContext<GsmbTileSource[]>,
-    { localTileSources }: UpdateLocalDoubleTileSources
+    { localTileSources }: UpdateLocalDoubleTileSources,
   ) {
     setState(localTileSources);
   }

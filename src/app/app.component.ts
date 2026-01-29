@@ -4,25 +4,25 @@ import {
   OnInit,
   Renderer2,
   ViewEncapsulation,
-} from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { Title } from '@angular/platform-browser';
-import { SelectedThemeState } from './state/theme-state';
-import { Observable, Subject, take } from 'rxjs';
-import { GsmbTheme, GsmbThemeClass } from './model/theme';
-import { LocalStorageService } from './service/local-storage.service';
-import { takeUntil } from 'rxjs/operators';
-import { InfoCarrierRepository } from './data/repository/info-carrier-repository';
-import { UpdateCarriers } from './state/information-carrier-state.service';
+} from "@angular/core";
+import { Select, Store } from "@ngxs/store";
+import { Title } from "@angular/platform-browser";
+import { SelectedThemeState } from "./state/theme-state";
+import { Observable, Subject, take } from "rxjs";
+import { GsmbTheme, GsmbThemeClass } from "./model/theme";
+import { LocalStorageService } from "./service/local-storage.service";
+import { takeUntil } from "rxjs/operators";
+import { InfoCarrierRepository } from "./data/repository/info-carrier-repository";
+import { UpdateCarriers } from "./state/information-carrier-state.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
   encapsulation: ViewEncapsulation.None, // for making the component work with strict csp headers
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Gossembrot Bibliothek';
+  title = "Gossembrot Bibliothek";
 
   private _currentTheme: GsmbThemeClass | null = null;
 
@@ -48,9 +48,12 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._titleService.setTitle(this.title);
 
-    this._icr.informationCarriers$().pipe(take(1)).subscribe((carriers) => {
-        this._store.dispatch(new UpdateCarriers(carriers))
-    })
+    this._icr
+      .informationCarriers$()
+      .pipe(take(1))
+      .subscribe((carriers) => {
+        this._store.dispatch(new UpdateCarriers(carriers));
+      });
   }
 
   // apply a given theme class to the body

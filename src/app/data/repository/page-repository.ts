@@ -1,15 +1,17 @@
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { Page } from '../../model/page';
-import { DataService } from '../dataservice.service';
+import { BehaviorSubject, Observable, tap } from "rxjs";
+import { Injectable } from "@angular/core";
+import { Page } from "../../model/page";
+import { DataService } from "../dataservice.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class PageRepository {
   constructor(private _dataService: DataService) {}
 
-  private _cachedPages: BehaviorSubject<Page[]> = new BehaviorSubject<Page[]>([]);
+  private _cachedPages: BehaviorSubject<Page[]> = new BehaviorSubject<Page[]>(
+    [],
+  );
   private cachedPages$ = this._cachedPages.asObservable();
 
   /***
@@ -18,16 +20,13 @@ export class PageRepository {
   pagesOfCarrier$(carId: string): Observable<Page[]> {
     const q = `SELECT * FROM page WHERE car_id = "${carId}"
                ORDER BY sort_in_car ASC;`;
-    return this._dataService.getDataAs$(Page, q)
+    return this._dataService.getDataAs$(Page, q);
   }
 
   /***
    * get all pages of a given information carrier which have a belegstelle on it.
    */
-  pagesOfCarrierHavingBelegstellen$(
-    carId: string,
-  ): Observable<Page[]> {
-
+  pagesOfCarrierHavingBelegstellen$(carId: string): Observable<Page[]> {
     const q = `
     SELECT DISTINCT page.*
     FROM belegstelle
@@ -42,18 +41,17 @@ export class PageRepository {
     WHERE belegstelle.car_id = "${carId}"
     
     ORDER BY sort_in_car ASC;`;
-    return this._dataService.getDataAs$(Page, q)
+    return this._dataService.getDataAs$(Page, q);
   }
 
   // get all pages from any information carrier which have a belegstelle/verweis on it pointing to the given carrier
   pagesPointingToCarrier$(carId: string): Observable<Page[]> {
-
     const q = `SELECT DISTINCT src_page.* FROM verweis
             LEFT JOIN belegstelle AS src_belegstelle ON src_belegstelle.id = verweis.src_belegstelle
             LEFT JOIN page as src_page ON src_page.id = src_belegstelle.page_id
             WHERE verweis.target_car = '${carId}' AND src_page.id IS NOT NULL;`;
 
-    return this._dataService.getDataAs$(Page, q)
+    return this._dataService.getDataAs$(Page, q);
   }
 
   // get all pages of any information carrier to which the given carriers verweise are pointing to
@@ -72,7 +70,7 @@ export class PageRepository {
       return this._allPages$().pipe(
         tap((pages) => {
           this._cachedPages.next(pages);
-        })
+        }),
       );
     }
   }

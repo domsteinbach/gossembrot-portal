@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
-import { GsmbTheme } from '../model/theme';
+import { Injectable } from "@angular/core";
+import { GsmbTheme } from "../model/theme";
 
-type LocalStarageItem = 'version' | 'theme' | 'steckbriefPanelExpanded';
+type LocalStarageItem = "version" | "theme" | "steckbriefPanelExpanded";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class LocalStorageService {
   get theme(): GsmbTheme | null {
-    return this._getItem<GsmbTheme>('theme') || null;
+    return this._getItem<GsmbTheme>("theme") || null;
   }
 
   set theme(value: GsmbTheme) {
-    this._setItem('theme', value);
+    this._setItem("theme", value);
   }
 
   get steckbriefPanelExpanded(): boolean | null {
-    return this._getItem<boolean>('steckbriefPanelExpanded');
+    return this._getItem<boolean>("steckbriefPanelExpanded");
   }
 
   set steckbriefPanelExpanded(value: boolean) {
-    this._setItem('steckbriefPanelExpanded', value);
+    this._setItem("steckbriefPanelExpanded", value);
   }
 
   private _setItem(key: LocalStarageItem, value: any): void {

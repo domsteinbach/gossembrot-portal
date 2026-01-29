@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { InfoCarrierSelectComponent } from './info-carrier-select.component';
+import { InfoCarrierSelectComponent } from "./info-carrier-select.component";
 
-describe('InfoCarrierSelectComponent', () => {
+describe("InfoCarrierSelectComponent", () => {
   let component: InfoCarrierSelectComponent;
   let fixture: ComponentFixture<InfoCarrierSelectComponent>;
 
@@ -16,7 +16,7 @@ describe('InfoCarrierSelectComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

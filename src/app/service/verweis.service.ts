@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import {combineLatest, filter, map, Observable} from 'rxjs';
-import { DisplayVerweis } from '../model/verweis';
-import { VerweisRepository } from '../data/repository/verweis-repository';
-import { Belegstelle } from '../model/belegstelle';
-import { BelegstelleRepository } from '../data/repository/belegstelle-repository';
-import { CarrierText } from '../model/carriertext';
-import { CarrierTextRepository } from '../data/repository/carrier-text-repository';
+import { Injectable } from "@angular/core";
+import { combineLatest, filter, map, Observable } from "rxjs";
+import { DisplayVerweis } from "../model/verweis";
+import { VerweisRepository } from "../data/repository/verweis-repository";
+import { Belegstelle } from "../model/belegstelle";
+import { BelegstelleRepository } from "../data/repository/belegstelle-repository";
+import { CarrierText } from "../model/carriertext";
+import { CarrierTextRepository } from "../data/repository/carrier-text-repository";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class VerweisService {
   constructor(
@@ -20,14 +20,16 @@ export class VerweisService {
   public getOutgoingVerweiseOfCarrier$(
     carrierId: string,
     selfVerweise = true,
-    includeErwaehnungen = false
+    includeErwaehnungen = false,
   ): Observable<DisplayVerweis[]> {
-
     const outgoingVerweise$: Observable<DisplayVerweis[]> =
       this._vr.outgoingVerweiseFromCarrier$(carrierId, includeErwaehnungen);
 
     const sourceBelegstellen$: Observable<Belegstelle[]> =
-      this._getbelegstellenWithOutgoingVerweise$(carrierId, includeErwaehnungen);
+      this._getbelegstellenWithOutgoingVerweise$(
+        carrierId,
+        includeErwaehnungen,
+      );
 
     const foreignTargetBelegstellen$: Observable<Belegstelle[]> =
       this._br.foreignTargetBelegstellenOfCarrier$(carrierId);
@@ -39,12 +41,12 @@ export class VerweisService {
       return this._mergeAllIntoVerweise$(
         outgoingVerweise$.pipe(
           map((verweise: DisplayVerweis[]) =>
-            verweise.filter((v) => v.targetCar !== carrierId)
-          )
+            verweise.filter((v) => v.targetCar !== carrierId),
+          ),
         ),
         sourceBelegstellen$,
         foreignTargetBelegstellen$,
-        targetTexts$
+        targetTexts$,
       );
     } else {
       // return all the verweise including the Erwaehnungen
@@ -52,58 +54,59 @@ export class VerweisService {
         outgoingVerweise$,
         sourceBelegstellen$,
         foreignTargetBelegstellen$,
-        targetTexts$
+        targetTexts$,
       );
     }
   }
 
-
-  private _getbelegstellenWithOutgoingVerweise$(carrierId: string, includeErwaehnungen = false) : Observable<Belegstelle[]> {
+  private _getbelegstellenWithOutgoingVerweise$(
+    carrierId: string,
+    includeErwaehnungen = false,
+  ): Observable<Belegstelle[]> {
     const outgoingVerweise$: Observable<DisplayVerweis[]> =
-        this._vr.outgoingVerweiseFromCarrier$(carrierId, includeErwaehnungen);
+      this._vr.outgoingVerweiseFromCarrier$(carrierId, includeErwaehnungen);
 
     const sourceBelegstellen$: Observable<Belegstelle[]> =
-        this._br.getSourceBelegstellenOfCarrier$(carrierId);
+      this._br.getSourceBelegstellenOfCarrier$(carrierId);
 
     return combineLatest([outgoingVerweise$, sourceBelegstellen$]).pipe(
-        map(([verweise, belegstellen]) => {
-            belegstellen.forEach((bst: Belegstelle) => {
-                bst.outgoingVerweise = verweise.filter((v) => v.srcBelegstelle === bst.id);
-            }
-            );
-            return belegstellen;
-        })
+      map(([verweise, belegstellen]) => {
+        belegstellen.forEach((bst: Belegstelle) => {
+          bst.outgoingVerweise = verweise.filter(
+            (v) => v.srcBelegstelle === bst.id,
+          );
+        });
+        return belegstellen;
+      }),
     );
-}
+  }
 
   private _mergeAllIntoVerweise$(
     verweise$: Observable<DisplayVerweis[]>,
     srcBelegstellen$: Observable<Belegstelle[]>,
     targetBelegstellen$: Observable<Belegstelle[]>,
-    targetTexts$: Observable<CarrierText[]>
-): Observable<DisplayVerweis[]> {
+    targetTexts$: Observable<CarrierText[]>,
+  ): Observable<DisplayVerweis[]> {
     return combineLatest([
       verweise$,
       srcBelegstellen$,
       targetBelegstellen$,
-      targetTexts$
+      targetTexts$,
     ]).pipe(
       map(([verweise, srcBelegstellen, targetBelegstellen, targetTexts]) => {
-
-        verweise.forEach(v => {
+        verweise.forEach((v) => {
           v.srcBelegstelleObj = srcBelegstellen.find(
-            (bst) => bst.id === v.srcBelegstelle
+            (bst) => bst.id === v.srcBelegstelle,
           );
           v.targetBelegstelleObj = targetBelegstellen.find(
-            (bst) => bst.id === v.targetBelegstelle);
+            (bst) => bst.id === v.targetBelegstelle,
+          );
 
-          v.targetTextObj = targetTexts.find(t => t.id === v.targetText);
-        })
-
+          v.targetTextObj = targetTexts.find((t) => t.id === v.targetText);
+        });
 
         return verweise;
-
-      })
+      }),
     );
   }
 
@@ -116,15 +119,25 @@ export class VerweisService {
     ]).pipe(
       map(([verweise, texts, srcBelegstellen, targetBelegstellen]) => {
         verweise.forEach((v: DisplayVerweis) => {
-          v.srcBelegstelleObj = srcBelegstellen.find(b => b.id === v.srcBelegstelle);
-          v.targetBelegstelleObj = targetBelegstellen.find(b => b.id === v.targetBelegstelle);
+          v.srcBelegstelleObj = srcBelegstellen.find(
+            (b) => b.id === v.srcBelegstelle,
+          );
+          v.targetBelegstelleObj = targetBelegstellen.find(
+            (b) => b.id === v.targetBelegstelle,
+          );
         });
 
-        const verweiseWithTarget = verweise.filter(v => (!!v.targetText || !!v.targetBelegstelle) && v.insecurity <= 1);
-        const verweiseWithoutTarget = verweise.filter(v => (!v.targetText && !v.targetBelegstelle) && v.insecurity <= 1);
+        const verweiseWithTarget = verweise.filter(
+          (v) => (!!v.targetText || !!v.targetBelegstelle) && v.insecurity <= 1,
+        );
+        const verweiseWithoutTarget = verweise.filter(
+          (v) => !v.targetText && !v.targetBelegstelle && v.insecurity <= 1,
+        );
 
-        texts.forEach(t => {
-          t.incomingVerweise = verweiseWithTarget.filter(v => v.targetText === t.id);
+        texts.forEach((t) => {
+          t.incomingVerweise = verweiseWithTarget.filter(
+            (v) => v.targetText === t.id,
+          );
         });
 
         // If there are verweise without target, create a NullText instance
@@ -134,10 +147,10 @@ export class VerweisService {
           texts.push(nullText);
         }
 
-        return texts.filter(t => t.incomingVerweise && t.incomingVerweise.length > 0);
-      })
+        return texts.filter(
+          (t) => t.incomingVerweise && t.incomingVerweise.length > 0,
+        );
+      }),
     );
   }
-
-
 }

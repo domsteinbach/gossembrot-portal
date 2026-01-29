@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
-import { combineLatest, defaultIfEmpty, map, Observable } from 'rxjs';
-import { DataService } from '../dataservice.service';
+import { Injectable } from "@angular/core";
+import { combineLatest, defaultIfEmpty, map, Observable } from "rxjs";
+import { DataService } from "../dataservice.service";
 import {
   VisualisationVerweisData,
   InfoCarrierHitlistData,
   VisualisationNodeLinkData,
   CarrierTextData,
-} from '../repository-model';
+} from "../repository-model";
 import {
   VisualisationNodeLink,
   VisualisationVerweis,
-} from '../../model/visualisations';
-import { CarrierText } from '../../model/carriertext';
-import { AuthorRepository } from './author-repository';
+} from "../../model/visualisations";
+import { CarrierText } from "../../model/carriertext";
+import { AuthorRepository } from "./author-repository";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class VisualizationRepository {
   constructor(
     private _dataService: DataService,
-    private authorRepo: AuthorRepository
+    private authorRepo: AuthorRepository,
   ) {}
 
   getCarrierToCarrierVerweise(): Observable<VisualisationVerweis[]> {
@@ -32,7 +32,7 @@ export class VisualizationRepository {
           return [new VisualisationVerweis(data)];
         }
       }),
-      defaultIfEmpty([]) // Ensure never null
+      defaultIfEmpty([]), // Ensure never null
     );
   }
 
@@ -68,7 +68,7 @@ export class VisualizationRepository {
           return [new VisualisationVerweis(data)];
         }
       }),
-      defaultIfEmpty([]) // Ensure never null
+      defaultIfEmpty([]), // Ensure never null
     );
   }
 
@@ -103,22 +103,16 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
     ]).pipe(
       map(([texts, authors]) => {
         if (Array.isArray(texts)) {
-          return texts.map(
-            (item) => {
-              const t =  new CarrierText(item)
-              t.author = authors.find((a) => a.id === item.author_id);
-              return t;
-            }
-          );
+          return texts.map((item) => {
+            const t = new CarrierText(item);
+            t.author = authors.find((a) => a.id === item.author_id);
+            return t;
+          });
         } else {
-          return [
-            new CarrierText(
-              texts,
-            ),
-          ];
+          return [new CarrierText(texts)];
         }
       }),
-      defaultIfEmpty([]) // Ensure never null
+      defaultIfEmpty([]), // Ensure never null
     );
   }
 
@@ -132,7 +126,7 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
           return [new CarrierText(data)];
         }
       }),
-      defaultIfEmpty([]) // Ensure never null
+      defaultIfEmpty([]), // Ensure never null
     );
   }
 
@@ -148,7 +142,7 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
           return [new VisualisationNodeLink(data)];
         }
       }),
-      defaultIfEmpty([]) // Ensure never null
+      defaultIfEmpty([]), // Ensure never null
     );
   }
 
@@ -157,11 +151,11 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
   // Optional white list of carriers.
   getBelegstelleNodeLinks(
     sourceCarriers: string[] = [],
-    targetCarriers: string[] = []
+    targetCarriers: string[] = [],
   ): Observable<VisualisationNodeLink[]> {
     return this._getBelegstellenNodeLinkData$(
       sourceCarriers,
-      targetCarriers
+      targetCarriers,
     ).pipe(
       map((data: VisualisationNodeLinkData) => {
         if (Array.isArray(data)) {
@@ -170,7 +164,7 @@ GROUP BY verweis.src_text, verweis.target_text, src_text.id, src_text.title, tar
           return [new VisualisationNodeLink(data)];
         }
       }),
-      defaultIfEmpty([]) // Ensure never null
+      defaultIfEmpty([]), // Ensure never null
     );
   }
 
@@ -206,16 +200,16 @@ WHERE
   // get all node links between belegstellen and Texts, which have a verweis.
   private _getBelegstellenNodeLinkData$(
     sourceCarriers: string[] = [],
-    targetCarriers: string[] = []
+    targetCarriers: string[] = [],
   ): Observable<VisualisationNodeLinkData> {
     const sourcesClause =
       sourceCarriers.length > 0
-        ? `scr_car IN (${sourceCarriers.join(',')}) AND`
-        : '';
+        ? `scr_car IN (${sourceCarriers.join(",")}) AND`
+        : "";
     const targetClause =
       targetCarriers.length > 0
-        ? `target_car IN (${targetCarriers.join(',')}) AND`
-        : '';
+        ? `target_car IN (${targetCarriers.join(",")}) AND`
+        : "";
 
     const q = `
 SELECT DISTINCT

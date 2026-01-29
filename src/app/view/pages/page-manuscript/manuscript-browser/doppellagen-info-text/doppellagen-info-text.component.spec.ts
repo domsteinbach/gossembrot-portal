@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DoppellagenInfoTextComponent } from './doppellagen-info-text.component';
+import { DoppellagenInfoTextComponent } from "./doppellagen-info-text.component";
 
-describe('DoppellagenInfoTextComponent', () => {
+describe("DoppellagenInfoTextComponent", () => {
   let component: DoppellagenInfoTextComponent;
   let fixture: ComponentFixture<DoppellagenInfoTextComponent>;
 
@@ -15,7 +15,7 @@ describe('DoppellagenInfoTextComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,23 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import {
   MatRadioButton,
   MatRadioChange,
   MatRadioGroup,
-} from '@angular/material/radio';
-import { MatTooltip } from '@angular/material/tooltip';
+} from "@angular/material/radio";
+import { MatTooltip } from "@angular/material/tooltip";
 import {
   Granularity,
   VisualisationSettingsService,
-} from '../../../visualisation-settings.service';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../../../../../../../auth/auth.service';
+} from "../../../visualisation-settings.service";
+import { Subscription } from "rxjs";
+import { AuthService } from "../../../../../../../auth/auth.service";
 
 @Component({
-  selector: 'app-vis-display-settings',
+  selector: "app-vis-display-settings",
   standalone: true,
   imports: [MatRadioButton, MatRadioGroup, MatTooltip],
-  templateUrl: './vis-display-settings.component.html',
-  styleUrl: './vis-display-settings.component.scss',
+  templateUrl: "./vis-display-settings.component.html",
+  styleUrl: "./vis-display-settings.component.scss",
 })
 export class VisDisplaySettingsComponent implements OnInit, OnDestroy {
   private _granularitySub = new Subscription();
@@ -25,7 +25,7 @@ export class VisDisplaySettingsComponent implements OnInit, OnDestroy {
 
   constructor(
     protected authService: AuthService,
-    private _visSettings: VisualisationSettingsService
+    private _visSettings: VisualisationSettingsService,
   ) {}
 
   ngOnInit(): void {

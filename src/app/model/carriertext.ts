@@ -1,13 +1,13 @@
-import { CarrierTextData } from '../data/repository-model';
-import { Author } from './author';
-import { GsmbResource } from '../data/repository/gsmb-resource';
-import { InformationCarrier } from './infoCarrier';
-import { DisplayVerweis } from './verweis';
+import { CarrierTextData } from "../data/repository-model";
+import { Author } from "./author";
+import { GsmbResource } from "../data/repository/gsmb-resource";
+import { InformationCarrier } from "./infoCarrier";
+import { DisplayVerweis } from "./verweis";
 
 /***
  * The texts of a carrier like in the database. Usable for writing to the database.
- */export class CarrierText extends GsmbResource {
-  static readonly tableName = 'carrier_text';
+ */ export class CarrierText extends GsmbResource {
+  static readonly tableName = "carrier_text";
 
   private _authorId: string;
   private _carId: string;
@@ -15,14 +15,14 @@ import { DisplayVerweis } from './verweis';
   private _sortInCar: number;
   private _title: string;
   private _text_range: string;
-  private _incipit = '';
-  private _additionalSource = '';
+  private _incipit = "";
+  private _additionalSource = "";
   private _author!: Author | undefined;
   private _carrier: InformationCarrier | undefined;
   private _outgoingVerweise: DisplayVerweis[] = [];
   private _incomingVerweise: DisplayVerweis[] = [];
   private _is_author_insecure: boolean;
-  private _first_page_id = '';
+  private _first_page_id = "";
 
   constructor(data: CarrierTextData, carrier?: InformationCarrier) {
     super(data.id);
@@ -33,7 +33,7 @@ import { DisplayVerweis } from './verweis';
     this._title = data.title;
     this._text_range = data.text_range;
     this._incipit = data.incipit;
-    this._additionalSource = data.additional_source || '';
+    this._additionalSource = data.additional_source || "";
     this._carrier = carrier;
     this._is_author_insecure = data.is_author_insecure === 1;
     this._first_page_id = data.first_page_id;
@@ -44,7 +44,7 @@ import { DisplayVerweis } from './verweis';
   }
 
   get carId(): string {
-      return this._carId;
+    return this._carId;
   }
 
   get isLost(): boolean {
@@ -60,8 +60,8 @@ import { DisplayVerweis } from './verweis';
   }
 
   get textRange(): string {
-    const prefix = this._text_range?.startsWith('Karta') ? '' : 'Bl. ';
-    return this._text_range ? `${prefix}${this._text_range}` : '';
+    const prefix = this._text_range?.startsWith("Karta") ? "" : "Bl. ";
+    return this._text_range ? `${prefix}${this._text_range}` : "";
   }
 
   get author(): Author | undefined {
@@ -73,24 +73,27 @@ import { DisplayVerweis } from './verweis';
   }
 
   get authorsCognomen(): string {
-    const insecurrityMarker = this._author?.cognomen && this.isAuthorInsecure ? '?' : '';
-    return this._author?.cognomen ? this._author?.cognomen + insecurrityMarker : '';
+    const insecurrityMarker =
+      this._author?.cognomen && this.isAuthorInsecure ? "?" : "";
+    return this._author?.cognomen
+      ? this._author?.cognomen + insecurrityMarker
+      : "";
   }
 
   get authorGndId(): string {
-    return this._author?.gndId || '';
+    return this._author?.gndId || "";
   }
 
   get authorGndIdAlternate(): string {
-    return this._author?.gndIdAlternate || '';
+    return this._author?.gndIdAlternate || "";
   }
 
-    get isAuthorInsecure(): boolean {
-        return this._is_author_insecure;
-    }
+  get isAuthorInsecure(): boolean {
+    return this._is_author_insecure;
+  }
 
   get fullTitle(): string {
-    const c = this.authorsCognomen ? `${this.authorsCognomen}: ` : '';
+    const c = this.authorsCognomen ? `${this.authorsCognomen}: ` : "";
     const t = `${c}${this.title}`;
     return this.textRange ? `${t} (${this.textRange})` : t;
   }
@@ -99,9 +102,9 @@ import { DisplayVerweis } from './verweis';
     return this._incipit;
   }
 
-    get additionalSource(): string {
-        return this._additionalSource;
-    }
+  get additionalSource(): string {
+    return this._additionalSource;
+  }
 
   get carrier(): InformationCarrier | undefined {
     return this._carrier;
@@ -131,19 +134,25 @@ import { DisplayVerweis } from './verweis';
   }
 
   get incomingErwaehnungen() {
-    return this._incomingVerweise.filter((v) => v.type === 'Erwaehnung');
+    return this._incomingVerweise.filter((v) => v.type === "Erwaehnung");
   }
 
   get hasIncomingErwaehnung() {
-    return this.incomingErwaehnungen.filter((v) => v.type === 'Erwaehnung').length > 0;
+    return (
+      this.incomingErwaehnungen.filter((v) => v.type === "Erwaehnung").length >
+      0
+    );
   }
 
   get isOnlyErwaehnung() {
-    return this.hasIncomingErwaehnung && this.incomingVerweise.length === this.incomingErwaehnungen.length;
+    return (
+      this.hasIncomingErwaehnung &&
+      this.incomingVerweise.length === this.incomingErwaehnungen.length
+    );
   }
 
   get carrierFulltitle(): string {
-    return this._carrier?.fullTitle || '';
+    return this._carrier?.fullTitle || "";
   }
 
   get firstPageId(): string {

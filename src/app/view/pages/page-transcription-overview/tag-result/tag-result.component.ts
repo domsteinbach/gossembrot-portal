@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { RouteConstants } from '../../../../routeConstants';
-import { take } from 'rxjs';
-import { Belegstelle } from '../../../../model/belegstelle';
-import { Store } from '@ngxs/store';
-import { CarriersState } from '../../../../state/information-carrier-state.service';
-import { InformationCarrier } from '../../../../model/infoCarrier';
+import { Component, Input } from "@angular/core";
+import { RouteConstants } from "../../../../routeConstants";
+import { take } from "rxjs";
+import { Belegstelle } from "../../../../model/belegstelle";
+import { Store } from "@ngxs/store";
+import { CarriersState } from "../../../../state/information-carrier-state.service";
+import { InformationCarrier } from "../../../../model/infoCarrier";
 
 interface TagTextPart {
   text: string;
@@ -12,21 +12,24 @@ interface TagTextPart {
 }
 
 @Component({
-  selector: 'app-search-result',
-  templateUrl: './tag-result.component.html',
-  styleUrls: ['./tag-result.component.scss'],
+  selector: "app-search-result",
+  templateUrl: "./tag-result.component.html",
+  styleUrls: ["./tag-result.component.scss"],
 })
 export class TagResultComponent {
   @Input() belegstellen: Belegstelle[] = [];
-  @Input() displayResultsAs: 'html' | 'tei-xml' = 'html';
-  @Input() highlghtTag = '';
+  @Input() displayResultsAs: "html" | "tei-xml" = "html";
+  @Input() highlghtTag = "";
 
   carriers: InformationCarrier[] = [];
 
   constructor(private _store: Store) {
-    this._store.select(CarriersState).pipe(take(1)).subscribe((carriers) => {
-      this.carriers = carriers;
-    });
+    this._store
+      .select(CarriersState)
+      .pipe(take(1))
+      .subscribe((carriers) => {
+        this.carriers = carriers;
+      });
   }
 
   highlightTags(wortlaut: string, tagPattern: string): TagTextPart[] {
@@ -48,12 +51,14 @@ export class TagResultComponent {
 
   onBelegstelleClicked(belegstelle: Belegstelle) {
     // open the carrier in a new tab
-        const params = `?$${RouteConstants.QUERY_VERWEIS_PARAM}=${belegstelle}`;
-        const route = `${RouteConstants.MANUSCRIPTS}/${belegstelle.carId}${params}`;
-        window.open(route, '_blank');
+    const params = `?$${RouteConstants.QUERY_VERWEIS_PARAM}=${belegstelle}`;
+    const route = `${RouteConstants.MANUSCRIPTS}/${belegstelle.carId}${params}`;
+    window.open(route, "_blank");
   }
 
-  getCarrierOfBelegstelle(belegstelle: Belegstelle): InformationCarrier | undefined {
+  getCarrierOfBelegstelle(
+    belegstelle: Belegstelle,
+  ): InformationCarrier | undefined {
     return this.carriers.find((c) => c.id === belegstelle.carId);
   }
 }

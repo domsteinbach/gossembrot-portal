@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { OsdEditorComponent } from './osd-editor.component';
+import { OsdEditorComponent } from "./osd-editor.component";
 
-describe('OsdViewerComponent', () => {
+describe("OsdViewerComponent", () => {
   let component: OsdEditorComponent;
   let fixture: ComponentFixture<OsdEditorComponent>;
 
@@ -16,7 +16,7 @@ describe('OsdViewerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

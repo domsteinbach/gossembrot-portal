@@ -1,18 +1,21 @@
+import { VerweisData } from "../data/repository-model";
+import { Belegstelle } from "./belegstelle";
+import { InformationCarrier, Physicality } from "./infoCarrier";
+import { CarrierText } from "./carriertext";
+import { GsmbResource } from "../data/repository/gsmb-resource";
 import {
-  VerweisData,
-} from '../data/repository-model';
-import { Belegstelle } from './belegstelle';
-import { InformationCarrier, Physicality } from './infoCarrier';
-import { CarrierText } from './carriertext';
-import { GsmbResource } from '../data/repository/gsmb-resource';
-import {MissingPageOfExistingCarrier, NullPage, PageOfClassicText, PageOfMissingCarrier} from "./page";
+  MissingPageOfExistingCarrier,
+  NullPage,
+  PageOfClassicText,
+  PageOfMissingCarrier,
+} from "./page";
 
 export enum VerweisTypes {
   Verweis = 0,
   Erwaehnung = 1,
 }
 
-export type VerweisType = 'Verweis' | 'Erwaehnung';
+export type VerweisType = "Verweis" | "Erwaehnung";
 
 export class Verweis extends GsmbResource {
   protected _type: VerweisType;
@@ -84,7 +87,7 @@ export class Verweis extends GsmbResource {
 }
 
 export class DisplayVerweis extends Verweis {
-  static readonly tableName = 'verweis';
+  static readonly tableName = "verweis";
   private _srcCarObj?: InformationCarrier;
   private _srcTextObj?: CarrierText;
   private _srcBelegstelleObj?: Belegstelle;
@@ -121,7 +124,7 @@ export class DisplayVerweis extends Verweis {
   }
 
   get srcBelegstelleText(): string {
-    return `${this.srcCarObj?.fullTitle || ''}, ${this.srcBelegstelleObj?.belegstelleText || ''}`;
+    return `${this.srcCarObj?.fullTitle || ""}, ${this.srcBelegstelleObj?.belegstelleText || ""}`;
   }
 
   get targetCarObj(): InformationCarrier | undefined {
@@ -133,7 +136,7 @@ export class DisplayVerweis extends Verweis {
   }
 
   get srcTextTitle(): string {
-    return this._srcTextObj?.title || '';
+    return this._srcTextObj?.title || "";
   }
 
   get targetTextObj(): CarrierText | undefined {
@@ -145,17 +148,19 @@ export class DisplayVerweis extends Verweis {
   }
 
   get targetTextTitle(): string {
-    return this._targetTextObj?.title || '';
+    return this._targetTextObj?.title || "";
   }
 
   get targetPage() {
     switch (this.targetCarObj?.physicality) {
-      case 'Available':
-        return this.targetBelegstelleObj?.getPageOrAlternativePage()
-            || new MissingPageOfExistingCarrier();
-      case 'Classic':
+      case "Available":
+        return (
+          this.targetBelegstelleObj?.getPageOrAlternativePage() ||
+          new MissingPageOfExistingCarrier()
+        );
+      case "Classic":
         return new PageOfClassicText();
-      case 'Lost':
+      case "Lost":
         return new PageOfMissingCarrier();
       default:
         return new NullPage();
@@ -171,11 +176,13 @@ export class DisplayVerweis extends Verweis {
   }
 
   get targetCarFullTitle(): string {
-    return this._targetCarObj?.fullTitle ? this._targetCarObj.fullTitle : this.targetCarObj?.title || '';
+    return this._targetCarObj?.fullTitle
+      ? this._targetCarObj.fullTitle
+      : this.targetCarObj?.title || "";
   }
 
   get targetCarPhysicality(): Physicality {
-    return this._targetCarObj?.physicality || 'Lost';
+    return this._targetCarObj?.physicality || "Lost";
   }
 
   get isSelfTargeting(): boolean {
@@ -183,55 +190,57 @@ export class DisplayVerweis extends Verweis {
   }
 
   get srcTextAuthorCognomen(): string {
-    return this.srcTextObj?.authorsCognomen|| '';
+    return this.srcTextObj?.authorsCognomen || "";
   }
 
   get targetTextAuthorCognomen(): string {
-    return this.targetTextObj?.authorsCognomen || '';
+    return this.targetTextObj?.authorsCognomen || "";
   }
 
   get sortArgForSrcBelegstelle(): string {
     return this.srcBelegstelleText.replace(/\d+(\.\d+)?/g, (match) => {
       return match
-        .split('.')
-        .map((part) => part.padStart(8, '0'))
-        .join('.');
+        .split(".")
+        .map((part) => part.padStart(8, "0"))
+        .join(".");
     });
   }
 
   get srcBlattangabe(): string {
-    return this.srcBelegstelleObj?.belegstelleText || '';
+    return this.srcBelegstelleObj?.belegstelleText || "";
   }
 
   get targetBlattangabe(): string {
-    if (this.targetCarObj?.physicality === 'Lost' && !this.targetBelegstelleObj?.belegstelleText) {
-      return 'Karta ?';
+    if (
+      this.targetCarObj?.physicality === "Lost" &&
+      !this.targetBelegstelleObj?.belegstelleText
+    ) {
+      return "Karta ?";
     }
-    return this.targetBelegstelleObj?.belegstelleText || '';
+    return this.targetBelegstelleObj?.belegstelleText || "";
   }
 
   get sortInSourceCarrier(): number {
-    return this.srcBelegstelleObj!.sortInCar
+    return this.srcBelegstelleObj!.sortInCar;
   }
 
   get srcBlattSortInCar(): number {
-    return this.srcBelegstelleObj!.page!.idx
+    return this.srcBelegstelleObj!.page!.idx;
   }
 
   get wortlaut(): string {
-    return this.srcBelegstelleObj?.wortlaut || '';
+    return this.srcBelegstelleObj?.wortlaut || "";
   }
 
   get wortlautTeiXml(): string {
-    return this.srcBelegstelleObj?.wortlautTeiXml || '';
+    return this.srcBelegstelleObj?.wortlautTeiXml || "";
   }
 
   get wortlautSearchstring(): string {
-    return this.srcBelegstelleObj?.wortlautSearchstring || '';
+    return this.srcBelegstelleObj?.wortlautSearchstring || "";
   }
 
   get targetBlattIsFragment(): boolean {
     return this.targetBelegstelleObj?.isFragment || false;
   }
-
 }

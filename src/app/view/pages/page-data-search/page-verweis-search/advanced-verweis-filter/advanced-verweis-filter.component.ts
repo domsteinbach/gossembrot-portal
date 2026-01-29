@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-advanced-verweis-filter',
+  selector: "app-advanced-verweis-filter",
   template: `<div>
     <mat-card class="filter-card" appearance="outlined">
       <mat-card-header>
@@ -10,16 +10,16 @@ import { Component } from '@angular/core';
       <mat-card-content>
         <div>
           <h3>Verfügbarkeit Ziel-Textträger</h3>
-          <app-physicality-filter/>
+          <app-physicality-filter />
         </div>
         <div>
           <h3>Beschaffenheit Ziel-Textträger</h3>
-          <app-infocar-type-filter/>
+          <app-infocar-type-filter />
         </div>
         <div>
           <h3>Zielblatt</h3>
-          <div><app-target-blatt-is-fragment-filter/> </div>
-          <div><app-target-blatt-is-lost-filter/></div>
+          <div><app-target-blatt-is-fragment-filter /></div>
+          <div><app-target-blatt-is-lost-filter /></div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -30,12 +30,11 @@ import { Component } from '@angular/core';
       <mat-card-content>
         <div>
           <h3>Verweis-Typ</h3>
-          <app-is-erwaehnung-filter/>
+          <app-is-erwaehnung-filter />
         </div>
       </mat-card-content>
     </mat-card>
   </div>`,
-  styleUrls: ['../../page-data-search.component.scss']
+  styleUrls: ["../../page-data-search.component.scss"],
 })
-export class AdvancedVerweisFilterComponent {
-}
+export class AdvancedVerweisFilterComponent {}

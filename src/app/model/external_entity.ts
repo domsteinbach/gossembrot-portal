@@ -19,7 +19,7 @@ enum ExternalEntityType {
 export type ExternalEntityObjType = keyof typeof ExternalEntityType;
 
 export class ExternalEntity {
-  static readonly tableName = 'external_entities';
+  static readonly tableName = "external_entities";
   id: string;
   objId: string;
   objType: ExternalEntityObjType;
@@ -30,7 +30,9 @@ export class ExternalEntity {
   constructor(data: ExternalEntityData) {
     this.id = data.id;
     this.objId = data.obj_id;
-    this.objType = ExternalEntityType[data.obj_type] as unknown as ExternalEntityObjType;
+    this.objType = ExternalEntityType[
+      data.obj_type
+    ] as unknown as ExternalEntityObjType;
     this.thirdPartyId = data.third_party_id;
     this.thirdPartyLink = data.third_party_link;
     this.thirdPartyHost = data.third_party_host;

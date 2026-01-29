@@ -1,8 +1,8 @@
-import { GsmbResource } from '../data/repository/gsmb-resource';
-import { LibraryData } from '../data/repository-model';
+import { GsmbResource } from "../data/repository/gsmb-resource";
+import { LibraryData } from "../data/repository-model";
 
 export class Library extends GsmbResource {
-  static readonly tableName = 'library';
+  static readonly tableName = "library";
 
   private _gndId: string;
   private _inst: string;

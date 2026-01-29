@@ -5,20 +5,20 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-} from '@angular/core';
-import { Page } from '../../../../model/page';
-import { ManuscriptNavService } from '../../../../service/manuscript-nav.service';
-import { MatButton } from '@angular/material/button';
-import { Observable, Subject } from 'rxjs';
-import { Select } from '@ngxs/store';
-import { DisplayedPagesState } from '../../../../state/app-state';
-import { MatDrawer } from '@angular/material/sidenav';
-import { takeUntil } from 'rxjs/operators';
+} from "@angular/core";
+import { Page } from "../../../../model/page";
+import { ManuscriptNavService } from "../../../../service/manuscript-nav.service";
+import { MatButton } from "@angular/material/button";
+import { Observable, Subject } from "rxjs";
+import { Select } from "@ngxs/store";
+import { DisplayedPagesState } from "../../../../state/app-state";
+import { MatDrawer } from "@angular/material/sidenav";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
-  selector: 'app-manuscript-browser',
-  templateUrl: './manuscript-browser.component.html',
-  styleUrls: ['./manuscript-browser.component.scss'],
+  selector: "app-manuscript-browser",
+  templateUrl: "./manuscript-browser.component.html",
+  styleUrls: ["./manuscript-browser.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManuscriptBrowserComponent implements OnInit, OnDestroy {
@@ -29,8 +29,8 @@ export class ManuscriptBrowserComponent implements OnInit, OnDestroy {
 
   displayedPages!: Page[];
 
-  @ViewChild('rightDrawer') rightDrawer!: MatDrawer;
-  @ViewChild('rippleOutgoingVerweiseBtn', { static: false })
+  @ViewChild("rightDrawer") rightDrawer!: MatDrawer;
+  @ViewChild("rippleOutgoingVerweiseBtn", { static: false })
   rippleOutgoingVerweiseBtn!: MatButton;
 
   constructor(public manuscript: ManuscriptNavService) {}
@@ -47,14 +47,14 @@ export class ManuscriptBrowserComponent implements OnInit, OnDestroy {
    * Arrow left/right navigates in pages
    * @param event: a keyboard event
    */
-  @HostListener('window:keydown', ['$event'])
+  @HostListener("window:keydown", ["$event"])
   onKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'ArrowLeft') {
+    if (event.key === "ArrowLeft") {
       this.manuscript.goPrevPage();
       // Prevent event propagation, so no other controls are infected
       event.stopPropagation();
     }
-    if (event.key === 'ArrowRight') {
+    if (event.key === "ArrowRight") {
       this.manuscript.goNextPage();
       // Prevent event propagation, so no other controls are infected
       event.stopPropagation();

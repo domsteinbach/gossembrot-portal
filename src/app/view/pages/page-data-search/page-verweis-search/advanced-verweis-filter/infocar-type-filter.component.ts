@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { InfoCarrierType } from '../../../../../model/infoCarrier';
-import { VerweisAdvancedFilterService } from '../verweis-advanced-filter.service';
+import { Component } from "@angular/core";
+import { InfoCarrierType } from "../../../../../model/infoCarrier";
+import { VerweisAdvancedFilterService } from "../verweis-advanced-filter.service";
 
 interface InfoCarrierTypeControl {
   infocarType: InfoCarrierType;
@@ -8,7 +8,7 @@ interface InfoCarrierTypeControl {
 }
 
 @Component({
-  selector: 'app-infocar-type-filter',
+  selector: "app-infocar-type-filter",
   template: `
     <mat-checkbox
       *ngFor="let type of infoCarrierTypes"
@@ -21,13 +21,13 @@ interface InfoCarrierTypeControl {
 })
 export class InfocarTypeFilterComponent {
   infoCarrierTypes: InfoCarrierTypeControl[] = [
-    { infocarType: 'Manuscript', label: 'Handschriften' },
-    { infocarType: 'Print', label: 'Drucke' },
-    { infocarType: 'Classic', label: 'Kanonische Texte' },
+    { infocarType: "Manuscript", label: "Handschriften" },
+    { infocarType: "Print", label: "Drucke" },
+    { infocarType: "Classic", label: "Kanonische Texte" },
   ];
   constructor(private filterService: VerweisAdvancedFilterService) {}
 
-  selectedFilters: InfoCarrierType[] = ['Manuscript', 'Print', 'Classic'];
+  selectedFilters: InfoCarrierType[] = ["Manuscript", "Print", "Classic"];
 
   isChecked(type: InfoCarrierType): boolean {
     return this.selectedFilters.includes(type);

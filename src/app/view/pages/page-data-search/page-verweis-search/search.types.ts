@@ -1,1 +1,1 @@
-export type PrimitiveDataType = 'string' | 'number' | 'boolean' | 'date';
+export type PrimitiveDataType = "string" | "number" | "boolean" | "date";

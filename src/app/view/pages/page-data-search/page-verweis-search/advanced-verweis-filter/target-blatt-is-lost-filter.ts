@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { VerweisAdvancedFilterService } from '../verweis-advanced-filter.service';
-import { BooleanControl } from '../../data-search-types';
+import { Component } from "@angular/core";
+import { VerweisAdvancedFilterService } from "../verweis-advanced-filter.service";
+import { BooleanControl } from "../../data-search-types";
 
 @Component({
-  selector: 'app-target-blatt-is-lost-filter',
+  selector: "app-target-blatt-is-lost-filter",
   template: `
     <mat-checkbox
       *ngFor="let t of isLosts"
@@ -16,11 +16,11 @@ import { BooleanControl } from '../../data-search-types';
 })
 export class TargetBlattIsLostFilterComponent {
   isLosts: BooleanControl[] = [
-    { checkboxValue: true, value: true, label: 'Zielblatt ist erhalten' },
+    { checkboxValue: true, value: true, label: "Zielblatt ist erhalten" },
     {
       checkboxValue: true,
       value: false,
-      label: 'Zielblatt ist verloren',
+      label: "Zielblatt ist verloren",
     },
   ];
 
@@ -42,7 +42,7 @@ export class TargetBlattIsLostFilterComponent {
       this.selectedFilters.push(filter.value);
     } else {
       this.selectedFilters = this.selectedFilters.filter(
-        (t) => t !== filter.value
+        (t) => t !== filter.value,
       );
     }
     this.filterService.setTargetBlattIsLostFilter(this.selectedFilters);

@@ -1,6 +1,9 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
-import { DisplayVerweis } from '../../model/verweis';
+import { Component, Inject } from "@angular/core";
+import {
+  MAT_SNACK_BAR_DATA,
+  MatSnackBarRef,
+} from "@angular/material/snack-bar";
+import { DisplayVerweis } from "../../model/verweis";
 
 @Component({
   template: `
@@ -9,30 +12,34 @@ import { DisplayVerweis } from '../../model/verweis';
         {{ data.targetBelegstelleObj?.missingComment }}
       </div>
       <div class="bottom-container">
-        <button color="primary" mat-raised-button (click)="close()">Schließen</button>
+        <button color="primary" mat-raised-button (click)="close()">
+          Schließen
+        </button>
       </div>
     </div>
   `,
-  styles: [`
-    .lost-snackbar-wrapper {
-      padding: 16px;
-    }
-    
-    .lost-snackbar-content {
-      font-size: 1.2em;
-    }
-    .bottom-container {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: var(--margin-medium);
-    }
-  `]
+  styles: [
+    `
+      .lost-snackbar-wrapper {
+        padding: 16px;
+      }
+
+      .lost-snackbar-content {
+        font-size: 1.2em;
+      }
+      .bottom-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: var(--margin-medium);
+      }
+    `,
+  ],
 })
 export class LostSnackbarComponent {
-
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: DisplayVerweis,
-              private snackBarRef: MatSnackBarRef<LostSnackbarComponent>,
-  ){}
+  constructor(
+    @Inject(MAT_SNACK_BAR_DATA) public data: DisplayVerweis,
+    private snackBarRef: MatSnackBarRef<LostSnackbarComponent>,
+  ) {}
 
   close() {
     this.snackBarRef.dismiss();

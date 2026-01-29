@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { UpdateTheme } from '../state/theme-state';
-import { GsmbTheme, ThemeBrightness, THEMES } from '../model/theme';
-import { LocalStorageService } from './local-storage.service';
+import { Injectable } from "@angular/core";
+import { Store } from "@ngxs/store";
+import { UpdateTheme } from "../state/theme-state";
+import { GsmbTheme, ThemeBrightness, THEMES } from "../model/theme";
+import { LocalStorageService } from "./local-storage.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ThemeHandlerService {
   private _themes: GsmbTheme[] = THEMES;
@@ -14,7 +14,7 @@ export class ThemeHandlerService {
 
   constructor(
     private _store: Store,
-    private _localStorageService: LocalStorageService
+    private _localStorageService: LocalStorageService,
   ) {
     const storedTheme = this._localStorageService.theme;
     this._selectedTheme = storedTheme

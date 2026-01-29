@@ -9,22 +9,19 @@ import {
   QueryList,
   ViewChild,
   ViewChildren,
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { map, Observable, startWith } from 'rxjs';
-import {
-  MatAutocompleteTrigger,
-} from '@angular/material/autocomplete';
-import { MatOption } from '@angular/material/core';
-import { Page } from '../../../model/page';
+} from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { map, Observable, startWith } from "rxjs";
+import { MatAutocompleteTrigger } from "@angular/material/autocomplete";
+import { MatOption } from "@angular/material/core";
+import { Page } from "../../../model/page";
 
 @Component({
-  selector: 'app-belegstelle-select',
-  templateUrl: './belegstelle-select.component.html',
-  styleUrls: ['./belegstelle-select.component.scss'],
+  selector: "app-belegstelle-select",
+  templateUrl: "./belegstelle-select.component.html",
+  styleUrls: ["./belegstelle-select.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class BelegstelleSelectComponent implements OnChanges {
   @Input() label!: string;
   @Input() pages: Page[] = [];
@@ -44,23 +41,23 @@ export class BelegstelleSelectComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.filteredPages$ = this.pagesFormControl.valueChanges.pipe(
-      startWith(''),
+      startWith(""),
       map((value) => {
         const filteredOptions = this.filterOptions(value);
         return filteredOptions.sort((a, b) => a.idx - b.idx);
-      })
+      }),
     );
   }
 
   filterOptions(value: string): Page[] {
     const filterValue = value.toLowerCase();
     return this.pages.filter((p) =>
-      p.pageText.toLowerCase().includes(filterValue)
+      p.pageText.toLowerCase().includes(filterValue),
     );
   }
 
   onBelegstelleAutocompleteOpened() {
-    this.pagesFormControl.setValue('');
+    this.pagesFormControl.setValue("");
   }
 
   onBelegstelleSelectionChange(page: Page): void {
@@ -70,6 +67,6 @@ export class BelegstelleSelectComponent implements OnChanges {
   }
 
   onBelegstelleAutocompleteClosed() {
-    this.pagesFormControl.setValue('');
+    this.pagesFormControl.setValue("");
   }
 }

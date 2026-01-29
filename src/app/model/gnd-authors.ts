@@ -1,9 +1,9 @@
-import { GndAuthorData } from '../data/repository-model';
-import { EnvConstants } from '../constants';
-import { GsmbResource } from '../data/repository/gsmb-resource';
+import { GndAuthorData } from "../data/repository-model";
+import { EnvConstants } from "../constants";
+import { GsmbResource } from "../data/repository/gsmb-resource";
 
 export class GndAuthor extends GsmbResource {
-  static readonly tableName = 'einband';
+  static readonly tableName = "einband";
 
   private _preferredName: string;
   private _variantNames: string;
@@ -38,19 +38,19 @@ export class GndAuthor extends GsmbResource {
     return this._dateOfBirth;
   }
 
-  get dateOfDeath(){
+  get dateOfDeath() {
     return this._dateOfDeath;
   }
 
-  get placesOfBirth(){
+  get placesOfBirth() {
     return this._placesOfBirth;
   }
 
-  get professions(): string | undefined{
+  get professions(): string | undefined {
     return this._professions;
   }
 
   get linkToGnd(): string {
-    return this._id ? `${EnvConstants.GND_BASEURL}${this._id}` : '';
+    return this._id ? `${EnvConstants.GND_BASEURL}${this._id}` : "";
   }
 }

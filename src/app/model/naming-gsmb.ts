@@ -1,4 +1,4 @@
-import { InformationCarrier } from './infoCarrier';
+import { InformationCarrier } from "./infoCarrier";
 
 export interface NamingGossembrotData {
   id: string;
@@ -8,7 +8,7 @@ export interface NamingGossembrotData {
 }
 
 export class NamingGossembrot {
-  static readonly tableName = 'naming_gossembrot';
+  static readonly tableName = "naming_gossembrot";
   id: string;
   carId: string;
   benennung: string;

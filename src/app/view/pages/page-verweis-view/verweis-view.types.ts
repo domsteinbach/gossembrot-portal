@@ -1,1 +1,1 @@
-export type View = 'source' | 'split' | 'target';
+export type View = "source" | "split" | "target";

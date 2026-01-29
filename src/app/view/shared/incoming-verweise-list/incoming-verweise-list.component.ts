@@ -1,40 +1,49 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  OnChanges, OnDestroy, OnInit,
+  OnChanges,
+  OnDestroy,
+  OnInit,
   Output,
-  SimpleChanges, ViewChild,
-} from '@angular/core';
-import { DisplayVerweis } from '../../../model/verweis';
-import { InformationCarrier } from '../../../model/infoCarrier';
-import { CarrierText } from '../../../model/carriertext';
-import { ScrollIntoViewDirective } from '../../../directives/scroll-into-view.directive';
-import { Store } from '@ngxs/store';
-import { SelectedVerweisState, UpdateSelectedVerweis } from '../../../state/belegstelle-state.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RouteConstants } from '../../../routeConstants';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
+import { DisplayVerweis } from "../../../model/verweis";
+import { InformationCarrier } from "../../../model/infoCarrier";
+import { CarrierText } from "../../../model/carriertext";
+import { ScrollIntoViewDirective } from "../../../directives/scroll-into-view.directive";
+import { Store } from "@ngxs/store";
+import {
+  SelectedVerweisState,
+  UpdateSelectedVerweis,
+} from "../../../state/belegstelle-state.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { RouteConstants } from "../../../routeConstants";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 
 @Component({
-  selector: 'app-incoming-verweise-list',
-  templateUrl: './incoming-verweise-list.component.html',
-  styleUrls: ['./incoming-verweise-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-incoming-verweise-list",
+  templateUrl: "./incoming-verweise-list.component.html",
+  styleUrls: ["./incoming-verweise-list.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestroy {
+export class IncomingVerweiseListComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() texts: CarrierText[] = [];
   @Input() loading = false;
-  @Input() forceSelectFirstVerweis? : object;
+  @Input() forceSelectFirstVerweis?: object;
 
   @Input() infoCarrier: InformationCarrier | null = null; // Todo remove that and make proper structure
   @Input() displaySteckbrief = true; // Todo remove that and make proper structure
 
   @Output() verweisSelected = new EventEmitter<DisplayVerweis>();
 
-  @ViewChild('scrollDirective') scrollDirective!: ScrollIntoViewDirective;
+  @ViewChild("scrollDirective") scrollDirective!: ScrollIntoViewDirective;
 
   selectedVerweis?: DisplayVerweis;
   _shouldForceSelect = false;
@@ -46,19 +55,21 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
 
   private _destroy$ = new Subject<void>();
 
-  readonly INCOMING_PREFIX = 'incoming-';
+  readonly INCOMING_PREFIX = "incoming-";
 
   get hasIncomingVerweise() {
-    return this.texts.flatMap(t => t.incomingVerweise).length > 0;
+    return this.texts.flatMap((t) => t.incomingVerweise).length > 0;
   }
 
   get selectedScrollTarget(): string {
-    return this.selectedVerweis ? `${this.INCOMING_PREFIX}${this.selectedVerweis.id}` : '';
+    return this.selectedVerweis
+      ? `${this.INCOMING_PREFIX}${this.selectedVerweis.id}`
+      : "";
   }
 
-  private _isPartOfIncomingVerweise(verweisId: string): boolean{
-    const incomingVerweise = this.texts.flatMap(t => t.incomingVerweise);
-    return incomingVerweise.some(v => v.id === verweisId);
+  private _isPartOfIncomingVerweise(verweisId: string): boolean {
+    const incomingVerweise = this.texts.flatMap((t) => t.incomingVerweise);
+    return incomingVerweise.some((v) => v.id === verweisId);
   }
 
   constructor(
@@ -66,32 +77,45 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     private _route: ActivatedRoute,
     private _router: Router,
     private _store: Store,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this._verweisToInit = this._route.snapshot.queryParamMap.get(RouteConstants.QUERY_VERWEIS_PARAM)
+    this._verweisToInit = this._route.snapshot.queryParamMap.get(
+      RouteConstants.QUERY_VERWEIS_PARAM,
+    );
     this._store.dispatch(new UpdateSelectedVerweis(null));
-    this._store.select(SelectedVerweisState).pipe(takeUntil(this._destroy$)).subscribe((v: DisplayVerweis) => {
-      if (!v?.id) {
-        return;
-      }
-      this._verweisToInit = v?.id;
-      if (v && v.id !== this.selectedVerweis?.id && this._isPartOfIncomingVerweise(v.id)) {
-        this._selectVerweis(v);
-      }
-    });
+    this._store
+      .select(SelectedVerweisState)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((v: DisplayVerweis) => {
+        if (!v?.id) {
+          return;
+        }
+        this._verweisToInit = v?.id;
+        if (
+          v &&
+          v.id !== this.selectedVerweis?.id &&
+          this._isPartOfIncomingVerweise(v.id)
+        ) {
+          this._selectVerweis(v);
+        }
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this._alreadyPrintedKartaMap = new Map<string, string>();
-    if (changes['forceSelectFirstVerweis'] && this.forceSelectFirstVerweis) {
+    if (changes["forceSelectFirstVerweis"] && this.forceSelectFirstVerweis) {
       this._shouldForceSelect = true;
     }
 
-    if (changes['texts'] && this.texts.length && this.hasIncomingVerweise) {
-      if (this._verweisToInit && this._isPartOfIncomingVerweise(this._verweisToInit)) {
-        const verweisToInit = this.texts.flatMap(t => t.incomingVerweise).find(v => v.id === this._verweisToInit);
+    if (changes["texts"] && this.texts.length && this.hasIncomingVerweise) {
+      if (
+        this._verweisToInit &&
+        this._isPartOfIncomingVerweise(this._verweisToInit)
+      ) {
+        const verweisToInit = this.texts
+          .flatMap((t) => t.incomingVerweise)
+          .find((v) => v.id === this._verweisToInit);
         if (verweisToInit) {
           this._verweisToInit = undefined;
           this._selectVerweis(verweisToInit);
@@ -101,21 +125,22 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
           this._verweisToInit = undefined;
           this._shouldForceSelect = false;
           this.onVerweisClicked(this.texts[0].incomingVerweise[0]);
-        }
-        else if (!this._verweisToInit) {
+        } else if (!this._verweisToInit) {
           this._selectVerweis(this.texts[0].incomingVerweise[0]);
         }
-
       }
     }
   }
 
   closingAbschnitt(v: DisplayVerweis): boolean {
     if (v.targetBelegstelleObj?.abschnitt) {
-      return false
+      return false;
     }
     const previousVerweis = this._getPreviousVerweis(v);
-    return !!previousVerweis?.targetBelegstelleObj?.abschnitt && previousVerweis?.targetText === v.targetText;
+    return (
+      !!previousVerweis?.targetBelegstelleObj?.abschnitt &&
+      previousVerweis?.targetText === v.targetText
+    );
   }
 
   displayAbschnitt(v: DisplayVerweis): boolean {
@@ -128,14 +153,20 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     const previousVerweis = this._getPreviousVerweis(v);
 
     // Again a super special case: if the previous verweis has a different abschnitt within the abschnitt, but the abschnitt has already been printed
-    if (printedBy && previousVerweis?.targetBelegstelleObj?.abschnitt && previousVerweis.targetBelegstelleObj.abschnitt !== v.targetBelegstelleObj.abschnitt && previousVerweis?.targetText === v.targetText) {
+    if (
+      printedBy &&
+      previousVerweis?.targetBelegstelleObj?.abschnitt &&
+      previousVerweis.targetBelegstelleObj.abschnitt !==
+        v.targetBelegstelleObj.abschnitt &&
+      previousVerweis?.targetText === v.targetText
+    ) {
       return true;
     }
 
-    if (printedBy) { // only print for the page for that one abschnitt
+    if (printedBy) {
+      // only print for the page for that one abschnitt
       return printedBy === v.id;
     }
-
 
     if (!printedBy) {
       this._alreadyPrintedAbschnittMap.set(key, v.id);
@@ -150,7 +181,8 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     const key = `${v.targetBlattangabe}${v.targetText}`;
     const printedBy = this._alreadyPrintedKartaMap.get(key);
 
-    if (printedBy) { // only print for the page
+    if (printedBy) {
+      // only print for the page
       return printedBy === v.id;
     }
     this._alreadyPrintedKartaMap.set(key, v.id);
@@ -173,8 +205,9 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
   }
 
   private _updateUrl() {
-    const queryParams = this.selectedVerweis ?
-      { [RouteConstants.QUERY_VERWEIS_PARAM] : this.selectedVerweis.id } : null;
+    const queryParams = this.selectedVerweis
+      ? { [RouteConstants.QUERY_VERWEIS_PARAM]: this.selectedVerweis.id }
+      : null;
 
     this._router.navigate([], {
       relativeTo: this._route,
@@ -182,13 +215,15 @@ export class IncomingVerweiseListComponent implements OnInit, OnChanges, OnDestr
     });
   }
 
-    private _getPreviousVerweis(v: DisplayVerweis): DisplayVerweis | undefined {
-      const currentIndex = this.texts.flatMap(t => t.incomingVerweise).findIndex(ov => ov.id === v.id);
-      if (currentIndex < 1) {
-        return undefined;
-      }
-      return this.texts.flatMap(t => t.incomingVerweise)[currentIndex - 1];
+  private _getPreviousVerweis(v: DisplayVerweis): DisplayVerweis | undefined {
+    const currentIndex = this.texts
+      .flatMap((t) => t.incomingVerweise)
+      .findIndex((ov) => ov.id === v.id);
+    if (currentIndex < 1) {
+      return undefined;
     }
+    return this.texts.flatMap((t) => t.incomingVerweise)[currentIndex - 1];
+  }
 
   ngOnDestroy() {
     this._destroy$.next();

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 // Generic Custom Element Class
 class TeiElement extends HTMLElement {
@@ -15,7 +15,7 @@ class TeiElement extends HTMLElement {
 
 class TeiSic extends TeiElement {
   constructor() {
-    super('tei-sic');
+    super("tei-sic");
   }
 
   override connectedCallback() {
@@ -25,18 +25,17 @@ class TeiSic extends TeiElement {
   updateTooltip() {
     // Set the tooltip based on the current text content of the element
     const textContent = this.textContent?.trim();
-    let tooltip = '';
+    let tooltip = "";
     if (textContent) {
       tooltip = `<div>Offensichtlicher Fehler: "${textContent}"</div>`;
     }
-    this.dataset['tooltip'] = tooltip;
+    this.dataset["tooltip"] = tooltip;
   }
 }
 
-
 class TeiK extends TeiElement {
   constructor() {
-    super('tei-k');
+    super("tei-k");
   }
 
   override connectedCallback() {
@@ -45,15 +44,14 @@ class TeiK extends TeiElement {
 
   updateTooltip() {
     // Set the tooltip based on the current text content of the element
-    const korr = this.querySelector('tei-w');
-    let tooltipContent = '';
+    const korr = this.querySelector("tei-w");
+    let tooltipContent = "";
     if (korr) {
       tooltipContent = `<div>Unkorrigierte Form: ${korr.outerHTML}</div>`;
     }
-    this.dataset['tooltip'] = tooltipContent;
+    this.dataset["tooltip"] = tooltipContent;
   }
 }
-
 
 // Function to dynamically define a custom element if it hasn't been defined yet
 function defineCustomElement(name: string) {
@@ -64,7 +62,7 @@ function defineCustomElement(name: string) {
         constructor() {
           super(name);
         }
-      }
+      },
     );
   }
 }
@@ -72,15 +70,15 @@ function defineCustomElement(name: string) {
 type TeiElementConstructor = new () => TeiElement;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class XmlTransformService {
   // Registry for TEI element names and their corresponding classes
   teiElementRegistry: { [key: string]: TeiElementConstructor } = {};
 
   constructor() {
-    this.registerTeiElement('sic', TeiSic);
-    this.registerTeiElement('k', TeiK);
+    this.registerTeiElement("sic", TeiSic);
+    this.registerTeiElement("k", TeiK);
     // iterate all teiElementRegistry entries and define as customElement
     Object.keys(this.teiElementRegistry).forEach((name) => {
       customElements.define(`tei-${name}`, this.teiElementRegistry[name]);
@@ -102,12 +100,12 @@ export class XmlTransformService {
 
   transformXmlToHtml(
     xmlString: string,
-    stringsToHighlight: string[] = []
+    stringsToHighlight: string[] = [],
   ): string {
     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+    const xmlDoc = parser.parseFromString(xmlString, "application/xml");
 
-    let targetElement: HTMLElement | null = xmlDoc.querySelector('p');
+    let targetElement: HTMLElement | null = xmlDoc.querySelector("p");
     if (!targetElement) {
       targetElement = xmlDoc.documentElement;
     }
@@ -115,21 +113,21 @@ export class XmlTransformService {
     const transformedContent = this.transformNode(
       targetElement,
       xmlDoc,
-      stringsToHighlight
+      stringsToHighlight,
     );
     const serializer = new XMLSerializer();
 
     // Return the transformed content as a string and replace self-closing elements with non-self-closing elements
     return serializer
       .serializeToString(transformedContent)
-      .replace(/<([^/>]+)\/>/g, '<$1></$1>');
+      .replace(/<([^/>]+)\/>/g, "<$1></$1>");
   }
 
   // Recursively transform the XML nodes to custom tei HTML nodes
   private transformNode(
     node: Node,
     xmlDoc: Document,
-    stringsToHighlight: string[]
+    stringsToHighlight: string[],
   ): Node {
     if (node.nodeType === Node.ELEMENT_NODE) {
       let element: TeiElement | HTMLElement;
@@ -149,7 +147,7 @@ export class XmlTransformService {
       // Process all child nodes
       Array.from(node.childNodes).forEach((child) => {
         element.appendChild(
-          this.transformNode(child, xmlDoc, stringsToHighlight)
+          this.transformNode(child, xmlDoc, stringsToHighlight),
         );
       });
 
@@ -159,17 +157,17 @@ export class XmlTransformService {
       if (stringsToHighlight.length > 0 && textNode.nodeValue) {
         const highlightedText = this.highlightText(
           textNode.nodeValue,
-          stringsToHighlight
+          stringsToHighlight,
         );
 
-        const wrapper = xmlDoc.createElement('span');
+        const wrapper = xmlDoc.createElement("span");
         wrapper.innerHTML = highlightedText;
         return wrapper;
       }
 
       return textNode;
     } else {
-      return xmlDoc.createTextNode('');
+      return xmlDoc.createTextNode("");
     }
   }
 
@@ -179,14 +177,14 @@ export class XmlTransformService {
       // Regex to match the stringToHighlight, case-insensitive, and global
       const regex = new RegExp(
         `(${stringToHighlight
-          .split('')
+          .split("")
           .map((char) => `\\(?${char}\\)?`)
-          .join('')})`,
-        'gi'
+          .join("")})`,
+        "gi",
       );
       highlightedText = highlightedText.replace(
         regex,
-        '<span class="highlighted-substr">$1</span>'
+        '<span class="highlighted-substr">$1</span>',
       );
     });
     return highlightedText;

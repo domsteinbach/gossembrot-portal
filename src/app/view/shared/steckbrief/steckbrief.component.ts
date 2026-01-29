@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { InformationCarrier } from '../../../model/infoCarrier';
-import { MatExpansionPanel } from '@angular/material/expansion';
-import { LocalStorageService } from '../../../service/local-storage.service';
+import { Component, Input } from "@angular/core";
+import { InformationCarrier } from "../../../model/infoCarrier";
+import { MatExpansionPanel } from "@angular/material/expansion";
+import { LocalStorageService } from "../../../service/local-storage.service";
 
 export interface NullCarrier {
   title: string;
@@ -10,9 +10,9 @@ export interface NullCarrier {
 }
 
 @Component({
-  selector: 'app-steckbrief',
-  templateUrl: './steckbrief.component.html',
-  styleUrls: ['./steckbrief.component.scss'],
+  selector: "app-steckbrief",
+  templateUrl: "./steckbrief.component.html",
+  styleUrls: ["./steckbrief.component.scss"],
 })
 export class SteckbriefComponent {
   @Input() selectedCarrier?: InformationCarrier | null;
@@ -27,7 +27,7 @@ export class SteckbriefComponent {
       return (
         !!this.selectedCarrier?.namingsGossembrot?.length ||
         !!this.selectedCarrier?.matDescription ||
-        (this.selectedCarrier?.physicality === 'Available' &&
+        (this.selectedCarrier?.physicality === "Available" &&
           !!this.selectedCarrier?.description)
       );
     }

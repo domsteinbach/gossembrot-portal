@@ -1,18 +1,16 @@
-import { Observable, shareReplay, tap } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { DataService } from '../dataservice.service';
-import { Einband } from '../../model/einband';
+import { Observable, shareReplay, tap } from "rxjs";
+import { Injectable } from "@angular/core";
+import { DataService } from "../dataservice.service";
+import { Einband } from "../../model/einband";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class EinbandRepository {
-
   _cachedEinbaende: Einband[] = [];
   cachedEinbaende$: Observable<Einband[]> | undefined;
 
-  constructor(private _dataService: DataService) {
-  }
+  constructor(private _dataService: DataService) {}
 
   getEinbaende$(): Observable<Einband[]> {
     return this._getEinbaendeReplayed$();
@@ -24,8 +22,8 @@ export class EinbandRepository {
     }
 
     this.cachedEinbaende$ = this._getEinbaende$().pipe(
-      tap(ebd => this._cachedEinbaende = ebd),
-      shareReplay(1)
+      tap((ebd) => (this._cachedEinbaende = ebd)),
+      shareReplay(1),
     );
 
     return this.cachedEinbaende$;
@@ -35,4 +33,3 @@ export class EinbandRepository {
     return this._dataService.getDataAs$(Einband);
   }
 }
-

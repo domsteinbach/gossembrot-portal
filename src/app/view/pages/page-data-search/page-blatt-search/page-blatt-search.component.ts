@@ -1,70 +1,91 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { combineLatest, map, Observable, Subject, switchMap, take, tap } from 'rxjs';
-import { ColumnDef } from '../data-search-types';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { TableDisplayService } from '../service/table-display.service';
-import { MatDialog } from '@angular/material/dialog';
-import { takeUntil } from 'rxjs/operators';
-import { ColumnSettingsComponent } from '../shared/column-settings/column-settings.component';
-import { Page } from '../../../../model/page';
-import { PageRepository } from '../../../../data/repository/page-repository';
-import { InformationCarrier } from '../../../../model/infoCarrier';
-import { ValueFilterService } from '../service/value-filter.service';
-import { MatDrawer } from '@angular/material/sidenav';
-import { InfoCarrierRepository } from '../../../../data/repository/info-carrier-repository';
-import {AuthService} from "../../../../auth/auth.service";
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import {
+  combineLatest,
+  map,
+  Observable,
+  Subject,
+  switchMap,
+  take,
+  tap,
+} from "rxjs";
+import { ColumnDef } from "../data-search-types";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { TableDisplayService } from "../service/table-display.service";
+import { MatDialog } from "@angular/material/dialog";
+import { takeUntil } from "rxjs/operators";
+import { ColumnSettingsComponent } from "../shared/column-settings/column-settings.component";
+import { Page } from "../../../../model/page";
+import { PageRepository } from "../../../../data/repository/page-repository";
+import { InformationCarrier } from "../../../../model/infoCarrier";
+import { ValueFilterService } from "../service/value-filter.service";
+import { MatDrawer } from "@angular/material/sidenav";
+import { InfoCarrierRepository } from "../../../../data/repository/info-carrier-repository";
+import { AuthService } from "../../../../auth/auth.service";
 
 @Component({
-  selector: 'app-page-blatt-search',
-  templateUrl: './page-blatt-search.component.html',
-  styleUrls: ['../page-data-search.component.scss', './page-blatt-search.component.scss'],
+  selector: "app-page-blatt-search",
+  templateUrl: "./page-blatt-search.component.html",
+  styleUrls: [
+    "../page-data-search.component.scss",
+    "./page-blatt-search.component.scss",
+  ],
 })
-export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PageBlattSearchComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   private _destroy$ = new Subject<void>();
   private readonly _initialColumns: ColumnDef[] = [
     {
-      column: 'idx',
-      displayedName: 'Sortierung',
-      primitiveType: 'number',
+      column: "idx",
+      displayedName: "Sortierung",
+      primitiveType: "number",
       displayed: true,
       displayFilter: false,
     },
     {
-      column: 'label',
-      displayedName: 'Blattangabe',
-      primitiveType: 'string',
+      column: "label",
+      displayedName: "Blattangabe",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
     },
     {
-      column: 'lagenText',
-      displayedName: 'Lage',
-      primitiveType: 'string',
-      displayed: true,
-      displayFilter: true,
-      nullOrEmptyFilter: true,
-    },
-    {
-      column: 'doppellagenText',
-      displayedName: 'Lagentext Doppelseite',
-      primitiveType: 'string',
+      column: "lagenText",
+      displayedName: "Lage",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
       nullOrEmptyFilter: true,
     },
     {
-      column: 'pageType',
-      displayedName: '* Typ',
-      primitiveType: 'string',
+      column: "doppellagenText",
+      displayedName: "Lagentext Doppelseite",
+      primitiveType: "string",
+      displayed: true,
+      displayFilter: true,
+      nullOrEmptyFilter: true,
+    },
+    {
+      column: "pageType",
+      displayedName: "* Typ",
+      primitiveType: "string",
       displayed: true,
       displayFilter: true,
       isInternal: true,
     },
   ] as const;
 
-  @ViewChild('advancedFilterDrawer') advancedFilterDrawer: MatDrawer | undefined;
+  @ViewChild("advancedFilterDrawer") advancedFilterDrawer:
+    | MatDrawer
+    | undefined;
   isDrawerClosed = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -75,13 +96,19 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
 
   loading = true;
 
-  dataSource: MatTableDataSource<Page>=
-    new MatTableDataSource<Page>();
+  dataSource: MatTableDataSource<Page> = new MatTableDataSource<Page>();
 
   selectedRow: Page | null = null;
 
-  private _infoCarriers$: Observable<InformationCarrier[]> =
-    this._ir.informationCarriers$().pipe(map((carriers) => carriers.filter((c: InformationCarrier) => c.physicality === 'Available')));
+  private _infoCarriers$: Observable<InformationCarrier[]> = this._ir
+    .informationCarriers$()
+    .pipe(
+      map((carriers) =>
+        carriers.filter(
+          (c: InformationCarrier) => c.physicality === "Available",
+        ),
+      ),
+    );
 
   carriers: InformationCarrier[] = [];
 
@@ -89,18 +116,18 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
   private _selectedCarrier$ = this._selectedCarrier.asObservable();
 
   constructor(
-      public authService: AuthService,
+    public authService: AuthService,
     private _ds: TableDisplayService,
     private _fs: ValueFilterService,
     private _ir: InfoCarrierRepository,
     private _dialog: MatDialog,
-    private _pr: PageRepository) {
-
-    this._ds.initTable('page',this._initialColumns);
-    this.columns$ = this._ds.getColumnsToDisplay$('page');
+    private _pr: PageRepository,
+  ) {
+    this._ds.initTable("page", this._initialColumns);
+    this.columns$ = this._ds.getColumnsToDisplay$("page");
 
     this.displayedColumns$ = this.columns$.pipe(
-      map((columns) => columns.filter((c) => c.displayed).map((c) => c.column))
+      map((columns) => columns.filter((c) => c.displayed).map((c) => c.column)),
     );
   }
 
@@ -108,11 +135,11 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
     this._selectedCarrier$
       .pipe(
         takeUntil(this._destroy$),
-        tap(() => this.loading = true),
+        tap(() => (this.loading = true)),
         switchMap((carrier: string) =>
-          this._getFilteredPages$(carrier).pipe(takeUntil(this._destroy$))
+          this._getFilteredPages$(carrier).pipe(takeUntil(this._destroy$)),
         ),
-        tap(() => this.loading = false)
+        tap(() => (this.loading = false)),
       )
       .subscribe((pages: Page[]) => {
         if (pages.length > 0) {
@@ -121,12 +148,14 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
         }
       });
 
-    this._infoCarriers$.pipe(take(1)).subscribe((carriers: InformationCarrier[]) => {
-      if (carriers.length > 0) {
-        this.carriers = carriers;
-        this._selectedCarrier.next(carriers[0].id);
-      }
-    });
+    this._infoCarriers$
+      .pipe(take(1))
+      .subscribe((carriers: InformationCarrier[]) => {
+        if (carriers.length > 0) {
+          this.carriers = carriers;
+          this._selectedCarrier.next(carriers[0].id);
+        }
+      });
   }
 
   ngAfterViewInit() {
@@ -139,23 +168,28 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private _getFilteredPages$(carrierId: string): Observable<Page[]> {
-    return combineLatest([this._pr.pagesOfCarrier$(carrierId), this._fs.nullFilters$('page')]).pipe(
-      map(([pages, _filters]) => this._fs.applyNullFilters<Page>(pages, 'page'))
+    return combineLatest([
+      this._pr.pagesOfCarrier$(carrierId),
+      this._fs.nullFilters$("page"),
+    ]).pipe(
+      map(([pages, _filters]) =>
+        this._fs.applyNullFilters<Page>(pages, "page"),
+      ),
     );
   }
 
   setCustomSort() {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'idx':
+        case "idx":
           return (item as Page).idx || 0;
         default:
-          return (item as any)[property].toLowerCase() || '';
+          return (item as any)[property].toLowerCase() || "";
       }
     };
 
     if (this.dataSource.sort) {
-      this.dataSource.sort.direction = 'asc';
+      this.dataSource.sort.direction = "asc";
     }
   }
 
@@ -169,7 +203,7 @@ export class PageBlattSearchComponent implements OnInit, AfterViewInit, OnDestro
 
   openColumnSettingsDialog() {
     this._dialog.open(ColumnSettingsComponent, {
-      data: { tableName: 'page' },
+      data: { tableName: "page" },
     });
   }
 

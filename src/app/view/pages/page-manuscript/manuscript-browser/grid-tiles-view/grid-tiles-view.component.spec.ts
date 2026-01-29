@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { GridTilesViewComponent } from './grid-tiles-view.component';
+import { GridTilesViewComponent } from "./grid-tiles-view.component";
 
-describe('GridTilesViewComponent', () => {
+describe("GridTilesViewComponent", () => {
   let component: GridTilesViewComponent;
   let fixture: ComponentFixture<GridTilesViewComponent>;
 
@@ -16,7 +16,7 @@ describe('GridTilesViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

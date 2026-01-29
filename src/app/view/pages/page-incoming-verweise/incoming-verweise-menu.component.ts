@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { RouteConstants } from '../../../routeConstants';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatTabChangeEvent } from '@angular/material/tabs';
-import { AuthService } from '../../../auth/auth.service';
+import { Component, OnInit } from "@angular/core";
+import { RouteConstants } from "../../../routeConstants";
+import { ActivatedRoute, Router } from "@angular/router";
+import { MatTabChangeEvent } from "@angular/material/tabs";
+import { AuthService } from "../../../auth/auth.service";
 
 @Component({
-  selector: 'app-incoming-verweise-menu',
-  templateUrl: './incoming-verweise-menu.component.html',
-  styleUrls: ['./incoming-verweise-menu.component.scss'],
+  selector: "app-incoming-verweise-menu",
+  templateUrl: "./incoming-verweise-menu.component.html",
+  styleUrls: ["./incoming-verweise-menu.component.scss"],
 })
 export class IncomingVerweiseMenuComponent implements OnInit {
   activeTabIndex = 0;
@@ -15,12 +15,13 @@ export class IncomingVerweiseMenuComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
   ) {}
 
   ngOnInit(): void {
     if (this._route.snapshot.firstChild) {
-      const path = this._route.snapshot.firstChild.routeConfig?.path?.split('/')[0];
+      const path =
+        this._route.snapshot.firstChild.routeConfig?.path?.split("/")[0];
       switch (path) {
         case RouteConstants.IN_GSM_VALUE:
           this.activeTabIndex = 0;

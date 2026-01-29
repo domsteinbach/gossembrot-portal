@@ -8,26 +8,29 @@ import {
   OnInit,
   SimpleChanges,
   ViewChild,
-} from '@angular/core';
-import * as d3 from 'd3';
-import { MatDialog } from '@angular/material/dialog';
+} from "@angular/core";
+import * as d3 from "d3";
+import { MatDialog } from "@angular/material/dialog";
 import {
   InteractionMode,
   VisualisationDataService,
-} from '../visualisation-data.service';
-import { InformationCarrier, Physicality } from '../../../../../model/infoCarrier';
-import { Subscription } from 'rxjs';
-import { Granularity } from '../visualisation-settings.service';
-import { CarrierText } from '../../../../../model/carriertext';
-import { DisplayVerweis } from '../../../../../model/verweis';
+} from "../visualisation-data.service";
+import {
+  InformationCarrier,
+  Physicality,
+} from "../../../../../model/infoCarrier";
+import { Subscription } from "rxjs";
+import { Granularity } from "../visualisation-settings.service";
+import { CarrierText } from "../../../../../model/carriertext";
+import { DisplayVerweis } from "../../../../../model/verweis";
 
 export type NodeType =
-  | 'LostManuscript'
-  | 'LostPrint'
-  | 'Available'
-  | 'Classic'
-  | 'textNode'
-  | 'Undefined';
+  | "LostManuscript"
+  | "LostPrint"
+  | "Available"
+  | "Classic"
+  | "textNode"
+  | "Undefined";
 
 class ToolTip {
   // private bc. of referencing issues by d3. D3 is updating positions coming from events
@@ -36,7 +39,7 @@ class ToolTip {
   constructor(
     private _id: string,
     private _content: string,
-    position: { x: number; y: number }
+    position: { x: number; y: number },
   ) {
     this._posX = position.x;
     this._posY = position.y;
@@ -62,19 +65,19 @@ class ToolTip {
 }
 
 @Component({
-  selector: 'app-force-directed-graph',
-  templateUrl: './force-directed-graph.component.html',
-  styleUrls: ['./force-directed-graph.component.scss'],
+  selector: "app-force-directed-graph",
+  templateUrl: "./force-directed-graph.component.html",
+  styleUrls: ["./force-directed-graph.component.scss"],
 })
 export class ForceDirectedGraphComponent
   implements OnInit, OnChanges, OnDestroy
 {
-  @ViewChild('visContainer', { static: true })
+  @ViewChild("visContainer", { static: true })
   private visContainer!: ElementRef;
-  @ViewChild('chart', { static: true }) private chartContainer!: ElementRef;
+  @ViewChild("chart", { static: true }) private chartContainer!: ElementRef;
   @Input() nodes: any[] = [];
   @Input() links: any[] = [];
-  @Input() granularity: Granularity = 'InformationCarrier';
+  @Input() granularity: Granularity = "InformationCarrier";
 
   readonly debouncedResizeHandler: () => void;
 
@@ -91,9 +94,9 @@ export class ForceDirectedGraphComponent
   // on the fly tooltips when hovered
   hoverTooltipVisible = false;
   hoverTooltipPosition = { x: 0, y: 0 };
-  hoverTooltipContent = '';
-  hoverTooltipType = 'linkTooltip' || 'nodeTooltip' || 'textTooltip' || '';
-  requestedHoverTooltip = '';
+  hoverTooltipContent = "";
+  hoverTooltipType = "linkTooltip" || "nodeTooltip" || "textTooltip" || "";
+  requestedHoverTooltip = "";
 
   currentTabSub!: Subscription;
   currentTab!: InteractionMode;
@@ -118,7 +121,7 @@ export class ForceDirectedGraphComponent
   }
 
   private get contentGroup() {
-    return this.svg.select('.content-group');
+    return this.svg.select(".content-group");
   }
 
   private getParentDimensions(): { width: number; height: number } | null {
@@ -132,9 +135,9 @@ export class ForceDirectedGraphComponent
   }
 
   // link colors
-  readonly colorin = '#0033ff';
-  readonly colorout = '#0033ff';
-  readonly colordefault = '#a2a2a2';
+  readonly colorin = "#0033ff";
+  readonly colorout = "#0033ff";
+  readonly colordefault = "#a2a2a2";
 
   readonly linkColorMap = (isSource: boolean) => {
     return isSource ? this.colorout : this.colorin;
@@ -142,64 +145,64 @@ export class ForceDirectedGraphComponent
 
   getNodeType(d: any): NodeType {
     if (!d.physicality) {
-      return 'textNode';
+      return "textNode";
     } else {
       d = d as InformationCarrier;
     }
-    if ((d.physicality as Physicality) == 'Available') {
-      return 'Available';
+    if ((d.physicality as Physicality) == "Available") {
+      return "Available";
     }
-    if ((d.physicality as Physicality) == 'Classic') {
-      return 'Classic';
+    if ((d.physicality as Physicality) == "Classic") {
+      return "Classic";
     }
 
-    if ((d.physicality as Physicality) == 'Lost') {
-      if (d.carrierType === 'Print') {
-        return 'LostPrint';
+    if ((d.physicality as Physicality) == "Lost") {
+      if (d.carrierType === "Print") {
+        return "LostPrint";
       }
-      if (d.carrierType === 'Manuscript') {
-        return 'LostManuscript';
+      if (d.carrierType === "Manuscript") {
+        return "LostManuscript";
       }
     }
-    return 'Undefined';
+    return "Undefined";
   }
 
   readonly colorMap = (key?: NodeType) => {
     switch (key) {
-      case 'Available':
-        return '#00a100';
-      case 'LostManuscript':
-        return '#e30000';
-      case 'LostPrint':
-        return '#d902b5';
-      case 'Classic':
-        return '#e5d501';
-      case 'textNode':
-        return '#797979';
+      case "Available":
+        return "#00a100";
+      case "LostManuscript":
+        return "#e30000";
+      case "LostPrint":
+        return "#d902b5";
+      case "Classic":
+        return "#e5d501";
+      case "textNode":
+        return "#797979";
       default:
-        return '#020202';
+        return "#020202";
     }
   };
 
   readonly legendItems = [
-    { color: this.colorMap('Available'), label: 'Erhaltene Textträger' },
+    { color: this.colorMap("Available"), label: "Erhaltene Textträger" },
     {
-      color: this.colorMap('LostManuscript'),
-      label: 'Rekonstruierte Handschriften',
+      color: this.colorMap("LostManuscript"),
+      label: "Rekonstruierte Handschriften",
     },
-    { color: this.colorMap('LostPrint'), label: 'Rekonstruierte Drucke' },
-    { color: this.colorMap('Classic'), label: 'Kanonische Werke' },
+    { color: this.colorMap("LostPrint"), label: "Rekonstruierte Drucke" },
+    { color: this.colorMap("Classic"), label: "Kanonische Werke" },
   ];
 
   constructor(
     private _cdr: ChangeDetectorRef,
     public dialog: MatDialog,
-    private _visService: VisualisationDataService
+    private _visService: VisualisationDataService,
   ) {
     this.currentTabSub = this._visService.interactionMode$.subscribe(
       (tab: InteractionMode) => {
         this.currentTab = tab;
-      }
+      },
     );
 
     // subscribe to the selected carrier and highlight it
@@ -207,27 +210,30 @@ export class ForceDirectedGraphComponent
       (carriers) => {
         // get all carriers from this.selectedCarriers carriers which are not in carriers anymore
         this.selectedCarriers = carriers.map((carrier) => carrier.id);
-        if (this.granularity === 'CarrierText') {
+        if (this.granularity === "CarrierText") {
           return;
         }
         this.reRenderAllHighlightedNodes();
-      }
+      },
     );
 
     this.selectedLinksSub = this._visService.selectedVerweise$.subscribe(
       (verweise: DisplayVerweis[]) => {
-
         verweise.forEach((v) => {
           if (!verweise) {
-            console.error('verweise is null or undefined');
+            console.error("verweise is null or undefined");
             return;
           }
           // get all links with sam target and source
           const links = this.links.filter((l: any) => {
-            if (this.granularity === 'CarrierText') {
-              return l.source?.id === v?.srcText && l.target?.id === v?.targetText;
+            if (this.granularity === "CarrierText") {
+              return (
+                l.source?.id === v?.srcText && l.target?.id === v?.targetText
+              );
             } else {
-              return l.source?.id === v?.srcCar && l.target?.id === v?.targetCar;
+              return (
+                l.source?.id === v?.srcCar && l.target?.id === v?.targetCar
+              );
             }
           });
           // push to linksOfVerweise if not already in there
@@ -238,30 +244,30 @@ export class ForceDirectedGraphComponent
           });
 
           const notSelectedAnymore = this.permanentlyHighlightedLinks.filter(
-            (l) => !links.includes(l)
+            (l) => !links.includes(l),
           );
 
           notSelectedAnymore.forEach((link) => {
             // splice
             this.permanentlyHighlightedLinks.splice(
               this.permanentlyHighlightedLinks.indexOf(link),
-              1
+              1,
             );
             this.unhighlightPermanentLink(link);
           });
         });
-      }
+      },
     );
 
     this.debouncedResizeHandler = debounce(() => this.onResizeEnd(), 200);
   }
 
   ngOnInit() {
-    window.addEventListener('resize', this.debouncedResizeHandler);
+    window.addEventListener("resize", this.debouncedResizeHandler);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['granularity'] && this.granularity === 'CarrierText') {
+    if (changes["granularity"] && this.granularity === "CarrierText") {
       this.permanentTooltips = [];
     }
     if (this.nodes.length === 0 || this.links.length === 0) {
@@ -271,11 +277,10 @@ export class ForceDirectedGraphComponent
   }
 
   private _init() {
-
-    d3.select(this.chartContainer.nativeElement).select('svg').remove();
+    d3.select(this.chartContainer.nativeElement).select("svg").remove();
     // Hard remove tooltip elements from the DOM bc. D3 makes magic sometimes
     const tooltipElements =
-      this.visContainer.nativeElement.querySelectorAll('.tooltip');
+      this.visContainer.nativeElement.querySelectorAll(".tooltip");
     tooltipElements.forEach((element: any) => {
       element.remove();
     });
@@ -297,12 +302,12 @@ export class ForceDirectedGraphComponent
 
     this.svg = d3
       .select(element)
-      .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height);
+      .append("svg")
+      .attr("width", this.width)
+      .attr("height", this.height);
 
     // add the arrowhead marker definition for the links
-    this.svg.append('defs').html(`
+    this.svg.append("defs").html(`
         <marker id="arrowhead" markerWidth="5" markerHeight="4" 
         refX="2.5" refY="2" orient="auto">
         <polygon points="0 0, 5 2, 0 4" />
@@ -310,8 +315,8 @@ export class ForceDirectedGraphComponent
     `);
 
     // Create the group element that will be zoomable
-    this.svg.append('g').attr('class', 'content-group');
-    this.svg.style('cursor', 'grab'); // Set the cursor to grab when the mouse is over the SVG
+    this.svg.append("g").attr("class", "content-group");
+    this.svg.style("cursor", "grab"); // Set the cursor to grab when the mouse is over the SVG
 
     this.setZoomBehavior();
   }
@@ -322,21 +327,21 @@ export class ForceDirectedGraphComponent
     const zoom = d3
       .zoom<SVGSVGElement, any>()
       .scaleExtent([0.3, 4])
-      .on('start', (event) => {
+      .on("start", (event) => {
         zoomStartTransform = event.transform;
         hasZoomed = false;
         this.permanentTooltipsVisible = false;
       })
-      .on('zoom', (event) => {
+      .on("zoom", (event) => {
         const dx = event.transform.x - zoomStartTransform.x;
         const dy = event.transform.y - zoomStartTransform.y;
         const dz = event.transform.k - zoomStartTransform.k;
         if (Math.sqrt(dx * dx + dy * dy) > 5 || Math.abs(dz) > 0.01) {
           hasZoomed = true;
-          this.contentGroup.attr('transform', event.transform);
+          this.contentGroup.attr("transform", event.transform);
         }
       })
-      .on('end', () => {
+      .on("end", () => {
         if (hasZoomed) {
           this.updatePermanentTooltipPositions();
         }
@@ -351,8 +356,8 @@ export class ForceDirectedGraphComponent
 
     // Ensure all links have valid nodes as source/target
     const validLinks = this.links.filter((link) => {
-      const sourceNode = this.nodes.find(node => node.id === link.source);
-      const targetNode = this.nodes.find(node => node.id === link.target);
+      const sourceNode = this.nodes.find((node) => node.id === link.source);
+      const targetNode = this.nodes.find((node) => node.id === link.target);
 
       if (!sourceNode || !targetNode) {
         return false; // Exclude this link from the simulation
@@ -362,20 +367,20 @@ export class ForceDirectedGraphComponent
     const simulation = d3
       .forceSimulation(this.nodes)
       .force(
-        'link',
+        "link",
         d3
           .forceLink(validLinks)
           .id((d: any) => d?.id)
-          .distance(20)
+          .distance(20),
       )
 
-      .force('charge', d3.forceManyBody().strength(-100))
-      .force('center', d3.forceCenter(this.shiftX, this.shiftY).strength(0.05))
-      .force('collision', d3.forceCollide().radius(30)) // Adjust radius as needed
+      .force("charge", d3.forceManyBody().strength(-100))
+      .force("center", d3.forceCenter(this.shiftX, this.shiftY).strength(0.05))
+      .force("collision", d3.forceCollide().radius(30)) // Adjust radius as needed
 
       .alphaDecay(0.08) // Set the alpha decay rate
       .alphaTarget(0.0001) // Set the target alpha value;
-      .on('end', () => this.onSimulationEnded()); // Listen for the end event
+      .on("end", () => this.onSimulationEnded()); // Listen for the end event
 
     const strokeWidthScale = d3
       .scaleLinear()
@@ -387,34 +392,34 @@ export class ForceDirectedGraphComponent
 
     // Create the links
     const link = this.contentGroup
-      .selectAll('.link')
+      .selectAll(".link")
       .data(this.links)
       .enter()
-      .append('path')
-      .attr('class', 'link')
-      .attr('stroke', this.colordefault)
-      .attr('fill', 'none') // Ensure paths are not filled
-      .attr('stroke-width', (d) => strokeWidthScale(d.value || 1));
+      .append("path")
+      .attr("class", "link")
+      .attr("stroke", this.colordefault)
+      .attr("fill", "none") // Ensure paths are not filled
+      .attr("stroke-width", (d) => strokeWidthScale(d.value || 1));
 
     // Create the nodes
     const node = this.contentGroup
-      .selectAll('.node')
+      .selectAll(".node")
       .data(this.nodes)
       .enter()
-      .append('circle')
-      .attr('class', 'node')
-      .attr('r', 5)
-      .attr('fill', (d: any) => this.colorMap(this.getNodeType(d)))
-      .on('mouseover', (event, d) => this.nodeHovered(event, d))
-      .on('mouseout', (event, d) => this.nodeOuted(event))
-      .on('click', (event, d) => this.nodeClicked(d));
+      .append("circle")
+      .attr("class", "node")
+      .attr("r", 5)
+      .attr("fill", (d: any) => this.colorMap(this.getNodeType(d)))
+      .on("mouseover", (event, d) => this.nodeHovered(event, d))
+      .on("mouseout", (event, d) => this.nodeOuted(event))
+      .on("click", (event, d) => this.nodeClicked(d));
 
     // Add the nodes and links to the simulation
-    simulation.nodes(this.nodes).on('tick', () => {
+    simulation.nodes(this.nodes).on("tick", () => {
       link
-        .attr('d', (d: any) => {
-          if (!d.source?.x || !d.source?.y  || !d.target?.x || !d.target?.y) {
-            return '';
+        .attr("d", (d: any) => {
+          if (!d.source?.x || !d.source?.y || !d.target?.x || !d.target?.y) {
+            return "";
           }
           // Calculate the control points for curved lines
           const dx = d?.target?.x - d?.source?.x;
@@ -437,35 +442,35 @@ export class ForceDirectedGraphComponent
           // Return the path commands for curved lines
           return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${targetX},${targetY}`;
         })
-        .attr('stroke-width', (d: any) => (d.value / 5 < 1 ? 1 : d.value / 5))
-        .attr('marker-end', 'url(#arrowhead)')
-        .on('mouseover', (event, d) => this.linkHovered(event, d))
-        .on('mouseout', (event, d) => this.linkOuted())
-        .on('click', (event, d) => this.linkClicked(d));
+        .attr("stroke-width", (d: any) => (d.value / 5 < 1 ? 1 : d.value / 5))
+        .attr("marker-end", "url(#arrowhead)")
+        .on("mouseover", (event, d) => this.linkHovered(event, d))
+        .on("mouseout", (event, d) => this.linkOuted())
+        .on("click", (event, d) => this.linkClicked(d));
 
-      node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
+      node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y);
     });
     this.initNodeDrag(simulation);
   }
 
   initNodeDrag(simulation: d3.Simulation<any, any>): void {
-    const nodes = d3.selectAll<SVGCircleElement, any>('.node'); // Explicitly specify the element type
+    const nodes = d3.selectAll<SVGCircleElement, any>(".node"); // Explicitly specify the element type
     let hasDragged = false;
 
     const drag = d3
       .drag<SVGCircleElement, any>()
-      .on('start', (event, d: any) => {
+      .on("start", (event, d: any) => {
         this.permanentTooltipsVisible = false;
         d.fx = d.x;
         d.fy = d.y;
       })
-      .on('drag', (event, d: any) => {
+      .on("drag", (event, d: any) => {
         d.fx = event.x;
         d.fy = event.y;
         simulation.alphaTarget(0.02).restart();
         hasDragged = true;
       })
-      .on('end', (event, d: any) => {
+      .on("end", (event, d: any) => {
         simulation.alphaTarget(0).stop();
         d.fx = null;
         d.fy = null;
@@ -484,7 +489,7 @@ export class ForceDirectedGraphComponent
 
   // Highlight the node and connected links on mouseover and change the cursor to pointer
   private nodeHovered(event: any, d: any): void {
-    d3.select(event.currentTarget).style('cursor', 'pointer').attr('r', 10); // make node bigger
+    d3.select(event.currentTarget).style("cursor", "pointer").attr("r", 10); // make node bigger
     this.requestedHoverTooltip = d.id;
     // also highlight the connected links as well as the targets and sources after a delay
     this.highlightLinksOfNode(d);
@@ -498,29 +503,29 @@ export class ForceDirectedGraphComponent
   }
 
   highlightSelectedCarrier(id: string): void {
-    d3.selectAll('.node')
+    d3.selectAll(".node")
       .filter((d: any) => d.id === id)
-      .attr('r', 10)
-      .attr('fill', 'red');
+      .attr("r", 10)
+      .attr("fill", "red");
   }
 
   unhighlightSelectedCarier(id: string): void {
-    d3.selectAll('.node')
+    d3.selectAll(".node")
       .filter((d: any) => d.id === id)
-      .attr('r', 5)
-      .attr('fill', (d: any) => this.colorMap(this.getNodeType(d)));
+      .attr("r", 5)
+      .attr("fill", (d: any) => this.colorMap(this.getNodeType(d)));
   }
 
   private nodeOuted(event: any): void {
-    d3.select(event.currentTarget).style('cursor', 'grab');
+    d3.select(event.currentTarget).style("cursor", "grab");
     this.unhilightAllNodes();
     this.hideTooltip();
     this.unhighlightAllLinks();
-    this.requestedHoverTooltip = '';
+    this.requestedHoverTooltip = "";
   }
 
   unhilightAllNodes(): void {
-    d3.selectAll('.node').attr('r', 5);
+    d3.selectAll(".node").attr("r", 5);
   }
 
   private highlightLinksOfNode(node: any): void {
@@ -528,30 +533,30 @@ export class ForceDirectedGraphComponent
       return;
     }
     const outgoingLinks = this.links.filter(
-      (link: any) => link.source?.id === node?.id
+      (link: any) => link.source?.id === node?.id,
     );
 
     const incomingLinks = this.links.filter(
-      (link: any) => link.target.id === node.id
+      (link: any) => link.target.id === node.id,
     );
 
     // Highlight outgoing links
-    d3.selectAll('.link') // Select all elements with class 'link'
+    d3.selectAll(".link") // Select all elements with class 'link'
       .filter((d: any) => outgoingLinks.some((link) => link === d)) // Filter to outgoing links
-      .attr('stroke', this.linkColorMap(true));
+      .attr("stroke", this.linkColorMap(true));
 
     // Highlight incoming links
-    d3.selectAll('.link') // Select all elements with class 'link'
+    d3.selectAll(".link") // Select all elements with class 'link'
       .filter((d: any) => incomingLinks.some((link) => link === d)) // Filter to incoming links
-      .attr('stroke', this.linkColorMap(false));
+      .attr("stroke", this.linkColorMap(false));
   }
 
   private unhighlightAllLinks(): void {
     // unhighlight all except the permanently highlighted links
-    d3.selectAll('.link')
+    d3.selectAll(".link")
       .filter((d: any) => !this.permanentlyHighlightedLinks.includes(d))
-      .attr('stroke', this.colordefault)
-      .attr('stroke-width', (d: any) => (d.value / 5 < 1 ? 1 : d.value / 5));
+      .attr("stroke", this.colordefault)
+      .attr("stroke-width", (d: any) => (d.value / 5 < 1 ? 1 : d.value / 5));
   }
 
   private nodeClicked(d: any): void {
@@ -560,14 +565,14 @@ export class ForceDirectedGraphComponent
       return;
     }
     // if node already highlighted, unhighlight it, but only if we are in selection tab
-    if (this.currentTab === 'select' && this.selectedCarriers.includes(d.id)) {
+    if (this.currentTab === "select" && this.selectedCarriers.includes(d.id)) {
       this._visService.unselectCarrier(d);
       this.removePermanentTooltip(d);
       return;
     } // else highlight it
-    this.addPermanentTooltip(d, this.currentTab !== 'select');
+    this.addPermanentTooltip(d, this.currentTab !== "select");
     this.hideTooltip(); // hide on the fly tooltip
-    if (this.currentTab === 'select') {
+    if (this.currentTab === "select") {
       this._visService.selectCarrier(d);
     } else {
       this._visService.setLastSelectedCarrier(d);
@@ -576,8 +581,8 @@ export class ForceDirectedGraphComponent
 
   linkHovered(event: any, d: any): void {
     d3.select(event.currentTarget)
-      .style('cursor', 'pointer')
-      .attr('stroke', this.colorin);
+      .style("cursor", "pointer")
+      .attr("stroke", this.colorin);
     // Highlight the connected nodes after a delay
     this.requestedHoverTooltip = d.id;
     this.highlightConnectedNodes(d);
@@ -592,9 +597,9 @@ export class ForceDirectedGraphComponent
   }
 
   highlightConnectedNodes(link: any): void {
-    d3.selectAll('.node')
+    d3.selectAll(".node")
       .filter((d: any) => d === link.source || d === link.target)
-      .attr('r', 10);
+      .attr("r", 10);
   }
 
   linkClicked(linkData: any): void {
@@ -603,17 +608,17 @@ export class ForceDirectedGraphComponent
   }
 
   highlightLinkPermanently(link: any): void {
-    d3.selectAll('.link')
+    d3.selectAll(".link")
       .filter((d: any) => d.index === link.index)
-      .attr('stroke-width', 3)
-      .attr('stroke', this.colorin);
+      .attr("stroke-width", 3)
+      .attr("stroke", this.colorin);
   }
 
   unhighlightPermanentLink(link: any): void {
-    d3.selectAll('.link')
+    d3.selectAll(".link")
       .filter((d: any) => d.index === link.index)
-      .attr('stroke-width', (d: any) => (d.value / 5 < 1 ? 1 : d.value / 5))
-      .attr('stroke', this.colordefault);
+      .attr("stroke-width", (d: any) => (d.value / 5 < 1 ? 1 : d.value / 5))
+      .attr("stroke", this.colordefault);
   }
 
   showNodeTooltip(data: any): void {
@@ -624,7 +629,7 @@ export class ForceDirectedGraphComponent
       return; // do not show hover tooltip if there is already a static one for that node
     }
     this.hoverTooltipType =
-      data instanceof CarrierText ? 'textTooltip' : 'nodeTooltip';
+      data instanceof CarrierText ? "textTooltip" : "nodeTooltip";
     this.hoverTooltipVisible = true;
     this.hoverTooltipContent = `<div>${data.fullTitle}</div>`;
     // Apply the transformation matrix to the node positions
@@ -640,12 +645,12 @@ export class ForceDirectedGraphComponent
   }
 
   reRenderAllHighlightedNodes() {
-    const nodes = d3.selectAll('.node').data();
+    const nodes = d3.selectAll(".node").data();
     nodes.forEach((node: any) => {
       this.removePermanentTooltip(node);
       // readd tooltip with new position
       if (
-        ['InformationCarrier', 'CarrierAndText'].includes(this.granularity) &&
+        ["InformationCarrier", "CarrierAndText"].includes(this.granularity) &&
         this.selectedCarriers.findIndex((c) => c == node.id) > -1
       ) {
         this.addPermanentTooltip(node);
@@ -682,14 +687,14 @@ export class ForceDirectedGraphComponent
 
   removePermanentTooltip(data: any): void {
     this.permanentTooltips = this.permanentTooltips.filter(
-      (tooltip) => tooltip.id !== data.id
+      (tooltip) => tooltip.id !== data.id,
     );
   }
 
   updateSizeandPermanentTooltipPositions() {
     this.width = this.getParentDimensions()?.width || 0;
     this.height = this.getParentDimensions()?.height || 0;
-    this.svg.attr('width', this.width).attr('height', this.height);
+    this.svg.attr("width", this.width).attr("height", this.height);
     this.updatePermanentTooltipPositions();
   }
 
@@ -702,7 +707,7 @@ export class ForceDirectedGraphComponent
       this.permanentTooltips.forEach((tt) => {
         // Select the node from D3 by ID
         const nodeElement = d3
-          .selectAll('.node')
+          .selectAll(".node")
           .filter((d: any) => d.id === tt.id)
           .node();
         if (nodeElement) {
@@ -731,7 +736,7 @@ export class ForceDirectedGraphComponent
       // Apply the transformation matrix to the midpoint
       const transformedX = transform.applyX(midpointX);
       const transformedY = transform.applyY(midpointY);
-      this.hoverTooltipType = 'linkTooltip';
+      this.hoverTooltipType = "linkTooltip";
       this.hoverTooltipPosition = { x: transformedX, y: transformedY };
       this.hoverTooltipContent = `<div>${data.srcTitle}</div><br>
                            <div>verweist ${data.value} mal nach</div><br>
@@ -743,7 +748,7 @@ export class ForceDirectedGraphComponent
 
   hideTooltip(): void {
     this.hoverTooltipVisible = false;
-    this.hoverTooltipType = '';
+    this.hoverTooltipType = "";
     this._cdr.detectChanges();
   }
 
@@ -751,7 +756,7 @@ export class ForceDirectedGraphComponent
     this.unhighlightAllLinks();
     this.hideTooltip();
     this.unhilightAllNodes();
-    this.requestedHoverTooltip = '';
+    this.requestedHoverTooltip = "";
   }
   /*
 
@@ -787,7 +792,7 @@ export class ForceDirectedGraphComponent
   }
 
   takeScreenshot(): void {
-    const svg = this.chartContainer.nativeElement.querySelector('svg');
+    const svg = this.chartContainer.nativeElement.querySelector("svg");
     if (!svg) {
       return;
     }
@@ -798,31 +803,31 @@ export class ForceDirectedGraphComponent
     const clonedSvg = svg.cloneNode(true) as SVGSVGElement;
 
     // Set the viewBox attribute to scale the content
-    clonedSvg.setAttribute('width', width.toString());
-    clonedSvg.setAttribute('height', height.toString());
-    clonedSvg.setAttribute('viewBox', `0 0 ${this.width} ${this.height}`); // use original w & h here!!!
+    clonedSvg.setAttribute("width", width.toString());
+    clonedSvg.setAttribute("height", height.toString());
+    clonedSvg.setAttribute("viewBox", `0 0 ${this.width} ${this.height}`); // use original w & h here!!!
 
     // Create a foreignObject to include the tooltips
     const foreignObject = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'foreignObject'
+      "http://www.w3.org/2000/svg",
+      "foreignObject",
     );
-    foreignObject.setAttribute('width', '100%');
-    foreignObject.setAttribute('height', '100%');
+    foreignObject.setAttribute("width", "100%");
+    foreignObject.setAttribute("height", "100%");
 
     const tooltips =
       this.visContainer.nativeElement.querySelector(
-        '.tooltip-container'
+        ".tooltip-container",
       )?.innerHTML;
 
     const legend =
       this.visContainer.nativeElement.querySelector(
-        '.legend-container'
+        ".legend-container",
       )?.innerHTML;
 
     if (tooltips) {
       // Create a div to hold the tooltips and set its inner HTML to the tooltips container's inner HTML
-      const div = document.createElement('div');
+      const div = document.createElement("div");
       div.innerHTML = tooltips;
 
       // Append the div to the foreignObject
@@ -835,25 +840,25 @@ export class ForceDirectedGraphComponent
       copyStylesInline(clonedSvg, svg);
       copyStylesInline(
         div,
-        this.visContainer.nativeElement.querySelector('.tooltip-container')
+        this.visContainer.nativeElement.querySelector(".tooltip-container"),
       );
     }
 
     // Serialize the cloned SVG
     const svgString = new XMLSerializer().serializeToString(clonedSvg);
     const encodedSvgString =
-      'data:image/svg+xml;base64,' +
+      "data:image/svg+xml;base64," +
       btoa(
         encodeURIComponent(svgString).replace(/%([0-9A-F]{2})/g, (_, p1) =>
-          String.fromCharCode(parseInt(p1, 16))
-        )
+          String.fromCharCode(parseInt(p1, 16)),
+        ),
       );
 
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
 
     if (!context) {
-      console.error('no context');
+      console.error("no context");
       return;
     }
 
@@ -866,31 +871,31 @@ export class ForceDirectedGraphComponent
     img.onload = () => {
       // Hide buttons before taking the screenshot
       const buttons =
-        this.visContainer.nativeElement.querySelectorAll('button');
-      buttons.forEach((button: any) => (button.style.display = 'none'));
+        this.visContainer.nativeElement.querySelectorAll("button");
+      buttons.forEach((button: any) => (button.style.display = "none"));
 
-      context.fillStyle = '#FFFFFF'; // Set white background
+      context.fillStyle = "#FFFFFF"; // Set white background
       context.fillRect(0, 0, width, height);
 
       // Corrected drawImage syntax
       context.drawImage(img, 0, 0, width, height);
 
       // Restore buttons visibility after drawing
-      buttons.forEach((button: any) => (button.style.display = 'block'));
+      buttons.forEach((button: any) => (button.style.display = "block"));
 
       canvas.toBlob((blob) => {
         if (blob) {
           const url = URL.createObjectURL(blob);
-          this.downloadImage(url, 'chart.jpg');
+          this.downloadImage(url, "chart.jpg");
         }
-      }, 'image/jpeg');
+      }, "image/jpeg");
     };
 
     img.src = encodedSvgString;
   }
 
   private downloadImage(data: string, filename: string): void {
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = data;
     a.download = filename;
     document.body.appendChild(a);
@@ -918,7 +923,7 @@ export class ForceDirectedGraphComponent
   ngOnDestroy() {
     this.selectedCarriersSub.unsubscribe();
     this.currentTabSub.unsubscribe();
-    window.removeEventListener('resize', this.debouncedResizeHandler);
+    window.removeEventListener("resize", this.debouncedResizeHandler);
   }
 }
 
@@ -935,7 +940,7 @@ function debounce(func: (...args: any[]) => void, wait: number) {
 }
 
 function copyStylesInline(destinationNode: Node, sourceNode: Node) {
-  const containerElements = ['svg', 'g'];
+  const containerElements = ["svg", "g"];
 
   for (let cd = 0; cd < destinationNode.childNodes.length; cd++) {
     const child = destinationNode.childNodes[cd];
@@ -957,7 +962,7 @@ function copyStylesInline(destinationNode: Node, sourceNode: Node) {
         (child as any).style.setProperty(
           key,
           computedStyle.getPropertyValue(key),
-          computedStyle.getPropertyPriority(key)
+          computedStyle.getPropertyPriority(key),
         );
       }
     }

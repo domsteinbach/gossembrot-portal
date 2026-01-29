@@ -1,4 +1,4 @@
-import { PageType } from '../model/page';
+import { PageType } from "../model/page";
 
 export interface InformationCarrierData {
   id: string;
@@ -70,7 +70,7 @@ export interface PageData {
   id: string;
   sort_in_car: number;
   text_id: string;
-  manually_defined_info_json: number;  // 0 = 'no', 1 = 'yes'
+  manually_defined_info_json: number; // 0 = 'no', 1 = 'yes'
   is_missing_blatt: number; // 0 = 'no', 1 = 'yes'
 }
 
@@ -168,5 +168,5 @@ export interface SearchResultData {
   id: string;
   search_string: string;
   label: string;
-  type: string,
+  type: string;
 }

@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PageClassicsComponent } from './page-classics.component';
+import { PageClassicsComponent } from "./page-classics.component";
 
-describe('PageClassicsComponent', () => {
+describe("PageClassicsComponent", () => {
   let component: PageClassicsComponent;
   let fixture: ComponentFixture<PageClassicsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PageClassicsComponent]
-    })
-    .compileComponents();
-    
+      imports: [PageClassicsComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PageClassicsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

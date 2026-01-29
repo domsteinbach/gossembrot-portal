@@ -1,28 +1,28 @@
-import { PageData } from '../data/repository-model';
-import { GsmbResource } from '../data/repository/gsmb-resource';
-import { EnvConstants } from '../constants';
+import { PageData } from "../data/repository-model";
+import { GsmbResource } from "../data/repository/gsmb-resource";
+import { EnvConstants } from "../constants";
 
-export type Folio = 'r' | 'v';
+export type Folio = "r" | "v";
 
 export type PageType =
-  | 'CommonLeaf'
-  | 'LeafWithRomanNumeral'
-  | 'BindingInside'
-  | 'Einlegeblatt'
-  | 'Zwischenblatt'
-  | 'Makulaturblatt'
-  | 'Vorsatzblatt'
-  | 'Pergament'
-  | 'Cedula'
-  | 'Zettel'
-  | 'Schnitt'
-  | 'BindingOutside'
-  | 'Spine';
+  | "CommonLeaf"
+  | "LeafWithRomanNumeral"
+  | "BindingInside"
+  | "Einlegeblatt"
+  | "Zwischenblatt"
+  | "Makulaturblatt"
+  | "Vorsatzblatt"
+  | "Pergament"
+  | "Cedula"
+  | "Zettel"
+  | "Schnitt"
+  | "BindingOutside"
+  | "Spine";
 
 export class Page extends GsmbResource {
   protected _carId: string;
   protected _folio: Folio;
-  protected _imgDir = '';  // fallback for displaying missing images
+  protected _imgDir = ""; // fallback for displaying missing images
   protected _iiifInfoUrl: string;
   protected _imgName: string;
   protected _label: string;
@@ -57,7 +57,7 @@ export class Page extends GsmbResource {
     this._lagenText = pageData.lagen_text;
     this._doppellagenSym = pageData.doppellagen_sym;
     this._doppellagenText = pageData.doppellagen_text;
-    this._modernPageAddition = pageData.modern_page_addition || '';
+    this._modernPageAddition = pageData.modern_page_addition || "";
     this._modernPageNum = pageData.modern_page_num;
     this._oldFolio = pageData.old_folio;
     this._oldPageAddition = pageData.old_page_addition;
@@ -81,15 +81,15 @@ export class Page extends GsmbResource {
 
   get oppositeFolio(): Folio {
     // return the opposite folio, so r when v and vice versa
-    if (this._folio === 'r') {
-      return 'v';
+    if (this._folio === "r") {
+      return "v";
     } else {
-      return 'r';
+      return "r";
     }
   }
 
   get imgDir(): string {
-      return `${EnvConstants.LOCAL_IMG_FALLBACK_DIR}${this._imgDir}`;
+    return `${EnvConstants.LOCAL_IMG_FALLBACK_DIR}${this._imgDir}`;
   }
 
   get isMissingBlatt(): boolean {
@@ -129,7 +129,13 @@ export class Page extends GsmbResource {
   }
 
   get isDisplayedAsSingleImage(): boolean {
-    return this._pType === 'BindingOutside' || this._pType ===  'Schnitt' || this._pType === 'Spine' || this._pType === 'Cedula' || this._pType === 'Zettel';
+    return (
+      this._pType === "BindingOutside" ||
+      this._pType === "Schnitt" ||
+      this._pType === "Spine" ||
+      this._pType === "Cedula" ||
+      this._pType === "Zettel"
+    );
   }
 
   get pageText(): string {
@@ -151,7 +157,7 @@ export class BlindDoublePageFolio extends Page {
   }
 
   override get imgDir() {
-    return EnvConstants.NULL_IMG_PATH
+    return EnvConstants.NULL_IMG_PATH;
   }
 }
 
@@ -176,24 +182,26 @@ export class PageOfMissingCarrier extends Page {
     const pageData = emptyPageData;
     pageData.id = UuId.generateUuid();
     pageData.img_dir = EnvConstants.BLATT_OF_MISSING_CARRIER_PATH;
-    pageData.lagen_sym = '';
+    pageData.lagen_sym = "";
 
     super(pageData);
-    }
+  }
 
   override get imgDir(): string {
     return this._imgDir;
   }
-
 }
 
 // a page to be displayed when a page is referred to by a verweis but the carrier is lost or there is no carrier available
 export class MissingPageOfExistingCarrier extends Page {
-  constructor(folio: Folio = 'r') {
+  constructor(folio: Folio = "r") {
     const pageData = emptyPageData;
     pageData.id = UuId.generateUuid();
-    pageData.img_dir = folio === 'v' ? EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_V : EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_R;
-    pageData.lagen_sym = '';
+    pageData.img_dir =
+      folio === "v"
+        ? EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_V
+        : EnvConstants.MISSING_BLATT_OF_EXISTING_CARRIER_PATH_R;
+    pageData.lagen_sym = "";
     super(pageData);
   }
 
@@ -207,7 +215,7 @@ export class PageOfClassicText extends Page {
     const pageData = emptyPageData;
     pageData.id = UuId.generateUuid();
     pageData.img_dir = EnvConstants.BLATT_OF_CLASSIC_TEXT_PATH;
-    pageData.lagen_sym = '';
+    pageData.lagen_sym = "";
     super(pageData);
   }
 
@@ -218,46 +226,49 @@ export class PageOfClassicText extends Page {
 
 class UuId {
   static generateUuid(): string {
-    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    if (
+      typeof crypto !== "undefined" &&
+      typeof crypto.randomUUID === "function"
+    ) {
       return crypto.randomUUID();
     }
     // Fallback UUID v4 generator
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   }
 }
 
 export const emptyPageData: PageData = {
-  car_id: '',
-  folio: 'r',
-  img_dir: '',
-  external_img_url: '',
-  iiif_info_url: '',
-  img_name: '',
-  label: '',
-  lage: '',
-  lagen_id: '',
-  lagen_sym: '',
-  lagen_text: '',
-  doppellagen_sym: '',
-  doppellagen_text: '',
-  modern_page_addition: '',
+  car_id: "",
+  folio: "r",
+  img_dir: "",
+  external_img_url: "",
+  iiif_info_url: "",
+  img_name: "",
+  label: "",
+  lage: "",
+  lagen_id: "",
+  lagen_sym: "",
+  lagen_text: "",
+  doppellagen_sym: "",
+  doppellagen_text: "",
+  modern_page_addition: "",
   modern_page_num: 0,
-  old_folio: '',
-  old_page_addition: '',
+  old_folio: "",
+  old_page_addition: "",
   old_page_is_reconstr: 0,
   old_page_num: 0,
-  p_type: 'CommonLeaf',
-  page_text: '',
-  id: '',
+  p_type: "CommonLeaf",
+  page_text: "",
+  id: "",
   sort_in_car: 0,
-  text_id: '',
+  text_id: "",
   local_img_is_corrupt: 0,
   autocompared_iiif: 0,
   match_percentage: 0,
   manually_defined_info_json: 0,
-  is_missing_blatt: 0
+  is_missing_blatt: 0,
 };

@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
-  selector: 'app-show-more-toggle',
+  selector: "app-show-more-toggle",
   template: `
     <div
       *ngIf="results > offset && !showAll"
@@ -22,20 +22,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       weniger anzeigen ...
     </div>
   `,
-  styles: [`
-    .show-more-link {
-      color: var(--primary);
-      display: block;
-      padding: 0.5rem 3rem;
-      font-size: 0.875rem;
-      cursor: pointer;
-      text-align: left;
+  styles: [
+    `
+      .show-more-link {
+        color: var(--primary);
+        display: block;
+        padding: 0.5rem 3rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-align: left;
 
-      &:hover {
-        font-weight: bold;
+        &:hover {
+          font-weight: bold;
+        }
       }
-    }
-  `]
+    `,
+  ],
 })
 export class ShowMoreToggleComponent {
   @Input() results = 0;

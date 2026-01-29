@@ -6,21 +6,24 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
-} from '@angular/core';
-import { SearchResult, SearchResultTable } from '../../../../../model/search-result';
-import { SearchService } from '../../../../../service/search-service.service';
-import { SearchType } from '../../../../../data/repository/search-data-repository';
+} from "@angular/core";
+import {
+  SearchResult,
+  SearchResultTable,
+} from "../../../../../model/search-result";
+import { SearchService } from "../../../../../service/search-service.service";
+import { SearchType } from "../../../../../data/repository/search-data-repository";
 
 @Component({
-  selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrl: './search-results.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-search-results",
+  templateUrl: "./search-results.component.html",
+  styleUrl: "./search-results.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchResultsComponent implements OnChanges{
+export class SearchResultsComponent implements OnChanges {
   @Input() searchResults: SearchResult[] = [];
-  @Input() searchTerm = '';
-  @Input() searchType: SearchType = 'unset';
+  @Input() searchTerm = "";
+  @Input() searchType: SearchType = "unset";
   @Input() showCloseButton = false;
   @Output() closeResults = new EventEmitter<void>();
 
@@ -32,20 +35,22 @@ export class SearchResultsComponent implements OnChanges{
     carrier_text: [],
     belegstelle: [],
     naming_gossembrot: [],
-    library: []
+    library: [],
   };
 
   visibleGroups: Partial<Record<SearchResultTable, boolean>> = {};
 
   constructor(private _search: SearchService) {
-    this.groupOrder = this._search.GROUP_ORDER.filter(group => group.type !== 'library' && group.type !== 'info_carrier');
-    this.groupOrder.forEach(group => {
+    this.groupOrder = this._search.GROUP_ORDER.filter(
+      (group) => group.type !== "library" && group.type !== "info_carrier",
+    );
+    this.groupOrder.forEach((group) => {
       this.visibleGroups[group.type] = true;
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['searchResults']) {
+    if (changes["searchResults"]) {
       this._updateResultGroups();
     }
   }
@@ -57,7 +62,7 @@ export class SearchResultsComponent implements OnChanges{
       carrier_text: [],
       belegstelle: [],
       naming_gossembrot: [],
-      library: []
+      library: [],
     };
 
     for (const result of this.searchResults) {

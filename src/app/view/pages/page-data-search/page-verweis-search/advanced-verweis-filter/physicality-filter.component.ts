@@ -1,10 +1,10 @@
-import { Physicality } from '../../../../../model/infoCarrier';
-import { VerweisAdvancedFilterService } from '../verweis-advanced-filter.service';
-import { Component } from '@angular/core';
-import { PhysicalityControl } from './control-types';
+import { Physicality } from "../../../../../model/infoCarrier";
+import { VerweisAdvancedFilterService } from "../verweis-advanced-filter.service";
+import { Component } from "@angular/core";
+import { PhysicalityControl } from "./control-types";
 
 @Component({
-  selector: 'app-physicality-filter',
+  selector: "app-physicality-filter",
   template: `
     <mat-checkbox
       *ngFor="let type of physicalityTypes"
@@ -17,11 +17,11 @@ import { PhysicalityControl } from './control-types';
 })
 export class PhysicalityFilterComponent {
   physicalityTypes: PhysicalityControl[] = [
-    { physicality: 'Available', label: 'Erhalten' },
-    { physicality: 'Lost', label: 'Verschollen' },
-    { physicality: 'Classic', label: 'Kanonische Texte' },
+    { physicality: "Available", label: "Erhalten" },
+    { physicality: "Lost", label: "Verschollen" },
+    { physicality: "Classic", label: "Kanonische Texte" },
   ];
-  selectedFilters: Physicality[] = ['Available', 'Lost', 'Classic'];
+  selectedFilters: Physicality[] = ["Available", "Lost", "Classic"];
 
   constructor(private filterService: VerweisAdvancedFilterService) {}
 
