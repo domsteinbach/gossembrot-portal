@@ -51,15 +51,16 @@
                                 <div>
                                     <span>{{ car.fullTitle }}</span>
                                     <span *ngFor="let target of getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle); let i = index">
-                                        <span>, </span>
                                         <span
-                                                class="clickable"
-                                                [class.highlight-verweis-blatt-on-hover]="getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1" ]
-                                                [class.selected-verweis-blatt]="selectedVerweis?.id === target.id && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle) && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1"
+                                                (click)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)"
                                                 (mouseenter)="$event.stopPropagation()"
-                                                (click)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)">
-                                            {{ target.targetBlattangabe }}
-                                        </span>
+                                                [class.highlight-verweis-blatt-on-hover]="getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1"
+                                                [class.selected-verweis-blatt]="selectedVerweis?.id === target.id && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle) && getOutgoingVerweiseOfSrcBelegstelle(v.srcBelegstelle).length > 1"
+                                                class="clickable"
+                                                tabindex="0"
+                                                (keydown.enter)="$event.stopPropagation(); $event.preventDefault(); onVerweisClicked(target)"
+                                                aria-label="Zum Zielblatt wechseln"
+                                        >, {{ target.targetBlattangabe }}</span>
                                     </span>
                                 </div>
                             </div>
