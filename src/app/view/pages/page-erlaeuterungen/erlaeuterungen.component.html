@@ -39,7 +39,7 @@
     <li><strong>arcus modus:</strong> Bezeichnet das Folio-Format. Beispiel: München, Bayerische Staatsbibliothek, Clm 17836, Format 26,8 x 20,7 cm, Benennung durch Gossembrot: ‚Albus codex spissus arcus modus in Didascalicon et aliis operibus‘ (nach München, Bayerische Staatsbibliothek, Clm 3559, Bl. 2r).</li>
     <li><strong>textus modus:</strong> Bezeichnet das Quart-Format. Beispiel: München, Bayerische Staatsbibliothek, Clm 27419, Format 21 x 14,5 cm, Benennung durch Gossembrot: ‚Liber albus spissus confessionalis textus modus‘ (nach München, Bayerische Staatsbibliothek, Clm 3941, Bl.14r).</li>
     <li><strong>modus regalis:</strong> Bezeichnet das große Folio-Format.</li>
-    <li><strong>Karta:</strong> Gossembrot bezeichnet die Blätter in der Regel mit <span class="cite">karta</span>. Aus Verweisen auf erhaltenen Handschriften geht hervor, dass sich  <span class="cite">karta</span> dabei auf die aufgeschlagene Doppelseite und damit auch auf die vorausgehende verso-Seite bezieht. Beispiel: München, Bayerische Staatsbibliothek, Clm 3941, Bl. 44v:  <span class="cite">Eloq(uentia) q(uomodo) (com)p(ar)a(tur) nauigat(i)o(n)i (et) m(er)cancie vide | an(tea) a k(arta) .29.</span> [Signum], zielt auf: München, Bayerische Staatsbibliothek, Clm 3941, Bl. 28v, wo das im Verweis genannte Signum zu finden ist.</li>
+    <li><strong>karta:</strong> Gossembrot bezeichnet die Blätter in der Regel mit <span class="cite">karta</span>. Aus Verweisen auf erhaltenen Handschriften geht hervor, dass sich  <span class="cite">karta</span> dabei auf die aufgeschlagene Doppelseite und damit auch auf die vorausgehende verso-Seite bezieht. Beispiel: München, Bayerische Staatsbibliothek, Clm 3941, Bl. 44v:  <span class="cite">Eloq(uentia) q(uomodo) (com)p(ar)a(tur) nauigat(i)o(n)i (et) m(er)cancie vide | an(tea) a k(arta) .29.</span> [Signum], zielt auf: München, Bayerische Staatsbibliothek, Clm 3941, Bl. 28v, wo das im Verweis genannte Signum zu finden ist.</li>
   </ul>
 
   <!--
@@ -52,16 +52,21 @@
 
   <h3 class="subtitle margin-top">Transkriptionen:</h3>
 
-  <p>Die Transkriptionen erfolgen getreu der Handschrift. Zeilenumbrüche sind durch | markiert. Abkürzungen werden in Klammern aufgelöst. Es kommt ein Tagging-System zum Einsatz, das Eigenschaften des Originaltextes kennzeichnet (u.a. Additionen, Unterstreichungen, Korrekturen). Auf der Benutzeroberfläche wird dieses durch Farbkodierungen bzw. Auszeichnungen dargestellt (Umsetzung in Arbeit):
+  <p>Die Transkriptionen erfolgen getreu der Handschrift. Zeilenumbrüche sind durch | markiert. Abkürzungen werden in Klammern aufgelöst. Es kommt ein Tagging-System zum Einsatz, das Eigenschaften des Originaltextes kennzeichnet (u.a. Hinzufügungen, Unterstreichungen, Korrekturen). Auf der Benutzeroberfläche wird dieses durch Farbkodierungen bzw. Auszeichnungen dargestellt (Umsetzung in Arbeit):
   </p>
   <ul class="margin-bottom-end">
-      <li>Additionen: <app-tei-render-component [teiXmlString]="addExample"></app-tei-render-component></li>
+      <li>Hinzufügungen: <app-tei-render-component [teiXmlString]="addExample"></app-tei-render-component></li>
       <li>Unterstreichungen: <app-tei-render-component [teiXmlString]="underlineExample"></app-tei-render-component> </li>
       <li>Korrekturen: in <app-tei-render-component [teiXmlString]="gbExample"></app-tei-render-component>; die ursprüngliche Form wird in einem Tooltip angezeigt, wenn mit dem Mauszeiger darüber gefahren wird.</li>
+      <li>Text, der nicht von Gossembrot geschrieben ist: <app-tei-render-component [teiXmlString]="ngbExample"></app-tei-render-component>;</li>
       <li>Durchgestrichene Buchstaben/Wörter: <app-tei-render-component [teiXmlString]="delExmaple"></app-tei-render-component></li>
       <li>Rückgängig gemachte Durchstreichung: <app-tei-render-component [teiXmlString]="undelExample"></app-tei-render-component></li>
       <li>Eingriffe durch die Herausgeber: <app-tei-render-component [teiXmlString]="teiFragExampleHrsg"></app-tei-render-component></li>
-      <li>Unleserliche Stellen: <app-tei-render-component [teiXmlString]="teiFragExample"></app-tei-render-component></li>
+      <li>Unleserliche Stellen:  je nach Anzahl der unlesbaren Buchstaben:
+          <app-tei-render-component [teiXmlString]="teiFragExample"></app-tei-render-component>,
+          <app-tei-render-component [teiXmlString]="teiFragExampleb"></app-tei-render-component> oder
+          <app-tei-render-component [teiXmlString]="teiFragExamplec"></app-tei-render-component>
+      </li>
       <li>Offensichtliche Fehler: Ergänzung durch Ausrufezeichen <app-tei-render-component [teiXmlString]="teiSicExample"></app-tei-render-component></li>
       <li>Von Gossembrot verwendete Symbole: Maniculae werden mit <app-tei-render-component [teiXmlString]="teiManiculaExample"></app-tei-render-component> umgesetzt; alle anderen Symbole einheitlich <app-tei-render-component [teiXmlString]="teiSymbolExample"></app-tei-render-component></li>
       <li>Von Gossembrot als Symbole verwendete Buchstaben <app-tei-render-component [teiXmlString]="teiBuchstabeAExample"></app-tei-render-component>,<app-tei-render-component [teiXmlString]="teiBuchstabeBExample"></app-tei-render-component>, ...</li>

@@ -32,14 +32,6 @@ tei-gap[reason="editoral"]::before {
   content:"[...]";
 }
 
-tei-gap[reason="illegible"]::before {
-  content:"[";
-}
-
-tei-gap[reason="illegible"]::after {
-  content:"]";
-}
-
 tei-underline {
   text-decoration: underline;
 }
