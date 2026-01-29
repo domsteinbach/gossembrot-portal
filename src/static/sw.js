@@ -39,7 +39,7 @@ let dbPromise;
 async function initDb() {
     if (dbPromise) return dbPromise;
     const SQL  = await SQL_READY;
-    const resp = await fetch(scoped(DB_URL), { cache: 'force-cache' });
+    const resp = await fetch(scoped(DB_URL), { cache: 'reload' });
     if (!resp.ok) throw new Error(`DB fetch failed: ${resp.status} ${resp.statusText}`);
     const buf  = await resp.arrayBuffer();
     const db   = new SQL.Database(new Uint8Array(buf));
