@@ -10,7 +10,7 @@
       (input)="doSearch(searchInput.value)"/>
   </div>
 
-  <div *ngIf="searchResults.length || searchType !== 'unset'" class="search-suggestions">
+  <div *ngIf="searchResults.length || searchType !== 'unset' || searchTerm.length >= 2" class="search-suggestions">
     <mat-card>
       <mat-card-header>
         <mat-radio-group
