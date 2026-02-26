@@ -24,7 +24,7 @@
       <mat-radio-button value="suffix">am Wortende</mat-radio-button>
     </mat-radio-group>
   </mat-card-header>
-  <mat-card-header class="group-filter-row bg-full">
+  <mat-card-header class="group-filter-row">
     <ng-container *ngFor="let group of search.GROUP_ORDER">
       <mat-checkbox [(ngModel)]="visibleGroups[group.type]">
         {{ group.label }}
