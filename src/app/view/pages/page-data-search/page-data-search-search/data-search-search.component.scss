@@ -1,4 +1,3 @@
-
 .search-input-wrapper {
   margin-top: 1rem;
   min-width: 20rem;
@@ -45,9 +44,12 @@
   font-size: 0.9rem;
 }
 
-
 .scroll-container {
   overflow-y: auto;
   max-height: calc(80vh - 6rem);
   padding-right: 0.5rem;
+}
+
+.bg-full {
+  background-color: var(--mdc-elevated-card-container-color);
 }
