@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" = "production" ]; then
-  cp src/.htaccess dist/gossembrot-portal/.htaccess
+  cp src/.htaccess dist/.htaccess
 elif [ "$1" = "test-server" ]; then
   cp src/.htaccess.test dist/gossembrot-portal_test/.htaccess
 elif [ "$1" = "static-apache"  ]; then
