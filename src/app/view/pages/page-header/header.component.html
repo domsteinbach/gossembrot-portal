@@ -58,6 +58,13 @@
             (click)="openInNewTab(routeConstants.ERLAEUTERUNGEN)">
             Erläuterungen
         </button>
+        <button
+                mat-button
+                [routerLink]="[routeConstants.IMPRESSUM]"
+                [queryParams]="{}"
+                routerLinkActive="active-route">
+            <span>Impressum</span>
+        </button>
       <button
         *ngIf="authService.isAuthenticated()"
         mat-button

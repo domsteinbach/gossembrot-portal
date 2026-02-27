@@ -1,0 +1,12 @@
+.cc-by-img {
+    display: block;
+    height: 2rem;
+    width: auto;
+    margin: 0.5rem 0;
+}
+
+.impressum-container {
+    padding: var(--margin-small);
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+}
