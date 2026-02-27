@@ -5,7 +5,7 @@ export const environment = {
   useSqlJs: true,
   gsmbRoot: "/gossembrot-portal/",
   apiUrl: "./api",
-  dbVersion: "2.3",
+  dbVersion: "2.4",
   defaultDbName: "gossembrot",
   assetsRoot: "assets",
   osdPrefixUrl: "images/",

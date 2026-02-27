@@ -6,7 +6,7 @@ export const environment = {
   gsmbRoot: "/", // root when served locally
   apiUrl: "/api",
   defaultDbName: "gossembrot",
-  dbVersion: "2.1",
+  dbVersion: "2.4",
   localImageBaseUrl: "http://localhost:4201/",
   osdPrefixUrl: "images/",
   assetsRoot: "assets",
