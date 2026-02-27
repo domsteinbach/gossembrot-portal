@@ -146,6 +146,10 @@ const routes: Routes = [
   },
   { path: RouteConstants.IMPRESSUM, component: PageImpressumComponent },
   { path: "login", component: LoginComponent },
+  {
+    path: '**',
+    redirectTo: RouteConstants.HOME,
+  }
 
   // { path: RouteConstants.VERWEISE, component: VerweisComponent },
   // { path: RouteConstants.THEMES, component: ThemeSwitchComponent },
