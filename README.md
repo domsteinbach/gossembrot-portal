@@ -10,6 +10,10 @@ In order to be long term available and to minimise platform dependencies the pro
 
 The main projects page is deployed at https://gossembrot.unibe.ch/gossembrot-portal. A static version of the page is available at: https://domsteinbach.github.io/gossembrot-portal-site/. The static version is built and deployed automatically on every push to the main branch via github actions (.github/workflows/deploy-gh-pages.yml)
 
+# License
+The project is licensed under the MIT License - see the LICENSE file for details.
+The projects data (in ./data-import) is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0) - see the LICENSE file for details.
+
 # Prerequisites
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17. 
