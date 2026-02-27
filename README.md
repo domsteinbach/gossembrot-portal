@@ -9,7 +9,7 @@ Project staff:
 
 In order to be long term available and to minimise platform dependencies the project implements two different database technologies depending on the desired environment. It can be either hosted alongside a mysql database (with a node.js server as api) or as a static hosted website with SQLite compiled to WebAssembly (sqlite3 & sql.js).
 
-The main projects page is deployed at https://gossembrot.unibe.ch/gossembrot-portal. A static version of the page is available at: https://domsteinbach.github.io/gossembrot-portal-site/. The static version is built and deployed automatically on every push to the main branch via github actions (.github/workflows/deploy-gh-pages.yml)
+The main projects page is deployed at https://gossembrot.unibe.ch.
 
 # License
 The project is licensed under the MIT License - see the LICENSE file for details.
