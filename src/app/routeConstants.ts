@@ -12,6 +12,7 @@ export class RouteConstants {
   static readonly AV_TARGETS = "available-targets";
   static readonly HOME = "";
   static readonly ERLAEUTERUNGEN = "erl";
+  static readonly IMPRESSUM = "impressum";
   static readonly TRANSCRIPTION_OVERVIEW = "tags";
   static readonly VISUALISATIONS = "visualisations";
   static readonly FORCE_DIRECTED = "force-directed-graph";

@@ -18,6 +18,7 @@ import { VerweisSynopsisComponent } from "./view/pages/page-verweis-synopsis/ver
 import { AuthorSearchComponent } from "./view/pages/page-data-search/page-author-search/page-author-search.component";
 import { DataSearchSearchComponent } from "./view/pages/page-data-search/page-data-search-search/data-search-search.component";
 import { NonHabeoComponent } from "./view/pages/page-incoming-verweise/non-habeo/non-habeo.component";
+import {PageImpressumComponent} from "./view/pages/page-impressum/page-impressum.component";
 
 const routes: Routes = [
   {
@@ -143,6 +144,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: RouteConstants.IMPRESSUM, component: PageImpressumComponent },
   { path: "login", component: LoginComponent },
 
   // { path: RouteConstants.VERWEISE, component: VerweisComponent },
