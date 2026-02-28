@@ -150,10 +150,6 @@ const routes: Routes = [
     path: '**',
     redirectTo: RouteConstants.HOME,
   }
-
-  // { path: RouteConstants.VERWEISE, component: VerweisComponent },
-  // { path: RouteConstants.THEMES, component: ThemeSwitchComponent },
-  // { path: '**', redirectTo: RouteConstants.HOME }  // for any other routes
 ];
 
 @NgModule({
