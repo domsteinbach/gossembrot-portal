@@ -1,12 +1,13 @@
 <div class="search-input-wrapper">
-        <span class="search-icon">
-          <mat-icon>search</mat-icon>
-        </span>
+  <span class="search-icon">
+    <mat-icon>search</mat-icon>
+  </span>
   <input
     #searchInput
     type="text"
     placeholder="Eingabe ..."
-    (input)="doSearch(searchInput.value)" />
+    (input)="doSearch(searchInput.value)"
+  />
 </div>
 <mat-card>
   <mat-card-header class="search-header">
@@ -14,7 +15,8 @@
       class="group-filter-row"
       [(ngModel)]="searchType"
       (ngModelChange)="doSearch(searchInput.value)"
-      aria-label="Suchmodus">
+      aria-label="Suchmodus"
+    >
       <label>Suche:</label>
       <mat-radio-button value="unset">im ganzen Text</mat-radio-button>
       <mat-radio-button value="fullWord">nur ganze Wörter</mat-radio-button>
@@ -24,9 +26,7 @@
   </mat-card-header>
   <mat-card-header class="group-filter-row">
     <ng-container *ngFor="let group of search.GROUP_ORDER">
-      <mat-checkbox
-        [(ngModel)]="visibleGroups[group.type]"
-      >
+      <mat-checkbox [(ngModel)]="visibleGroups[group.type]">
         {{ group.label }}
       </mat-checkbox>
     </ng-container>
@@ -34,15 +34,13 @@
   <mat-divider></mat-divider>
   <mat-card-content class="scroll-container" *ngIf="resultGroups">
     <div *ngFor="let group of search.GROUP_ORDER">
-    <app-search-result-group
-      *ngIf="visibleGroups[group.type]"
-      [type]="group.type"
-      [results]="resultGroups[group.type]"
-      [searchTerm]="searchTerm"
-      [searchType]="searchType"
-    />
+      <app-search-result-group
+        *ngIf="visibleGroups[group.type]"
+        [type]="group.type"
+        [results]="resultGroups[group.type]"
+        [searchTerm]="searchTerm"
+        [searchType]="searchType"
+      />
     </div>
   </mat-card-content>
 </mat-card>
-
-

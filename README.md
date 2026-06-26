@@ -2,6 +2,7 @@
 
 A project of the Swiss Nationalfonds (2021–2025); Lead: Prof. Dr. Michael Stolz (University of Bern);
 Project staff:
+
 - Dr. Ioanna Georgiou (University of Bern)
 - Elena Brandazza MA (University of Bern)
 - Development and Design by Dominique Steinbach (University of Bern) https://github.com/domsteinbach.
@@ -16,12 +17,12 @@ The projects data (in ./data-import) is licensed under the Creative Commons Attr
 
 # Prerequisites
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17. 
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.
 
 - Make sure you have node.js installed (v18 or higher)
 - Make sure you have angular cli installed globally: `npm install -g @angular/cli`
 - Run `npm install` to install the dependencies
- 
+
 # Build and serve options
 
 There are two major ways to build and serve the page:
@@ -38,12 +39,13 @@ The static way is recommended as building and hosting the page as it is much eas
 ### 1.) Local build and serve the static page with baked in database
 
 To serve the page with live reload (changes to the code will be reflected immediately)
+
 - Run `npm run static:watch` to import the data to the build and serve the page at http://localhost:4201/. Changes to the code will be reflected and the browser reloads without rebuilding the whole project (but it might still take some time).
 
 For proper development with live reload use the mysql database and the node.js server as api (see below).
 
-
 ### 2.) Build and host the static page with an apache webserver
+
 - Run `npm run build:static:apache` to build the project for static hosting. The build artifacts will be stored in the `dist/gossembrot-portal_static/` directory.
 - Place the content of the "dist" directory (the whole directory "gossembrot-portal_static") onto the server (e.g. in `/var/www/`)
 - Make sure the apache webserver is configured to serve the page/directory correctly
@@ -52,9 +54,9 @@ For proper development with live reload use the mysql database and the node.js s
 ### 3.) Data imports & updates for static hosting (sqlite database)
 
 - Change or replace the csv files in `./data-import`
-- **Increase the version number** "dbVersion" in the defined environment you use to build in src/environments/environment.*.ts., e.g. "dbVersion":"2.2" to  "dbVersion":"2.3"
+- **Increase the version number** "dbVersion" in the defined environment you use to build in src/environments/environment.\*.ts., e.g. "dbVersion":"2.2" to "dbVersion":"2.3"
   For deployment on the github pages increase it in environment.static-ghpages.ts.
-Otherwise the browser might use a cached version of the sqlite database (service workers ...)
+  Otherwise the browser might use a cached version of the sqlite database (service workers ...)
 - Run `npm run db:build ` to rebuild the database and import (see above) for local development or rebuild the whole project for static hosting e.g. with `npm run build:static:apache` (see above)
 - commit and push the changes to the main branch (auto deployed to github pages)
 
@@ -63,24 +65,27 @@ Otherwise the browser might use a cached version of the sqlite database (service
 ### 1.) local development
 
 ### Prerequisites
+
 - Make sure you have a local mysql database running on localhost:3306
 - Create a database "gossembrot" on your local mysql server
 - Import the csv files found in "./data-import" into the database (as the data is generated from different project sources, the data is not available in a single sql dump file).
 
 ### Serve locally
+
 - Run `npm run api` to start the api locally in order to connect to a local mysql server running on localhost:3306. Make sure your mysql database is running.
-- Run `ng serve` or `ng s` for a dev server. Navigate to `http://localhost:4200/gossembrot-portal/`.
+- Run `ng serve` or `ng s` for a dev server. Navigate to `http://localhost:4200/`.
 
 ### 2.) Build and host with a mysql database
 
 #### Prerequisites
+
 - Make sure you have node.js installed (v18 or higher)
 - Make sure you have a mysql database running on the server
-- Create a database "gossembrot" in your mysql server (or change the db name in server.js and in src/environments/environment.*.ts accordingly)
+- Create a database "gossembrot" in your mysql server (or change the db name in server.js and in src/environments/environment.\*.ts accordingly)
 - Import the csv files found in "./data-import" into the database (as the data is generated from different project sources, the data is not available in a single sql dump file).
 
-The default host and port for mysql is localhost:3306. If your mysql database is running on a different host or port, change the host and port in server.js and in src/environments/environment.*.ts accordingly.
-The database name ("gossembrot" or "gossembrot_test") is defined in server.js and in src/environments/environment.*.ts accordingly.
+The default host and port for mysql is localhost:3306. If your mysql database is running on a different host or port, change the host and port in server.js and in src/environments/environment._.ts accordingly.
+The database name ("gossembrot" or "gossembrot_test") is defined in server.js and in src/environments/environment._.ts accordingly.
 
 - put the node server ./api/server.js onto the server (e.g. in /var/www/gsmb/api/)
 - run `npm install` to install the dependencies
@@ -93,7 +98,7 @@ The database name ("gossembrot" or "gossembrot_test") is defined in server.js an
   `nohup node server.js > ./server.log 2>&1 &`
 - in the same terminal disown the process by enter: `disown` (this will prevent the process from being killed when you close the terminal)ß
 - Make sure the user running the node.js server has access to the node_modules directory
-- Navigate to `http://your-server/gossembrot-portal/`.
+- Navigate to `http://your-server/`.
 
 Hints for debugging if the server.js does not start or the page does not load:
 
@@ -102,6 +107,7 @@ Hints for debugging if the server.js does not start or the page does not load:
 - Search for server js `ps aux | grep server.js`
 
 If you need to kill the process:
+
 - `kill -9 [PID]` (replace [PID] with the process id)
 - See ./server.log for errors
 
@@ -137,6 +143,7 @@ Authentication and user management is only implemented for the mysql database (n
 It's sole purpose is feature flagging during development. There are no CUD operations implemented (Create, Update, Delete) anyway.
 
 ### Register or Reset a password for a user
+
 - run `npm run registerPassword thePasswordYouLikeToHash`
 - then copy the hash (the output of the command; this is the new password hash)
 - Go to the database and enter the password hash for the user as password
