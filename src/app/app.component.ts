@@ -22,7 +22,7 @@ import { UpdateCarriers } from "./state/information-carrier-state.service";
   encapsulation: ViewEncapsulation.None, // for making the component work with strict csp headers
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = "Gossembrot Bibliothek";
+  title = "Gossembrots Bibliothek – digitale Rekonstruktion";
 
   private _currentTheme: GsmbThemeClass | null = null;
 
