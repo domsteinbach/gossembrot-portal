@@ -9,14 +9,12 @@
         <span class="radio">Textträger</span>
     </mat-radio-button>
     <mat-radio-button
-            [disabled]="!authService.isAuthenticated()"
             [checked]="granularity === 'CarrierAndText'"
             matTooltip="Es werden Textträger zusammen mit ihren Texten angezeigt. Verweise gehen von Texten aus und zielen auf Texte"
             value="CarrierAndText">
         <span class="radio">Textträger und Texte</span>
     </mat-radio-button>
     <mat-radio-button
-            [disabled]="!authService.isAuthenticated()"
             [checked]="granularity === 'CarrierText'"
             matTooltip="Es werden nur Texte angezeigt. Verweise gehen von Texten aus und zielen auf Texte"
             value="CarrierText">
