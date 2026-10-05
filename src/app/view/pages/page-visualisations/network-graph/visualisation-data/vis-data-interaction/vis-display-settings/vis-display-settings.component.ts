@@ -10,7 +10,6 @@ import {
   VisualisationSettingsService,
 } from "../../../visualisation-settings.service";
 import { Subscription } from "rxjs";
-import { AuthService } from "../../../../../../../auth/auth.service";
 
 @Component({
   selector: "app-vis-display-settings",
@@ -24,7 +23,6 @@ export class VisDisplaySettingsComponent implements OnInit, OnDestroy {
   protected granularity!: Granularity;
 
   constructor(
-    protected authService: AuthService,
     private _visSettings: VisualisationSettingsService,
   ) {}
 
